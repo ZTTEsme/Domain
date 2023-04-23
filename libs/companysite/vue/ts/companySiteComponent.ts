@@ -1,0 +1,341 @@
+import { Component, Prop, Vue } from "vue-facing-decorator";
+import CompanySiteInteractor from "../../core/ts/interactors/companySiteInteractor";
+import PaginationComponent from "qnect-sdk-web/lib/common/vue/ts/paginationComponent";
+import ModalComponent from "qnect-sdk-web/lib/common/vue/ts/modalComponent";
+import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
+import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbComponent";
+import CompanySitePresenter from "../../core/ts/interactors/companySitePresenter";
+import CompanySiteModel from "../../core/ts/models/companySiteModel";
+import NoDataComponent from "../../../common/component/noDataComponent";
+import ButtonComponent from "../../../common/component/ButtonComponent";
+
+@Component({
+  name: "CompanySiteComponent",
+  components: {
+    pagination: PaginationComponent,
+    modal: ModalComponent,
+    toast: ToastComponent,
+    breadcrumb:BreadcrumbComponent,
+    NoDataComponent:NoDataComponent,
+    ButtonComponent: ButtonComponent
+  },
+  template: `
+    <div class="container company-site">
+    <div class="wrapper">
+      <!--content -->
+      <section>
+        <div class="page-wrapper">
+          <div class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-1">
+              <div class="breadcrumb-title pe-3" style="border-right: 1.5px solid #aaa4a4;">{{ model.moduleName }}</div>
+              <div class="ps-3" style="margin-top: 15px;">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                      <i class="fa-solid fa-house"></i>
+                    </li>
+                    <li style="margin-left:10px">
+                      <breadcrumb :items="model.breadcrumb"/>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+              <div class="ms-auto">
+                <ButtonComponent img-style="width:30px" img="./img/shift.gif"  @click="interactor.showSearch(model)"></ButtonComponent>
+              </div>
+            </div>
+
+            <div class="main row gy-2">
+              <!--search-->
+              <div class="col col-lg-12 mx-auto" v-show="model.showSearch">
+                <div class="card">
+                  <div class="card-body pt-1 pb-1">
+                    <div class="card-title">
+                      <form class="row g-3">
+                        <div class="col-md-4 ">
+                          <label for="agentCompanyId" class="form-label">{{ model.labelInfo.companyId }}</label>
+                          <select class="form-select" id="agentCompanyId" v-model="model.searchForm.companyId">
+                            <option
+                              v-for="company in model.company"
+                              :key="company.agentCompanyId"
+                              :label="company.alias"
+                              :value="company.agentCompanyId"
+                            />
+                          </select>
+                        </div>
+                      </form>
+                    </div>
+                    <hr class="m-1"/>
+                    <div class="row row-cols-auto g-2" style="float:right;">
+                      <div class="col">
+                        <ButtonComponent img-style="width:30px" img="./img/searching.gif" @click="interactor.getCompanySites(model.searchForm.companyId)"></ButtonComponent>
+                      </div>
+                      <div class="col">
+                        <ButtonComponent img-style="width:30px" img="./img/reset.gif" @click="interactor.resetSearchForm(model)"></ButtonComponent>
+                      </div>
+
+                    </div>
+                    <!--end row-->
+                  </div>
+                </div>
+              </div>
+              <!--table-->
+              <div class="col col-lg-12 mx-auto">
+                <div v-show="model.isLoading" style="position: absolute;left: 43%;top: 60%;z-index: 100;">
+                  <div class="spinner-grow text-primary" role="status"><span
+                    class="visually-hidden">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-secondary" role="status"><span class="visually-hidden">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-success" role="status"><span
+                    class="visually-hidden">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-danger" role="status"><span
+                    class="visually-hidden">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-warning" role="status"><span
+                    class="visually-hidden">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-info" role="status"><span
+                    class="visually-hidden">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-light" role="status"><span
+                    class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+                <div v-show="!model.isLoading" class="card">
+                  <div class="card-body d-flex flex-column">
+                    <div class="card-title">
+                      <div class="row row-cols-auto g-2">
+                        <div class="col">
+                          <ButtonComponent img="./img/add.gif" img-style="width:30px" @click="() => interactor.openAddCompanySiteDialog()"></ButtonComponent>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <hr/>
+
+                    <NoDataComponent v-show="model.pageResultForCompanySite.total<=0" img="./img/no-data-available.gif"></NoDataComponent>
+
+                    <!--卡片列表-->
+                    <div class="row row-cols-auto g-1" style="min-height:300px"
+                         v-show="model.pageResultForCompanySite.total>0">
+                      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 company-site-card" style="width:100%">
+                        <div class="col" v-for="ele in model.pageResultForCompanySite.data">
+                          <div class="card radius-10 border-start border-0 border-3 border-info">
+                            <div class="card-body">
+                              <div class="d-flex align-items-center">
+                                <div>
+                                  <p class="mb-0 text-secondary">
+                                    <i class="fa-solid fa-land-mine-on fa-beat-fade fa-xs" style="color: #023e64;"></i>
+                                    {{ model.companySiteTableColName.alias }}
+                                  </p>
+                                  <h6 class="my-1 text-info">{{ ele.alias }}</h6>
+                                  <p class="mb-0 font-13 mt-3">
+
+                                    <ButtonComponent img="./img/modify.gif" img-style="width:30px" @click="() => interactor.openModifyDialog(
+                                             ele.alias,
+                                             ele.companyId)"></ButtonComponent>
+                                    <ButtonComponent btn-style="margin-left:10px;padding:2px" img="./img/delete.gif" img-style="width:30px" @click="() => interactor.openDeleteDialog(ele.companyId)"></ButtonComponent>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!--pagination-->
+                    <div class="mt-auto">
+                      <div class="row float-end"  v-show="model.pageResultForCompanySite.total>0">
+                        <div class="col pe-0" >
+                          <select class="form-select" aria-label="Default select example"
+                                  v-model="model.pageInfo.pageSize" @click="()=>interactor.changePageSize(model)">
+                            <option v-for="item in model.pageInfo.pageItems" :value=item>{{ item }}</option>
+                          </select>
+                        </div>
+                        <div class="col">
+                          <pagination
+                            :totalSize="model.pageResultForCompanySite.total"
+                            :pageSize="model.pageInfo.pageSize"
+                            :currentPage="model.pageInfo.pageNo"
+                            @change="(pageNo)=>interactor.changePage(pageNo)"
+                          ></pagination>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <!--tip-->
+        <toast :show="model.searchCompanySiteWasFailed">
+          <div class="toast-body">
+            <div class="d-flex align-items-center">
+              <div class="font-35 text-danger"><i class="bx bxs-message-square-x"></i>
+              </div>
+              <div class="ms-3">
+                <span class="mb-0 text-danger" style="font-size:20px">Server Internal Error!!!</span>
+              </div>
+            </div>
+          </div>
+        </toast>
+
+        <!--add companySite modal-->
+        <modal name="add companySite"
+               :show="model.dialog.openAddCompanySiteDialog"
+               :title="model.dialog.addCompanySite"
+               :labelClose="true"
+               :abortFunction="()=>interactor.closeAddCompanySiteDialog()">
+
+          <alert :show="model.dialog.showAddCompanySiteSuccessMessage" color="success" icon="fas fa-gift">
+            {{ model.dialog.msgAddCompanySiteWithSuccess }}
+          </alert>
+          <alert :show="model.dialog.showAddCompanySiteFailureMessage" color="danger"
+                 icon="fas fa-triangle-exclamation">
+            {{ model.dialog.msgAddCompanySiteWithFailure }}
+          </alert>
+          <div>
+            <form class="row g-3">
+              <div class="col-md-12 position-relative">
+                <label for="agentCompanyId" class="form-label">Alias</label>
+                <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddCompanySiteErrors.alias}"
+                       id="alias" v-model="model.addCompanySiteFormData.alias">
+                <div class="invalid-feedback" v-show="!!model.validAddCompanySiteErrors.alias">
+                  {{ model.validAddCompanySiteErrors.alias }}
+                </div>
+              </div>
+            </form>
+          </div>
+          <template #footer>
+            <button type="button" class="btn btn-primary" @click='()=>interactor.addCompanySite(
+                                        model.addCompanySiteFormData.alias
+                                        )'>{{ model.dialog.submit }}
+            </button>
+          </template>
+        </modal>
+
+        <!--delete company modal-->
+        <modal name="delete companySite"
+               :show="model.dialog.openDeleteDialog"
+               :title="model.dialog.deleteCompanySiteTitle"
+               :labelClose="true"
+               :abortFunction="()=>interactor.closeDeleteDialog()">
+
+          <alert :show="model.dialog.showDeleteCompanySiteSuccessMessage" color="success" icon="fas fa-gift">
+            {{ model.dialog.msgDeleteCompanySiteWithSuccess }}
+          </alert>
+          <alert :show="model.dialog.showDeleteCompanySiteFailureMessage" color="danger"
+                 icon="fas fa-triangle-exclamation">
+            {{ model.dialog.msgDeleteCompanySiteWithFailure }}
+          </alert>
+
+          <div
+            class="alert border-0 border-start border-5 border-warning alert-dismissible fade show py-2">
+            <div class="d-flex align-items-center">
+              <div class="font-35 text-warning"><i class="bx bx-info-circle"></i>
+              </div>
+              <div class="ms-3">
+                <h6 class="mb-0 text-warning">{{ model.dialog.deleteTipInfo }}</h6>
+              </div>
+            </div>
+          </div>
+          <template #footer>
+            <button
+              class="btn btn-primary"
+              @click='() => interactor.deleteCompanySite(model.dialog.currentDeleteCompanyId)'
+            >
+              {{ model.dialog.submit }}
+            </button>
+          </template>
+        </modal>
+
+        <!--modify company modal-->
+        <modal name="modify companySite"
+               :show="model.dialog.openModifyCompanySiteDialog"
+               :title="model.dialog.modifyCompanySiteTitle"
+               :labelClose="true"
+               :abortFunction="()=>interactor.closeModifyDialog()">
+
+          <alert :show="model.dialog.showModifyCompanySiteSuccessMessage" color="success" icon="fas fa-gift">
+            {{ model.dialog.msgModifyCompanySiteWithSuccess }}
+          </alert>
+          <alert :show="model.dialog.showModifyCompanySiteFailureMessage" color="danger"
+                 icon="fas fa-triangle-exclamation">
+            {{ model.dialog.msgModifyCompanySiteWithFailure }}
+          </alert>
+
+          <form class="row g-3">
+            <div class="col-md-12 position-relative">
+              <label for="companySiteId" class="form-label">Company Alias Name</label>
+              <select class="form-select" :class="{'is-invalid':!!model.validModifyCompanySiteErrors.companyId}"
+                      id="companySiteId" v-model="model.modifyCompanySiteFormData.companyId">
+                <option
+                  v-for="company in model.company"
+                  :key="company.agentCompanyId"
+                  :label="company.alias"
+                  :value="company.agentCompanyId"
+                />
+              </select>
+              <div class="invalid-feedback" v-show="!!model.validModifyCompanySiteErrors.companyId">
+                {{ model.validModifyCompanySiteErrors.companyId }}
+              </div>
+            </div>
+
+            <div class="col-md-12 position-relative">
+              <label for="alias" class="form-label">Company Site Alias Name</label>
+              <input type="text" class="form-control"
+                     :class="{'is-invalid': !!model.validModifyCompanySiteErrors.alias}" id="alias"
+                     v-model="model.modifyCompanySiteFormData.alias">
+              <div class="invalid-feedback" v-show="!!model.validModifyCompanySiteErrors.alias">
+                {{ model.validModifyCompanySiteErrors.alias }}
+              </div>
+            </div>
+          </form>
+
+          <template #footer>
+            <button
+              class="btn btn-primary"
+              @click='() => interactor.modifyCompanySite(
+                         model.modifyCompanySiteFormData.alias,
+                         model.modifyCompanySiteFormData.companyId
+                         )'
+            >{{ model.dialog.submit }}
+            </button>
+          </template>
+        </modal>
+      </section>
+    </div>
+    </div>
+    <script>
+    import Vue from "vue";
+    import {Component} from "vue-class-component";
+    import NoDataComponent from "./noDataComponent";
+    export default {
+      components: {NoDataComponent}
+    }
+    </script>`,
+})
+export default class CompanySiteComponent extends Vue implements CompanySitePresenter {
+
+  private model: CompanySiteModel = new CompanySiteModel();
+
+  @Prop
+  private readonly interactor!: CompanySiteInteractor;
+
+  public mounted(): void {
+    this.interactor.startPresenting(this);
+  }
+
+  public updateView(model: CompanySiteModel): void {
+    this.model = model;
+  }
+}

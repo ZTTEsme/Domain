@@ -1,0 +1,15 @@
+image: "node:18-slim"
+
+stages:
+  - build
+
+build:node-build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    when: always
+    paths:
+      - build
+    expire_in: 24h

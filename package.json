@@ -1,0 +1,36 @@
+{
+  "name": "qnect-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "shx rm -rf build",
+    "build": "npm run clean && node build-scripts/build.js build qnect-web",
+    "watch": "npm run clean && node build-scripts/build.js watch qnect-web"
+  },
+  "author": "Carl Cloos Schweisstechnick GmbH",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@rollup/plugin-alias": "^4.0.3",
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/bootstrap": "^5.2.6",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "eslint": "^8.36.0",
+    "rollup-plugin-serve": "^2.0.2",
+    "shx": "^0.3.4",
+    "slim-frontend-builder": "^2.0.1",
+    "stylelint": "^15.3.0",
+    "stylelint-config-recess-order": "^4.0.0",
+    "stylelint-config-standard-scss": "^7.0.1",
+    "typescript": "^4.9.5",
+    "uglify-js": "^3.17.4"
+  },
+  "dependencies": {
+    "qnect-sdk-web": "^3.1.24",
+    "qnect-web-frame": "^3.3.0"
+  }
+}

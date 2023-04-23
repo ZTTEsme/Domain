@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="de-DE">
+  <file id="qnect">
+   <unit id="home.editingFavorites">
+      <segment>
+        <source>Editing favorites</source>
+        <target>Bearbeiten der Favouriten</target>
+      </segment>
+    </unit>
+    <unit id="home.favorites">
+      <segment>
+        <source>Favorites</source>
+        <target>Favouriten</target>
+      </segment>
+    </unit>
+    <unit id="home.editFavorites">
+      <segment>
+        <source>Edit favorites</source>
+        <target>Favouriten bearbeiten</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

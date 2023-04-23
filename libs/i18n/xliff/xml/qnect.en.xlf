@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US">
+  <file id="qnect">
+    <unit id="home.editingFavorites">
+      <segment>
+        <source>Editing favorites</source>
+      </segment>
+    </unit>
+    <unit id="home.favorites">
+      <segment>
+        <source>Favorites</source>
+      </segment>
+    </unit>
+    <unit id="home.editFavorites">
+      <segment>
+        <source>Edit favorites</source>
+      </segment>
+    </unit>
+    <unit id="home.feedback">
+      <segment>
+        <source>Feedback</source>
+      </segment>
+    </unit>
+    <unit id="home.typeYourFeedbackHere">
+      <segment>
+        <source>Give us feedback about our platform:</source>
+      </segment>
+    </unit>
+    <unit id="home.submitYourFeedback">
+      <segment>
+        <source>Absenden</source>
+      </segment>
+    </unit>
+    <unit id="home.sentFeedback">
+      <segment>
+        <source>Thank you for your feedback!</source>
+      </segment>
+    </unit>
+    <unit id="home.failedToSendFeedback">
+      <segment>
+        <source>Failed to submit feedback, please try again later.</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>
