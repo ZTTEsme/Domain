@@ -14,7 +14,7 @@ export default class CompanyModel {
     total: 0
   };
 
-  public pageInfo: PageInfo = new PageInfo(1,1,[1,2,3,4,5]);
+  public pageInfo: PageInfo = new PageInfo(1,5,[5,10,20]);
 
   public breadcrumb: Breadcrumb[] = [];
 

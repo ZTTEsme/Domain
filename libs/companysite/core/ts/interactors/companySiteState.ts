@@ -7,7 +7,7 @@ import PageInfo from "../../../../common/entities/ts/pageInfo";
 
 export default class CompanySiteState{
 
-  public pageInfo: PageInfo = new PageInfo(1,1,[1,20,3,4,5],1);
+  public pageInfo: PageInfo = new PageInfo(1,5,[5,10,20],1);
 
   public breadcrumb: Breadcrumb[] = [];
 

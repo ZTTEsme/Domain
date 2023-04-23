@@ -184,7 +184,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
            
               <section>
                 <!--tip-->
-                <toast :show="model.searchCompaniesWasFailed">
+                <toast :show="model.searchCompaniesWasFailed" :delay=1000>
                    <div class="toast-body">
                      <div class="d-flex align-items-center">
                        <div class="font-35 text-danger"><i class="bx bxs-message-square-x"></i>

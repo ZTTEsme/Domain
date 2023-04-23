@@ -8,7 +8,7 @@ export default class CompanyState {
     data: [],
     total: 0
   };
-  public pageInfo: PageInfo = new PageInfo(1,1,[1,2,3,4,5],1);
+  public pageInfo: PageInfo = new PageInfo(1,5,[5,10,20],1);
 
   public isLoading:boolean = false;
 

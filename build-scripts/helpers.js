@@ -192,8 +192,10 @@ function copyAssets(srcDirs, distDir) {
 
 function postProcessHtmlInjects(htmlFile, environment, i18nHash) {
   builder.log.action("Post processing HTML injects");
-  let frameJsReplacement = "";
-  let frameCssReplacement = "";
+  //192.168.10.165
+  let frameJsReplacement = '\n<script src="http://localhost:8080/qnect-frame.js"></script>';
+  let frameCssReplacement =
+    '<link rel="stylesheet" type="text/css" href="http://localhost:8080/qnect-frame.css" />';
   if (environment === "production") {
     frameJsReplacement = '\n<script src="../../qnect-frame.js"></script>';
     frameCssReplacement = '<link rel="stylesheet" type="text/css" href="../../qnect-frame.css" />';

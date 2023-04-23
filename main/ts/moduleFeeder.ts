@@ -4,6 +4,8 @@ import I18nModule from "./modules/i18nModule";
 import RouterModule from "./modules/routerModule";
 import CompanyModule from "./modules/companyModule";
 import CompanySiteModule from "./modules/companySiteModule";
+// @ts-ignore
+import FrameModule from "./modules/frameModule";
 
 export default class ModuleFeeder {
   public static registerAllModules(moduleLoader: ModuleLoader): void {
@@ -16,6 +18,8 @@ export default class ModuleFeeder {
     const routerModule: RouterModule = new RouterModule();
     moduleLoader.registerModule(routerModule);
 
+    const frameModule: FrameModule = new FrameModule(authModule);
+    moduleLoader.registerModule(frameModule);
 
     const companyModule:CompanyModule = new CompanyModule(
       authModule,
