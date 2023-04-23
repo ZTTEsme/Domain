@@ -17,7 +17,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
     toast: ToastComponent,
     breadcrumb:BreadcrumbComponent,
     NoDataComponent:NoDataComponent,
-    ButtonComponent:ButtonComponent
+    ButtonComponent:ButtonComponent,
   },
   template: `
     <div class="container company">
@@ -153,7 +153,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                  <!--pagination-->
                                  <div class="mt-auto">
                                    <div  class="row float-end me-1" >
-                                     <div class="col" style="padding-right:0px">
+                                     <div class="col ps-0" >
                                        <select class="form-select" aria-label="Default select example" v-model="model.pageInfo.pageSize" @click="()=>interactor.changePageSize(model)">
                                          <option v-for="item in model.pageInfo.pageItems" :value=item>{{ item }}</option>
                                        </select>
@@ -162,7 +162,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                        <pagination
                                          :totalSize="model.pageResultForCompany.total"
                                          :pageSize="model.pageInfo.pageSize"
-                                         :currentPage="model.pageInfo.pageNo"
+                                         v-model="model.pageInfo.pageNo"
                                          @change="(pageNo)=>interactor.changePage(pageNo)"
                                        ></pagination>
                                      </div>

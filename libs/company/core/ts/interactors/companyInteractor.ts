@@ -28,6 +28,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   }
 
 
+
   async onLoad(): Promise<void> {
     await this.getCompanies();
   }
@@ -92,26 +93,18 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     }
   }
 
-  getCompany(companyId: number) {
-    try{
-      this.gateWay.getCompany(companyId).then((ele)=>{
+  // getCompany(companyId: number) {
+  //   try{
+  //     this.gateWay.getCompany(companyId).then((ele)=>{
+  //
+  //     });
+  //   }
+  //   catch(error){
+  //     console.log(error);
+  //
+  //   }
+  // }
 
-      });
-    }
-    catch(error){
-      console.log(error);
-
-    }
-  }
-
-
-  inviteUserToCompany(companyId: number, email: string, role: string): Promise<void>{
-    return this.gateWay.inviteUserToCompany(companyId,email,role);
-  }
-
-  removeUserFromCompany(companyId: number, userId: string): Promise<void>{
-    return this.gateWay.removeUserFromCompany(companyId,userId);
-  }
 
   showSearch(model:CompanyModel){
     this.state.showSearch = !model.showSearch;

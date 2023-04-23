@@ -1,8 +1,7 @@
 {
   "name": "qnect-web",
-  "version": "1.0.0",
+  "version": "1.1.7",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "clean": "shx rm -rf build",
     "build": "npm run clean && node build-scripts/build.js build qnect-web",
@@ -30,7 +29,6 @@
     "uglify-js": "^3.17.4"
   },
   "dependencies": {
-    "qnect-sdk-web": "^3.1.24",
-    "qnect-web-frame": "^3.3.0"
+    "qnect-sdk-web": "^3.1.27"
   }
 }

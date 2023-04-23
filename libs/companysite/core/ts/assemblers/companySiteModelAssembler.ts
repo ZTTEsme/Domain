@@ -6,8 +6,8 @@ import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil"
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/companySite";
-import FormErrors from "../../../../company/core/ts/entities/formError";
-import ValidationError from "../../../../company/core/ts/entities/validationError";
+import FormErrors from "../../../../common/entities/ts/formError";
+import ValidationError from "../../../../common/entities/ts/validationError";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
 export default class CompanySiteModelAssembler {

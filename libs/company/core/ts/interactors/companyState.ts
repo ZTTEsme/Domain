@@ -1,5 +1,5 @@
-import ValidationError from "../entities/validationError";
-import FormErrors from "../entities/formError";
+import ValidationError from "../../../../common/entities/ts/validationError";
+import FormErrors from "../../../../common/entities/ts/formError";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
 
 export default class CompanyState {

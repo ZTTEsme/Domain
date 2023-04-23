@@ -1,7 +1,7 @@
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import JsExtension from "qnect-sdk-web/lib/common/core/ts/jsExtension";
 import CompanySiteState from "./companySiteState";
-import ValidationError from "../../../../company/core/ts/entities/validationError";
+import ValidationError from "../../../../common/entities/ts/validationError";
 
 export default class Utils{
   public static validateAddCompanySiteInput(state:CompanySiteState,i18nGateway: I18nGateway,): boolean {

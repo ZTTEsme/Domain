@@ -1,10 +1,10 @@
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
-import FormErrors from "../entities/formError";
+import FormErrors from "../../../../common/entities/ts/formError";
 import SelfCompany from "../entities/SelfCompany";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
 
-
 export default class CompanyModel {
+
 
   public username:string="";
   public password:string="";

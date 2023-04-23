@@ -160,7 +160,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                           <pagination
                             :totalSize="model.pageResultForCompanySite.total"
                             :pageSize="model.pageInfo.pageSize"
-                            :currentPage="model.pageInfo.pageNo"
+                            v-model="model.pageInfo.pageNo"
                             @change="(pageNo)=>interactor.changePage(pageNo)"
                           ></pagination>
                         </div>

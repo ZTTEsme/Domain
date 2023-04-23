@@ -1,7 +1,7 @@
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
-import FormErrors from "../../../../company/core/ts/entities/formError";
+import FormErrors from "../../../../common/entities/ts/formError";
 import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/companySite";
-import ValidationError from "../../../../company/core/ts/entities/validationError";
+import ValidationError from "../../../../common/entities/ts/validationError";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
 

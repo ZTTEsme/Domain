@@ -3,8 +3,8 @@ import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil"
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CompanyModel from "../models/companyModel";
 import CompanyState from "../interactors/companyState";
-import FormErrors from "../entities/formError";
-import ValidationError from "../entities/validationError";
+import FormErrors from "../../../../common/entities/ts/formError";
+import ValidationError from "../../../../common/entities/ts/validationError";
 import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import SelfCompany from "../entities/SelfCompany";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
