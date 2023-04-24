@@ -78,7 +78,6 @@ export default class CompanySiteModelAssembler {
     model.dialog.showAddCompanySiteFailureMessage = state.showAddCompanySiteFailureMessage;
     model.dialog.showAddCompanySiteSuccessMessage = state.showAddCompanySiteSuccessMessage;
     model.dialog.openAddCompanySiteDialog = state.openAddCompanySiteDialog;
-    model.validAddCompanySiteErrors = state.validAddCompanySiteErrors;
     this.addFeedbackToAddForm(state,model,i18nGateway);
 
   }
@@ -92,7 +91,6 @@ export default class CompanySiteModelAssembler {
     model.dialog.showModifyCompanySiteSuccessMessage = state.showModifyCompanySiteSuccessMessage;
     model.modifyCompanySiteFormData = state.modifyCompanySiteFormData;
     model.dialog.openModifyCompanySiteDialog = state.openModifyCompanySiteDialog;
-    model.validModifyCompanySiteErrors = state.validModifyCompanySiteErrors;
     this.addFeedbackToModifyForm(state,model,i18nGateway);
   }
 
@@ -114,7 +112,7 @@ export default class CompanySiteModelAssembler {
     model: CompanySiteModel,
     i18nGateway: I18nGateway
   ): void {
-    model.validAddCompanySiteErrors = state.validationErrors.reduce((formErrors: FormErrors, error: ValidationError): FormErrors => {
+    model.validAddCompanySiteErrors = state.validAddCompanySiteErrors.reduce((formErrors: FormErrors, error: ValidationError): FormErrors => {
       formErrors[error.field] = error.message;
       return formErrors;
     }, {});
@@ -125,7 +123,7 @@ export default class CompanySiteModelAssembler {
     model: CompanySiteModel,
     i18nGateway: I18nGateway
   ): void {
-    model.validModifyCompanySiteErrors = state.validationErrors.reduce((formErrors: FormErrors, error: ValidationError): FormErrors => {
+    model.validModifyCompanySiteErrors = state.validModifyCompanySiteErrors.reduce((formErrors: FormErrors, error: ValidationError): FormErrors => {
       formErrors[error.field] = error.message;
       return formErrors;
     }, {});

@@ -249,11 +249,9 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                   </div>
                   <template #footer>
                     <button type="button" class="btn btn-primary" @click='()=>interactor.saveCompany(
-                                        model.formData.type,
-                                        model.formData.agentCompanyId,
-                                        model.formData.alias,
-                                        model.formData.customerId,
-                                        "ADD_COMPANY")'>{{model.dialog.submit}}
+                                        model,
+                                        "ADD_COMPANY"
+                                        )'>{{model.dialog.submit}}
                     </button>
                   </template>
                 </modal>
@@ -347,10 +345,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                     <button
                       class="btn btn-primary"
                       @click='() => interactor.saveCompany(
-                         model.formData.type,
-                         model.formData.agentCompanyId,
-                         model.formData.alias,
-                         model.formData.customerId,
+                          model,
                          "MODIFY_COMPANY"
                          )'
                     >{{ model.dialog.submit }}

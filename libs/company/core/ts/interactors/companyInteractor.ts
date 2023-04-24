@@ -8,8 +8,8 @@ import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import CompanyModel from "../models/companyModel";
 import CompanyState from "./companyState";
 import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
-import Utils from "./utils"
 import OperateType from "../enums/operateType";
+import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
 export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   private readonly i18nGateway: I18nGateway;
@@ -26,8 +26,6 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.i18nGateway = i18nGateway;
     this.gateWay = gateWay;
   }
-
-
 
   async onLoad(): Promise<void> {
     await this.getCompanies();
@@ -93,19 +91,6 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     }
   }
 
-  // getCompany(companyId: number) {
-  //   try{
-  //     this.gateWay.getCompany(companyId).then((ele)=>{
-  //
-  //     });
-  //   }
-  //   catch(error){
-  //     console.log(error);
-  //
-  //   }
-  // }
-
-
   showSearch(model:CompanyModel){
     this.state.showSearch = !model.showSearch;
     this.updateView();
@@ -136,22 +121,50 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     model.formData.customerId = "";
   }
 
+  public rules = {
+    alias: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: 'Alias is required',
+      },
+    ],
+    type: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: 'Type is required',
+      },
+    ],
+    agentCompanyId: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: 'AgentCompanyId is required',
+      },
+    ],
+    customerId: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: 'CustomerId is required',
+      },
+    ],
+  };
+
   public async saveCompany(
-    type: string,
-    agentCompanyId: string,
-    alias: string,
-    customerId: string,
+    model:CompanyModel,
     operateType:string
   ): Promise<void> {
-    this.state.companyAddState.type = type;
-    this.state.companyAddState.agentCompanyId = agentCompanyId;
-    this.state.companyAddState.alias = alias;
-    this.state.companyAddState.customerId = customerId;
 
-    if (Utils.validateInput(this.state,this.i18nGateway)) {
+    this.state.companyAddState.type = model.formData.type;
+    this.state.companyAddState.agentCompanyId = model.formData.agentCompanyId;
+    this.state.companyAddState.alias = model.formData.alias;
+    this.state.companyAddState.customerId = model.formData.customerId;
+
+    this.state.validationErrors = CommonUtils.validateForm(model.formData, this.rules);
+
+    if (this.state.validationErrors.length === 0) {
       try {
         // todo
         await this.gateWay.saveCompany(new Company({type:CompanyType.CUSTOMER,alias:this.state.alias,agentCompanyId:this.state.agentCompanyId,customerId:this.state.customerId}));
+
         // add company
         if(operateType === OperateType.ADD_COMPANY) {
           this.state.showAddCompanyFailureMessage = false;
@@ -237,7 +250,4 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   private updateViewWithOutValidationFeedBack() {
     this.presenter?.updateView(CompanyModelAssembler.fromStateWithOutValidationFeedBack(this.state,this.router,this.i18nGateway));
   }
-
-
-
 }

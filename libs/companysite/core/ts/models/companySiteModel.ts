@@ -16,11 +16,16 @@ export default class CompanySiteModel {
   public breadcrumb: Breadcrumb[] = [];
 
   // add companySite
-  public addCompanySiteFormData:CompanySite = new CompanySite();
+  public addCompanySiteFormData={
+    alias:""
+  };
   public validAddCompanySiteErrors: FormErrors = {};
 
   // modify companySite
-  public modifyCompanySiteFormData:CompanySite = new CompanySite();
+  public modifyCompanySiteFormData={
+    alias:"",
+    companyId:""
+  };
   public validModifyCompanySiteErrors: FormErrors = {};
 
   public isLoading: boolean = false;

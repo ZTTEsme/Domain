@@ -217,7 +217,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
           </div>
           <template #footer>
             <button type="button" class="btn btn-primary" @click='()=>interactor.addCompanySite(
-                                        model.addCompanySiteFormData.alias
+                                        model
                                         )'>{{ model.dialog.submit }}
             </button>
           </template>
@@ -304,10 +304,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
           <template #footer>
             <button
               class="btn btn-primary"
-              @click='() => interactor.modifyCompanySite(
-                         model.modifyCompanySiteFormData.alias,
-                         model.modifyCompanySiteFormData.companyId
-                         )'
+              @click='() => interactor.modifyCompanySite(model)'
             >{{ model.dialog.submit }}
             </button>
           </template>

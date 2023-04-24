@@ -81,12 +81,13 @@ export default class CompanyModel {
     msgModifyCompanyWithFailure:""
   }
 
-  public formData:any = {
+  public formData = {
     alias:"",
     type:"",
     agentCompanyId:"",
     customerId:""
   }
+
 
   public companyTableColName:any={
     alias:"",

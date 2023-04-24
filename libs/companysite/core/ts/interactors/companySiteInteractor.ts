@@ -9,6 +9,8 @@ import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/company
 import CompanySiteModel from "../models/companySiteModel";
 import Utils from "../../../../companysite/core/ts/interactors/utils";
 import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restCompanyGateway";
+import CommonUtils from "../../../../common/utils/ts/commonUtils";
+import ValidationError from "../../../../common/entities/ts/validationError";
 
 export default class CompanySiteInteractor extends ViewInteractor<CompanySitePresenter> {
   private i18nGateway: I18nGateway;
@@ -76,14 +78,20 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
 
   // modify companySite dialog
   public openModifyDialog(alias:string,companyId:number):void{
-    this.state.modifyCompanySiteFormData = new CompanySite({alias:alias,companyId:companyId});
+    this.state.modifyCompanySiteFormData = {
+      alias:alias,
+      companyId: companyId.toString()
+    };
     this.state.openModifyCompanySiteDialog = true;
     this.updateView();
   }
 
   public closeModifyDialog():void {
-    this.state.validationErrors = [];
-    this.state.modifyCompanySiteFormData = new CompanySite();
+    this.state.validModifyCompanySiteErrors = [];
+    this.state.modifyCompanySiteFormData = {
+      alias:"",
+      companyId: ""
+    };
     this.state.openModifyCompanySiteDialog = false;
     this.state.showModifyCompanySiteSuccessMessage = false;
     this.state.showModifyCompanySiteFailureMessage = false;
@@ -120,15 +128,26 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     }
   }
 
+  public rulesForAddCompanySite = {
+    alias: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: 'Alias is required',
+      },
+    ]
+  };
+
   public async addCompanySite(
-    alias: string
+    model:CompanySiteModel
   ): Promise<void> {
 
-    this.state.addCompanySiteFormData = new CompanySite({alias:alias})
+    this.state.addCompanySiteFormData = model.addCompanySiteFormData;
 
-    if (Utils.validateAddCompanySiteInput(this.state,this.i18nGateway)) {
+    this.state.validAddCompanySiteErrors = CommonUtils.validateForm(model.addCompanySiteFormData,this.rulesForAddCompanySite)
+
+    if (this.state.validAddCompanySiteErrors.length === 0) {
       try {
-        await this.gateWay.saveCompanySite(new CompanySite({alias:this.state.addCompanySiteFormData.alias,companyId:this.state.addCompanySiteFormData.companyId}));
+        await this.gateWay.saveCompanySite(new CompanySite({alias:this.state.addCompanySiteFormData.alias}));
         this.state.showAddCompanySiteFailureMessage = false;
         this.state.showAddCompanySiteSuccessMessage = true;
 
@@ -142,17 +161,32 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     this.updateView();
   }
 
+  public rulesForModifyCompanySite = {
+    alias: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: 'Alias is required',
+      },
+    ],
+    companyId: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: 'companyId is required',
+      },
+    ]
+  };
   public async modifyCompanySite(
-    alias: string,
-    companyId: number
+    model:CompanySiteModel
   ): Promise<void> {
-    this.state.modifyCompanySiteFormData.alias = alias;
-    this.state.modifyCompanySiteFormData.companyId = companyId;
+    this.state.modifyCompanySiteFormData = model.modifyCompanySiteFormData;
+    this.state.modifyCompanySiteFormData = model.modifyCompanySiteFormData;
 
-    if (Utils.validateModifyCompanySiteInput(this.state,this.i18nGateway)) {
+    this.state.validModifyCompanySiteErrors = CommonUtils.validateForm(this.state.modifyCompanySiteFormData,this.rulesForModifyCompanySite);
+
+    if (this.state.validModifyCompanySiteErrors.length === 0) {
       try {
 
-        await this.gateWay.saveCompanySite(new CompanySite({alias:this.state.modifyCompanySiteFormData.alias,companyId:this.state.modifyCompanySiteFormData.companyId}));
+        await this.gateWay.saveCompanySite(new CompanySite({alias:this.state.modifyCompanySiteFormData.alias,companyId:parseInt(this.state.modifyCompanySiteFormData.companyId)}));
         this.state.showModifyCompanySiteFailureMessage = false;
         this.state.showModifyCompanySiteSuccessMessage = true;
 

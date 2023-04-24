@@ -11,8 +11,6 @@ export default class CompanySiteState{
 
   public breadcrumb: Breadcrumb[] = [];
 
-  public formErrors: FormErrors = {};
-
   public companySite:CompanySite[] = [];
 
   public company:Company[] = [];
@@ -25,8 +23,6 @@ export default class CompanySiteState{
 
   public openAddCompanySiteDialog: boolean = false;
 
-  public validationErrors:ValidationError[]=[];
-
   //search
   public searchCompanySiteWasSuccess:boolean = false;
   public searchCompanySiteWasFailed:boolean = false;
@@ -34,8 +30,10 @@ export default class CompanySiteState{
   // add companySite
   public showAddCompanySiteSuccessMessage: boolean = false;
   public showAddCompanySiteFailureMessage: boolean = false;
-  public validAddCompanySiteErrors: FormErrors={};
-  public addCompanySiteFormData:CompanySite = new CompanySite();
+  public validAddCompanySiteErrors: ValidationError[]=[];
+  public addCompanySiteFormData={
+    alias:""
+  };
 
   // modify companySite
   public openModifyCompanySiteDialog: boolean = false;
@@ -43,8 +41,11 @@ export default class CompanySiteState{
   public companySiteModifyCompanyId:number = 0;
   public showModifyCompanySiteFailureMessage=false;
   public showModifyCompanySiteSuccessMessage=false;
-  public validModifyCompanySiteErrors: FormErrors={};
-  public modifyCompanySiteFormData:CompanySite = new CompanySite();
+  public validModifyCompanySiteErrors: ValidationError[]=[];
+  public modifyCompanySiteFormData={
+    alias:"",
+    companyId:""
+  };
 
   // delete companySite
   public openDeleteDialog: boolean = false;
