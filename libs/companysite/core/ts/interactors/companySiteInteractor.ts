@@ -7,10 +7,10 @@ import CompanySiteModelAssembler from "../assemblers/companySiteModelAssembler";
 import CompanySiteState from "./companySiteState";
 import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/companySite";
 import CompanySiteModel from "../models/companySiteModel";
-import Utils from "../../../../companysite/core/ts/interactors/utils";
 import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restCompanyGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 import ValidationError from "../../../../common/entities/ts/validationError";
+import FormErrors from "../../../../common/entities/ts/formError";
 
 export default class CompanySiteInteractor extends ViewInteractor<CompanySitePresenter> {
   private i18nGateway: I18nGateway;
@@ -68,7 +68,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
 
   public closeAddCompanySiteDialog():void{
     this.state.addCompanySiteFormData = new CompanySite();
-    this.state.validationErrors = [];
+    this.state.validAddCompanySiteFormErrors = {};
     this.state.resetCompanySiteAddInputState();
     this.state.openAddCompanySiteDialog = false;
     this.state.showAddCompanySiteSuccessMessage = false;
@@ -87,7 +87,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   }
 
   public closeModifyDialog():void {
-    this.state.validModifyCompanySiteErrors = [];
+    this.state.validModifyCompanySiteFormErrors = {};
     this.state.modifyCompanySiteFormData = {
       alias:"",
       companyId: ""
@@ -143,9 +143,9 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
 
     this.state.addCompanySiteFormData = model.addCompanySiteFormData;
 
-    this.state.validAddCompanySiteErrors = CommonUtils.validateForm(model.addCompanySiteFormData,this.rulesForAddCompanySite)
+    this.state.validAddCompanySiteFormErrors = CommonUtils.validateForm(model.addCompanySiteFormData,this.rulesForAddCompanySite,this.state.validAddCompanySiteErrors,this.state.validAddCompanySiteFormErrors)
 
-    if (this.state.validAddCompanySiteErrors.length === 0) {
+    if (CommonUtils.isObjectEmpty(this.state.validAddCompanySiteFormErrors)) {
       try {
         await this.gateWay.saveCompanySite(new CompanySite({alias:this.state.addCompanySiteFormData.alias}));
         this.state.showAddCompanySiteFailureMessage = false;
@@ -174,16 +174,18 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
         message: 'companyId is required',
       },
     ]
-  };
+  }
+
+
   public async modifyCompanySite(
     model:CompanySiteModel
   ): Promise<void> {
     this.state.modifyCompanySiteFormData = model.modifyCompanySiteFormData;
     this.state.modifyCompanySiteFormData = model.modifyCompanySiteFormData;
 
-    this.state.validModifyCompanySiteErrors = CommonUtils.validateForm(this.state.modifyCompanySiteFormData,this.rulesForModifyCompanySite);
+    this.state.validModifyCompanySiteFormErrors = CommonUtils.validateForm(this.state.modifyCompanySiteFormData,this.rulesForModifyCompanySite,this.state.validModifyCompanySiteErrors,this.state.validModifyCompanySiteFormErrors);
 
-    if (this.state.validModifyCompanySiteErrors.length === 0) {
+    if (CommonUtils.isObjectEmpty(this.state.validModifyCompanySiteFormErrors)) {
       try {
 
         await this.gateWay.saveCompanySite(new CompanySite({alias:this.state.modifyCompanySiteFormData.alias,companyId:parseInt(this.state.modifyCompanySiteFormData.companyId)}));

@@ -10,6 +10,8 @@ import CompanyState from "./companyState";
 import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import OperateType from "../enums/operateType";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
+import FormErrors from "../../../../common/entities/ts/formError";
+import ValidationError from "../../../../common/entities/ts/validationError";
 
 export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   private readonly i18nGateway: I18nGateway;
@@ -158,9 +160,9 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.state.companyAddState.alias = model.formData.alias;
     this.state.companyAddState.customerId = model.formData.customerId;
 
-    this.state.validationErrors = CommonUtils.validateForm(model.formData, this.rules);
+    this.state.formErrors = CommonUtils.validateForm(model.formData, this.rules,this.state.validationErrors,this.state.formErrors);
 
-    if (this.state.validationErrors.length === 0) {
+    if (CommonUtils.isObjectEmpty(this.state.formErrors)) {
       try {
         // todo
         await this.gateWay.saveCompany(new Company({type:CompanyType.CUSTOMER,alias:this.state.alias,agentCompanyId:this.state.agentCompanyId,customerId:this.state.customerId}));

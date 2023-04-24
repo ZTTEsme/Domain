@@ -207,10 +207,10 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
             <form class="row g-3">
               <div class="col-md-12 position-relative">
                 <label for="agentCompanyId" class="form-label">Alias</label>
-                <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddCompanySiteErrors.alias}"
+                <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddCompanySiteFormErrors.alias}"
                        id="alias" v-model="model.addCompanySiteFormData.alias">
-                <div class="invalid-feedback" v-show="!!model.validAddCompanySiteErrors.alias">
-                  {{ model.validAddCompanySiteErrors.alias }}
+                <div class="invalid-feedback" v-show="!!model.validAddCompanySiteFormErrors.alias">
+                  {{ model.validAddCompanySiteFormErrors.alias }}
                 </div>
               </div>
             </form>
@@ -276,7 +276,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
           <form class="row g-3">
             <div class="col-md-12 position-relative">
               <label for="companySiteId" class="form-label">Company Alias Name</label>
-              <select class="form-select" :class="{'is-invalid':!!model.validModifyCompanySiteErrors.companyId}"
+              <select class="form-select" :class="{'is-invalid':!!model.validModifyCompanySiteFormErrors.companyId}"
                       id="companySiteId" v-model="model.modifyCompanySiteFormData.companyId">
                 <option
                   v-for="company in model.company"
@@ -285,18 +285,18 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                   :value="company.agentCompanyId"
                 />
               </select>
-              <div class="invalid-feedback" v-show="!!model.validModifyCompanySiteErrors.companyId">
-                {{ model.validModifyCompanySiteErrors.companyId }}
+              <div class="invalid-feedback" v-show="!!model.validModifyCompanySiteFormErrors.companyId">
+                {{ model.validModifyCompanySiteFormErrors.companyId }}
               </div>
             </div>
 
             <div class="col-md-12 position-relative">
               <label for="alias" class="form-label">Company Site Alias Name</label>
               <input type="text" class="form-control"
-                     :class="{'is-invalid': !!model.validModifyCompanySiteErrors.alias}" id="alias"
+                     :class="{'is-invalid': !!model.validModifyCompanySiteFormErrors.alias}" id="alias"
                      v-model="model.modifyCompanySiteFormData.alias">
-              <div class="invalid-feedback" v-show="!!model.validModifyCompanySiteErrors.alias">
-                {{ model.validModifyCompanySiteErrors.alias }}
+              <div class="invalid-feedback" v-show="!!model.validModifyCompanySiteFormErrors.alias">
+                {{ model.validModifyCompanySiteFormErrors.alias }}
               </div>
             </div>
           </form>
@@ -312,14 +312,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
       </section>
     </div>
     </div>
-    <script>
-    import Vue from "vue";
-    import {Component} from "vue-class-component";
-    import NoDataComponent from "./noDataComponent";
-    export default {
-      components: {NoDataComponent}
-    }
-    </script>`,
+`,
 })
 export default class CompanySiteComponent extends Vue implements CompanySitePresenter {
 

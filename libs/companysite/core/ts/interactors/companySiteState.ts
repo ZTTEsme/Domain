@@ -31,6 +31,7 @@ export default class CompanySiteState{
   public showAddCompanySiteSuccessMessage: boolean = false;
   public showAddCompanySiteFailureMessage: boolean = false;
   public validAddCompanySiteErrors: ValidationError[]=[];
+  public validAddCompanySiteFormErrors: FormErrors={};
   public addCompanySiteFormData={
     alias:""
   };
@@ -42,6 +43,7 @@ export default class CompanySiteState{
   public showModifyCompanySiteFailureMessage=false;
   public showModifyCompanySiteSuccessMessage=false;
   public validModifyCompanySiteErrors: ValidationError[]=[];
+  public validModifyCompanySiteFormErrors: FormErrors={};
   public modifyCompanySiteFormData={
     alias:"",
     companyId:""

@@ -1,3 +1,6 @@
+import FormErrors from "../../entities/ts/formError";
+import ValidationError from "../../entities/ts/validationError";
+
 export default class CommonUtils {
 
   // pagination
@@ -15,23 +18,29 @@ export default class CommonUtils {
   }
 
   // validateForm
-  public static validateForm(formData: Record<string, any>, rules: Record<string, ValidationRule[]>): ValidationResult[] {
-    const errors: ValidationResult[] = [];
-
-    debugger
+  public static validateForm(formData: Record<string, any>, rules: Record<string, ValidationRule[]>,validationErrors:ValidationError[],formErrors:FormErrors): FormErrors {
+    validationErrors = [];
     for (const field in rules) {
       for (const rule of rules[field]) {
         const value = formData[field];
         if (!rule.validator(value)) {
-          errors.push({
+          validationErrors.push({
             message: rule.message,
             field,
           });
         }
       }
     }
+    formErrors = validationErrors.reduce((formErrors: FormErrors, error: ValidationError): FormErrors => {
+      formErrors[error.field] = error.message;
+      return formErrors;
+    }, {});
+    return formErrors;
+  }
 
-    return errors;
+  // 校验json对象是否为空
+  public static isObjectEmpty(obj: object): boolean {
+    return Object.keys(obj).length === 0;
   }
 }
 

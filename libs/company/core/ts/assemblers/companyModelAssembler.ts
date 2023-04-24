@@ -19,7 +19,6 @@ export default class CompanyModelAssembler {
   ): CompanyModel {
     const model: CompanyModel = new CompanyModel();
     this.initPageParams(state,model,router)
-    this.addFeedbackToForm(model,state,i18nGateway);
     return model;
   }
 
@@ -106,17 +105,9 @@ export default class CompanyModelAssembler {
     // pagination by front
     model.pageInfo = state.pageInfo;
     this.addTestTableData(model,model.pageInfo);
-  }
 
-  private static addFeedbackToForm(
-    model: CompanyModel,
-    state: CompanyState,
-    i18nGateway: I18nGateway
-  ): void {
-    model.formErrors = state.validationErrors.reduce((formErrors: FormErrors, error: ValidationError): FormErrors => {
-      formErrors[error.field] = error.message;
-      return formErrors;
-    }, {});
+    // 同步异常
+    model.formErrors = state.formErrors;
   }
 
   private static addTestTableData(model:CompanyModel,pageInfo:PageInfo){

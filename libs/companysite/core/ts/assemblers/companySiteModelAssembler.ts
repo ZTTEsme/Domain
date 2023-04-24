@@ -6,8 +6,6 @@ import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil"
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/companySite";
-import FormErrors from "../../../../common/entities/ts/formError";
-import ValidationError from "../../../../common/entities/ts/validationError";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
 export default class CompanySiteModelAssembler {
@@ -78,7 +76,7 @@ export default class CompanySiteModelAssembler {
     model.dialog.showAddCompanySiteFailureMessage = state.showAddCompanySiteFailureMessage;
     model.dialog.showAddCompanySiteSuccessMessage = state.showAddCompanySiteSuccessMessage;
     model.dialog.openAddCompanySiteDialog = state.openAddCompanySiteDialog;
-    this.addFeedbackToAddForm(state,model,i18nGateway);
+    model.validAddCompanySiteFormErrors = state.validAddCompanySiteFormErrors;
 
   }
 
@@ -91,7 +89,7 @@ export default class CompanySiteModelAssembler {
     model.dialog.showModifyCompanySiteSuccessMessage = state.showModifyCompanySiteSuccessMessage;
     model.modifyCompanySiteFormData = state.modifyCompanySiteFormData;
     model.dialog.openModifyCompanySiteDialog = state.openModifyCompanySiteDialog;
-    this.addFeedbackToModifyForm(state,model,i18nGateway);
+    model.validModifyCompanySiteFormErrors = state.validModifyCompanySiteFormErrors;
   }
 
 
@@ -107,27 +105,6 @@ export default class CompanySiteModelAssembler {
     model.dialog.showDeleteCompanySiteFailureMessage = state.showDeleteCompanySiteFailureMessage;
   }
 
-  private static addFeedbackToAddForm(
-    state: CompanySiteState,
-    model: CompanySiteModel,
-    i18nGateway: I18nGateway
-  ): void {
-    model.validAddCompanySiteErrors = state.validAddCompanySiteErrors.reduce((formErrors: FormErrors, error: ValidationError): FormErrors => {
-      formErrors[error.field] = error.message;
-      return formErrors;
-    }, {});
-  }
-
-  private static addFeedbackToModifyForm(
-    state: CompanySiteState,
-    model: CompanySiteModel,
-    i18nGateway: I18nGateway
-  ): void {
-    model.validModifyCompanySiteErrors = state.validModifyCompanySiteErrors.reduce((formErrors: FormErrors, error: ValidationError): FormErrors => {
-      formErrors[error.field] = error.message;
-      return formErrors;
-    }, {});
-  }
 
   private static addTestTableData(model:CompanySiteModel){
     model.companySite.push(new CompanySite({alias:"test1",companyId:2}));

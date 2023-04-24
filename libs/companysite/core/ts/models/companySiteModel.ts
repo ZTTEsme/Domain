@@ -19,14 +19,14 @@ export default class CompanySiteModel {
   public addCompanySiteFormData={
     alias:""
   };
-  public validAddCompanySiteErrors: FormErrors = {};
+  public validAddCompanySiteFormErrors: FormErrors = {};
 
   // modify companySite
   public modifyCompanySiteFormData={
     alias:"",
     companyId:""
   };
-  public validModifyCompanySiteErrors: FormErrors = {};
+  public validModifyCompanySiteFormErrors: FormErrors = {};
 
   public isLoading: boolean = false;
 
