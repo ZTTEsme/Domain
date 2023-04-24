@@ -28,14 +28,15 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                    <div class="page-content">
                      <!--breadcrumb-->
                      <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-1">
-                       <div class="breadcrumb-title pe-3" style="border-right: 1.5px solid #aaa4a4;">{{model.moduleName}}</div>
-                       <div class="ps-3" style="margin-top: 15px;">
+                       
+                       <div style="margin-top: 15px;">
                          <nav aria-label="breadcrumb">
                            <ol class="breadcrumb mb-0 p-0">
                              <li class="breadcrumb-item">
-                               <i class="fa-solid fa-house"></i>
+                               <img src="./img/home.gif" style="width:40px">
                              </li>
-                             <li style="margin-left:10px">
+<!--                             <li class="ps-1" class="breadcrumb-title">{{model.moduleName}}</li>-->
+                             <li class="ps-1 pt-2">
                                <breadcrumb :items="model.breadcrumb" />
                              </li>
                            </ol>
@@ -56,7 +57,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                  <div class="col-md-4">
                                    <label for="agentCompanyId" class="form-label">{{ model.labelInfo.agentCompanyLabel }}</label>
                                    <select class="form-select" id="agentCompanyId" v-model.number="model.searchForm.companyId">
-                                     <option selected value=-1>Choose All</option>
+                                     <option selected value=null>Choose All</option>
                                      <option
                                        v-for="company in model.allCompanies"
                                        :key="company.id"
@@ -318,7 +319,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                     <div class="col-md-12 position-relative">
                       <label for="type" class="form-label">Agent Company Name</label>
                       <select class="form-select" id="type" v-model.number="model.formData.agentCompanyId" :class="{'is-invalid':!!model.formErrors.agentCompanyId}">
-                        <option label="N/A" value="-1"></option>
+                        <option label="N/A" value=null></option>
                         <option
                           v-for="company in model.allCompanies"
                           :key="company.id"

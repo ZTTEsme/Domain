@@ -41,8 +41,8 @@ export default class CompanyModel {
   }
 
   public searchForm:any = {
-    agentCompanyId:"",
-    companyId:""
+    agentCompanyId:null,
+    companyId:null
   }
 
 

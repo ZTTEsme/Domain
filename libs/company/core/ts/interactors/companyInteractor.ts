@@ -39,26 +39,30 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.updateView();
   }
 
+  async getAllCompanies(){
+    this.state.allCompanies = await this.gateWay.getCompanies();
+  }
+
   async getCompanies(agentId?: number | undefined):Promise<void> {
     try{
       this.state.searchCompaniesWasFailed  = false;
       this.updateView();
-      debugger
-      if(agentId == undefined || agentId ===-1) {
+      if(agentId == undefined) {
         this.state.isLoading = true;
         this.updateView();
         this.state.resCompanies = await this.gateWay.getCompanies();
+        this.state.allCompanies = this.state.resCompanies;
         this.state.searchCompaniesWasFailed  = false;
-        this.state.agentCompanyId = agentId;
-        this.state.companyId = agentId;
+        this.state.searchForm.agentCompanyId = agentId;
+        this.state.searchForm.companyId = agentId;
         this.state.isLoading = false;
         this.updateView();
       }
       else {
         this.state.resCompanies = await this.gateWay.getCompanies(agentId)
         this.state.searchCompaniesWasFailed  = false;
-        this.state.agentCompanyId = agentId;
-        this.state.companyId = agentId;
+        this.state.searchForm.agentCompanyId = agentId;
+        this.state.searchForm.companyId = agentId;
         this.state.isLoading = false;
         this.updateView();
       }
@@ -66,8 +70,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     catch(error){
       this.state.resCompanies = [];
       this.state.searchCompaniesWasFailed  = true;
-      this.state.agentCompanyId = agentId;
-      this.state.companyId = agentId;
+      this.state.searchForm.agentCompanyId = agentId;
+      this.state.searchForm.companyId = agentId;
       this.state.isLoading = false;
       this.updateView();
     }
@@ -103,8 +107,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   }
 
   resetSearchForm(model:CompanyModel){
-    model.searchForm.agentCompanyId=-1;
-    model.searchForm.companyId=-1;
+    model.searchForm.agentCompanyId=null;
+    model.searchForm.companyId=null;
     this.getCompanies(model.searchForm.companyId).then(()=>{});
   }
 
@@ -160,7 +164,6 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.state.companyAddState.alias = model.formData.alias;
     this.state.companyAddState.customerId = model.formData.customerId;
 
-
     this.state.formErrors = CommonUtils.validateForm(model.formData, this.rules,this.state.validationErrors,this.state.formErrors);
 
     if (CommonUtils.isObjectEmpty(this.state.formErrors)) {
@@ -168,7 +171,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
         await this.gateWay.saveCompany(new Company({
           type:CommonUtils.getCustomerEnumValue(this.state.companyAddState.type),
           alias:this.state.companyAddState.alias,
-          agentCompanyId:parseInt(this.state.companyAddState.agentCompanyId),
+          agentCompanyId:this.state.companyAddState.agentCompanyId,
           customerId:this.state.companyAddState.customerId}));
 
         // add company
@@ -235,7 +238,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   }
 
   // modify company dialog
-  public openModifyDialog(agent:number,alias:string,type:string,customerId:string):void{
+  public openModifyDialog(agent:number | null,alias:string,type:string,customerId:string):void{
     this.state.companyAddState.agentCompanyId = agent;
     this.state.companyAddState.alias = alias;
     this.state.companyAddState.type = type;

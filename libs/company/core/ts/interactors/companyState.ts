@@ -17,16 +17,21 @@ export default class CompanyState {
 
   public type:string = "";
 
-  public agentCompanyId: number | undefined = 0;
-  public companyId: number | undefined = 0;
 
   public alias:string = "";
   public customerId:string = "";
+
+
   public validationErrors:ValidationError[]=[];
   public formErrors: FormErrors = {};
 
   public resCompanies:Company[] = []
   public allCompanies:Company[] = []
+
+  public searchForm:any = {
+    agentCompanyId:null,
+    companyId:null
+  }
 
 
   public companyAddState:any = {
@@ -63,7 +68,8 @@ export default class CompanyState {
 
   public resetInputState(): void {
     this.type = "";
-    this.agentCompanyId = 0;
+    this.searchForm.agentCompanyId = null;
+    this.searchForm.companyId = null;
     this.alias = "";
     this.customerId = "";
   }

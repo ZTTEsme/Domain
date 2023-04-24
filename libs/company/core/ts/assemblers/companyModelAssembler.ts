@@ -44,15 +44,11 @@ export default class CompanyModelAssembler {
 
     model.showSearch = state.showSearch;
 
+
     // searchForm
     model.labelInfo.agentCompanyLabel = "Agent Company Alias Name";
-    if(state.agentCompanyId === undefined) {
-      // -1代表全部
-      state.agentCompanyId = -1;
-      state.companyId = -1;
-    }
-    model.searchForm.agentCompanyId = state.agentCompanyId;
-    model.searchForm.companyId = state.companyId;
+    model.searchForm= state.searchForm;
+
 
     // formData(add company && modify company)
     model.formData.type = state.companyAddState.type;
@@ -114,9 +110,6 @@ export default class CompanyModelAssembler {
 
   private static updateCompanies(model:CompanyModel,pageInfo:PageInfo,state:CompanyState){
 
-    if(state.resCompanies.length > state.allCompanies.length) {
-      state.allCompanies = state.resCompanies;
-    }
     model.allCompanies = state.allCompanies;
 
     for (const company of state.resCompanies){
@@ -133,7 +126,6 @@ export default class CompanyModelAssembler {
       let agentCompanyName = map.get(ele.agentCompanyId);
       if(CommonUtils.isNullOrUndefined(agentCompanyName)){
         agentCompanyName = "N/A";
-        ele.agentCompanyId = -1;
       }
       ele.agentCompanyName = agentCompanyName;
     });
