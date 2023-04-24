@@ -10,8 +10,6 @@ import CompanyState from "./companyState";
 import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import OperateType from "../enums/operateType";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
-import FormErrors from "../../../../common/entities/ts/formError";
-import ValidationError from "../../../../common/entities/ts/validationError";
 
 export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   private readonly i18nGateway: I18nGateway;
