@@ -26,7 +26,6 @@ async function build(project) {
     await helpers.postProcessJavascript(
       `${distDir}/index.html`,
       `${distDir}/main.js`,
-      `${distDir}/qnect-frame.js`,
       `${distDir}/vue.js`,
       `${distDir}/bootstrap.js`
     );
