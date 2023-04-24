@@ -118,7 +118,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                              <div class="row row-cols-auto g-3" style="min-height:300px" v-show="model.pageResultForCompany.total>0">
                                <div class="table-responsive d-flex flex-column" style="width:100%;" >
                                  <!--table-->
-                                 <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                 <table id="example" class="table table-striped table-bordered text-center" style="width:100%">
                                    <thead>
                                    <tr>
                                      <th>{{ model.companyTableColName.alias }}</th>
@@ -152,7 +152,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                  <!--pagination-->
                                  <div class="mt-auto">
                                    <div  class="row float-end me-1" >
-                                     <div class="col ps-0" >
+                                     <div class="col ps-0 pe-0" >
                                        <select class="form-select" aria-label="Default select example" v-model="model.pageInfo.pageSize" @click="()=>interactor.changePageSize(model)">
                                          <option v-for="item in model.pageInfo.pageItems" :value=item>{{ item }}</option>
                                        </select>

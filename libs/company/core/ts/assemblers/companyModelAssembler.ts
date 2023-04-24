@@ -114,7 +114,7 @@ export default class CompanyModelAssembler {
 
   private static updateCompanies(model:CompanyModel,pageInfo:PageInfo,state:CompanyState){
 
-    if(state.allCompanies.length === 0) {
+    if(state.resCompanies.length > state.allCompanies.length) {
       state.allCompanies = state.resCompanies;
     }
     model.allCompanies = state.allCompanies;

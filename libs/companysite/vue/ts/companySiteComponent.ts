@@ -150,7 +150,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                     <!--pagination-->
                     <div class="mt-auto">
                       <div class="row float-end"  v-show="model.pageResultForCompanySite.total>0">
-                        <div class="col pe-0" >
+                        <div class="col pe-0 ps-0" >
                           <select class="form-select" aria-label="Default select example"
                                   v-model="model.pageInfo.pageSize" @click="()=>interactor.changePageSize(model)">
                             <option v-for="item in model.pageInfo.pageItems" :value=item>{{ item }}</option>

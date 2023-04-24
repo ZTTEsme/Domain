@@ -85,7 +85,9 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
         await this.gateWay.deleteCompany(companyId);
         this.state.showDeleteCompanyFailureMessage = false;
         this.state.showDeleteCompanySuccessMessage = true;
-        this.updateView();
+        this.getCompanies().then(()=>{
+          this.updateView();
+        })
       }
     }
     catch(error){
@@ -163,7 +165,6 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
 
     if (CommonUtils.isObjectEmpty(this.state.formErrors)) {
       try {
-        debugger
         await this.gateWay.saveCompany(new Company({
           type:CommonUtils.getCustomerEnumValue(this.state.companyAddState.type),
           alias:this.state.companyAddState.alias,
@@ -196,7 +197,9 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
         this.state.isLoading = false;
       }
     }
-    this.updateView();
+    this.getCompanies().then(()=>{
+      this.updateView();
+    })
   }
 
   // delete company dialog
@@ -228,6 +231,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.state.showAddCompanySuccessMessage = false;
     this.state.showAddCompanyFailureMessage = false;
     this.updateViewWithOutValidationFeedBack();
+
   }
 
   // modify company dialog
