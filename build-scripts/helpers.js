@@ -109,12 +109,6 @@ function rollupOutputConfig(dest, project) {
   };
 }
 
-function copyQnectFrame(distDir) {
-  builder.files.copy("node_modules/qnect-web-frame/build/main.js", `${distDir}/qnect-frame.js`);
-  builder.files.copy("node_modules/qnect-web-frame/build/main.css", `${distDir}/qnect-frame.css`);
-  builder.files.copy("node_modules/qnect-web-frame/build/i18n-qnect-frame", `${distDir}/i18n-qnect-frame`);
-}
-
 function copyVue(distDir) {
   builder.files.copy("node_modules/vue/dist/vue.global.js", `${distDir}/vue.js`);
   builder.files.copy("node_modules/bootstrap/dist/js/bootstrap.bundle.js", `${distDir}/bootstrap.js`);
@@ -179,9 +173,6 @@ function copyAssets(srcDirs, distDir) {
   // Images
   fs.mkdirSync(`${distDir}/img`, { recursive: true });
   builder.files.copyFilesByTypeToDirectory(srcDirs, `${distDir}/img`, "jpg", "jpeg", "png", "svg","gif");
-
-  // QNECT Frame
-  copyQnectFrame(distDir);
 
   // JS Vendor
   copyVue(distDir);

@@ -44,17 +44,20 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     try{
       this.state.searchCompaniesWasFailed  = false;
       this.updateView();
+      debugger
       if(agentId == undefined) {
         this.state.isLoading = true;
         this.updateView();
-        await this.gateWay.getCompanies();
+        const res = await this.gateWay.getCompanies();
+        console.log(res);
         this.state.searchCompaniesWasFailed  = false;
         this.state.agentCompanyId = agentId;
         this.state.isLoading = false;
         this.updateView();
       }
       else {
-        await this.gateWay.getCompanies(agentId)
+        const res = await this.gateWay.getCompanies(agentId)
+        console.log(res);
         this.state.searchCompaniesWasFailed  = false;
         this.state.agentCompanyId = agentId;
         this.state.isLoading = false;

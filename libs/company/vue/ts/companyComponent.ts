@@ -125,7 +125,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                      <th>{{ model.companyTableColName.type }}</th>
                                      <th>{{ model.companyTableColName.customerId }}</th>
                                      <th>{{ model.companyTableColName.agentCompanyId }}</th>
-                                     <th style="width:200px;align-content: center">{{ model.companyTableColName.operate }}</th>
+                                     <th style="width:200px">{{ model.companyTableColName.operate }}</th>
                                    </tr>
                                    </thead>
                                    <tbody>
