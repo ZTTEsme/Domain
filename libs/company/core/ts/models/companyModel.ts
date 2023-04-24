@@ -2,6 +2,7 @@ import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
 import FormErrors from "../../../../common/entities/ts/formError";
 import SelfCompany from "../entities/SelfCompany";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
+import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 
 export default class CompanyModel {
 
@@ -23,6 +24,7 @@ export default class CompanyModel {
   public msg: string = "";
 
   public company:SelfCompany[] = [];
+  public allCompanies:Company[] = [];
 
   public formErrors: FormErrors = {};
 
@@ -39,7 +41,8 @@ export default class CompanyModel {
   }
 
   public searchForm:any = {
-    agentCompanyId:""
+    agentCompanyId:"",
+    companyId:""
   }
 
 

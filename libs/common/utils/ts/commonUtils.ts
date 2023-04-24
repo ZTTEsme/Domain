@@ -1,5 +1,6 @@
 import FormErrors from "../../entities/ts/formError";
 import ValidationError from "../../entities/ts/validationError";
+import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 
 export default class CommonUtils {
 
@@ -41,6 +42,15 @@ export default class CommonUtils {
   // 校验json对象是否为空
   public static isObjectEmpty(obj: object): boolean {
     return Object.keys(obj).length === 0;
+  }
+
+  public static  isNullOrUndefined(obj: any): boolean {
+    return obj === null || obj === undefined;
+  }
+
+  // 客户类型 字符串转枚举
+  public static getCustomerEnumValue(enumString: string): CompanyType {
+    return CompanyType[enumString as keyof typeof CompanyType];
   }
 }
 

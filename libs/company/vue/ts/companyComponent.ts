@@ -55,13 +55,13 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                <form class="row g-3">
                                  <div class="col-md-4">
                                    <label for="agentCompanyId" class="form-label">{{ model.labelInfo.agentCompanyLabel }}</label>
-                                   <select class="form-select" id="agentCompanyId" v-model="model.searchForm.agentCompanyId">
+                                   <select class="form-select" id="agentCompanyId" v-model.number="model.searchForm.companyId">
                                      <option selected value=-1>Choose All</option>
                                      <option
-                                       v-for="company in model.company"
-                                       :key="company.agentCompanyId"
+                                       v-for="company in model.allCompanies"
+                                       :key="company.id"
                                        :label="company.alias"
-                                       :value="company.agentCompanyId"
+                                       :value="company.id"
                                      />
                                    </select>
                                  </div>
@@ -70,7 +70,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                              <hr class="m-1"/>
                              <div class="row row-cols-auto g-2" style="float:right;">
                                <div class="col">
-                                 <ButtonComponent img-style="width:30px" img="./img/searching.gif" @click="interactor.getCompanies(model.searchForm.agentCompanyId)"></ButtonComponent>
+                                 <ButtonComponent img-style="width:30px" img="./img/searching.gif" @click="interactor.getCompanies(model.searchForm.companyId)"></ButtonComponent>
                                </div>
                                <div class="col">
                                  <ButtonComponent img-style="width:30px" img="./img/reset.gif" @click="interactor.resetSearchForm(model)"></ButtonComponent>
@@ -140,11 +140,10 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                              ele.alias,
                                              ele.type,
                                              ele.customerId)"></ButtonComponent>
-                                         <ButtonComponent btn-style="margin-left:10px;padding:2px" img="./img/delete.gif" img-style="width:30px" @click="() => interactor.openDeleteDialog(ele.agentCompanyId)"></ButtonComponent>
+                                         <ButtonComponent btn-style="margin-left:10px;padding:2px" img="./img/delete.gif" img-style="width:30px" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
                                          
-                                         <a class="btn btn-light" :href="interactor.getHref('CompanySite')" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;margin-left:10px">
-                                           <i class="fa-regular fa-paper-plane fa-bounce"></i>
-                                         </a>
+                                         <ButtonComponent btn-style="width:36px;height:36px;margin-left:10px" icon="fa-regular fa-paper-plane fa-bounce" @click="()=>interactor.goCompanySite(ele.id)">
+                                         </ButtonComponent>
                                        </td>
                                    </tr>
                                    </tbody>
@@ -223,12 +222,13 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                       
                       <div class="col-md-12 position-relative">
                         <label for="type" class="form-label">Agent Company Name</label>
-                        <select class="form-select" id="type" v-model="model.formData.agentCompanyId" :class="{'is-invalid':!!model.formErrors.agentCompanyId}">
+                        <select class="form-select" id="type" v-model.number="model.formData.agentCompanyId" :class="{'is-invalid':!!model.formErrors.agentCompanyId}">
+                          <option label="N/A" value=""></option>
                           <option
-                            v-for="company in model.company"
-                            :key="company.agentCompanyId"
-                            :label="company.agentCompanyName"
-                            :value="company.agentCompanyId"
+                            v-for="company in model.allCompanies"
+                            :key="company.id"
+                            :label="company.alias"
+                            :value="company.id"
                           />
                         </select>
                         <div class="invalid-feedback" v-show="!!model.formErrors.agentCompanyId">{{ model.formErrors.agentCompanyId }}</div>
@@ -317,12 +317,13 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
 
                     <div class="col-md-12 position-relative">
                       <label for="type" class="form-label">Agent Company Name</label>
-                      <select class="form-select" id="type" v-model="model.formData.agentCompanyId" :class="{'is-invalid':!!model.formErrors.agentCompanyId}">
+                      <select class="form-select" id="type" v-model.number="model.formData.agentCompanyId" :class="{'is-invalid':!!model.formErrors.agentCompanyId}">
+                        <option label="N/A" value="-1"></option>
                         <option
-                          v-for="company in model.company"
-                          :key="company.agentCompanyId"
-                          :label="company.agentCompanyName"
-                          :value="company.agentCompanyId"
+                          v-for="company in model.allCompanies"
+                          :key="company.id"
+                          :label="company.alias"
+                          :value="company.id"
                         />
                       </select>
                       <div class="invalid-feedback" v-show="!!model.formErrors.agentCompanyId">{{ model.formErrors.agentCompanyId }}</div>

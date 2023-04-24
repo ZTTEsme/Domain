@@ -32,8 +32,10 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   }
 
   async onLoad(): Promise<void> {
-    debugger
-    await this.getCompanySites(1);
+    const companyId: string | undefined= this.router.getPathParams().get("id");
+    if (companyId != null) {
+      await this.getCompanySites(parseInt(companyId));
+    }
     return Promise.resolve(undefined);
   }
 

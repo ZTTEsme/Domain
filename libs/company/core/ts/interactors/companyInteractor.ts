@@ -7,7 +7,6 @@ import CompanyModelAssembler from "../assemblers/companyModelAssembler";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import CompanyModel from "../models/companyModel";
 import CompanyState from "./companyState";
-import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import OperateType from "../enums/operateType";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
@@ -45,28 +44,30 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
       this.state.searchCompaniesWasFailed  = false;
       this.updateView();
       debugger
-      if(agentId == undefined) {
+      if(agentId == undefined || agentId ===-1) {
         this.state.isLoading = true;
         this.updateView();
-        const res = await this.gateWay.getCompanies();
-        console.log(res);
+        this.state.resCompanies = await this.gateWay.getCompanies();
         this.state.searchCompaniesWasFailed  = false;
         this.state.agentCompanyId = agentId;
+        this.state.companyId = agentId;
         this.state.isLoading = false;
         this.updateView();
       }
       else {
-        const res = await this.gateWay.getCompanies(agentId)
-        console.log(res);
+        this.state.resCompanies = await this.gateWay.getCompanies(agentId)
         this.state.searchCompaniesWasFailed  = false;
         this.state.agentCompanyId = agentId;
+        this.state.companyId = agentId;
         this.state.isLoading = false;
         this.updateView();
       }
     }
     catch(error){
+      this.state.resCompanies = [];
       this.state.searchCompaniesWasFailed  = true;
       this.state.agentCompanyId = agentId;
+      this.state.companyId = agentId;
       this.state.isLoading = false;
       this.updateView();
     }
@@ -101,6 +102,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
 
   resetSearchForm(model:CompanyModel){
     model.searchForm.agentCompanyId=-1;
+    model.searchForm.companyId=-1;
+    this.getCompanies(model.searchForm.companyId).then(()=>{});
   }
 
   public changePage(pageNo:number,model?:CompanyModel){
@@ -137,12 +140,6 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
         message: 'Type is required',
       },
     ],
-    agentCompanyId: [
-      {
-        validator: (value: any) => value.length > 0,
-        message: 'AgentCompanyId is required',
-      },
-    ],
     customerId: [
       {
         validator: (value: any) => value.length > 0,
@@ -161,12 +158,17 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.state.companyAddState.alias = model.formData.alias;
     this.state.companyAddState.customerId = model.formData.customerId;
 
+
     this.state.formErrors = CommonUtils.validateForm(model.formData, this.rules,this.state.validationErrors,this.state.formErrors);
 
     if (CommonUtils.isObjectEmpty(this.state.formErrors)) {
       try {
-        // todo
-        await this.gateWay.saveCompany(new Company({type:CompanyType.CUSTOMER,alias:this.state.alias,agentCompanyId:this.state.agentCompanyId,customerId:this.state.customerId}));
+        debugger
+        await this.gateWay.saveCompany(new Company({
+          type:CommonUtils.getCustomerEnumValue(this.state.companyAddState.type),
+          alias:this.state.companyAddState.alias,
+          agentCompanyId:parseInt(this.state.companyAddState.agentCompanyId),
+          customerId:this.state.companyAddState.customerId}));
 
         // add company
         if(operateType === OperateType.ADD_COMPANY) {
@@ -230,7 +232,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
 
   // modify company dialog
   public openModifyDialog(agent:number,alias:string,type:string,customerId:string):void{
-    this.state.companyAddState.agentCompanyId = agent.toString();
+    this.state.companyAddState.agentCompanyId = agent;
     this.state.companyAddState.alias = alias;
     this.state.companyAddState.type = type;
     this.state.companyAddState.customerId = customerId;
@@ -252,5 +254,9 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
 
   private updateViewWithOutValidationFeedBack() {
     this.presenter?.updateView(CompanyModelAssembler.fromStateWithOutValidationFeedBack(this.state,this.router,this.i18nGateway));
+  }
+
+  public goCompanySite(id:number){
+    this.router.loadRoute(this.router.getRouteByName("CompanySite"), new Map([['id', id.toString()]])).then();
   }
 }

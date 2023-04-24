@@ -1,6 +1,7 @@
 import ValidationError from "../../../../common/entities/ts/validationError";
 import FormErrors from "../../../../common/entities/ts/formError";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
+import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 
 export default class CompanyState {
 
@@ -15,11 +16,17 @@ export default class CompanyState {
   public showSearch: boolean = true;
 
   public type:string = "";
+
   public agentCompanyId: number | undefined = 0;
+  public companyId: number | undefined = 0;
+
   public alias:string = "";
   public customerId:string = "";
   public validationErrors:ValidationError[]=[];
   public formErrors: FormErrors = {};
+
+  public resCompanies:Company[] = []
+  public allCompanies:Company[] = []
 
 
   public companyAddState:any = {
