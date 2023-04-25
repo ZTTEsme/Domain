@@ -52,6 +52,25 @@ export default class CommonUtils {
   public static getCustomerEnumValue(enumString: string): CompanyType {
     return CompanyType[enumString as keyof typeof CompanyType];
   }
+
+  public static deepCopy<T>(obj: T): T {
+    if (typeof obj !== 'object' || obj === null) {
+      return obj;
+    }
+
+    if (Array.isArray(obj)) {
+      return obj.map(this.deepCopy) as unknown as T;
+    }
+
+    const copiedObj = {} as T;
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        copiedObj[key] = this.deepCopy(obj[key]);
+      }
+    }
+
+    return copiedObj;
+  }
 }
 
 

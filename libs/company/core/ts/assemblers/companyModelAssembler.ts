@@ -3,9 +3,6 @@ import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil"
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CompanyModel from "../models/companyModel";
 import CompanyState from "../interactors/companyState";
-import FormErrors from "../../../../common/entities/ts/formError";
-import ValidationError from "../../../../common/entities/ts/validationError";
-import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import SelfCompany from "../entities/SelfCompany";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
@@ -47,8 +44,9 @@ export default class CompanyModelAssembler {
 
     // searchForm
     model.labelInfo.agentCompanyLabel = "Agent Company Alias Name";
-    model.searchForm= state.searchForm;
-
+    if(!CommonUtils.isNullOrUndefined(state.searchForm.companyId)){
+      model.searchForm = CommonUtils.deepCopy(state.searchForm);
+    }
 
     // formData(add company && modify company)
     model.formData.type = state.companyAddState.type;
@@ -110,6 +108,7 @@ export default class CompanyModelAssembler {
 
   private static updateCompanies(model:CompanyModel,pageInfo:PageInfo,state:CompanyState){
 
+    // allCompanies 表示 全量公司， resCompanies 表示 跟具体搜索条件关联的公司
     model.allCompanies = state.allCompanies;
 
     for (const company of state.resCompanies){

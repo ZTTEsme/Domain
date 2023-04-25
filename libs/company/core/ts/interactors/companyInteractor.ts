@@ -39,7 +39,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.updateView();
   }
 
-  async getAllCompanies(){
+  async getAllCompaniesForSelect(){
     this.state.allCompanies = await this.gateWay.getCompanies();
   }
 
@@ -85,11 +85,11 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
         this.updateView();
       }
       else {
-        debugger
         await this.gateWay.deleteCompany(companyId);
         this.state.showDeleteCompanyFailureMessage = false;
         this.state.showDeleteCompanySuccessMessage = true;
-        this.getCompanies().then(()=>{
+        this.getCompanies(this.state.searchForm.companyId).then(()=>{
+          this.getAllCompaniesForSelect();
           this.updateView();
         })
       }
@@ -126,12 +126,6 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     }
   }
 
-  resetFormData(model:CompanyModel) {
-    model.formData.alias="";
-    model.formData.type="";
-    model.formData.agentCompanyId = "";
-    model.formData.customerId = "";
-  }
 
   public rules = {
     alias: [
@@ -200,7 +194,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
         this.state.isLoading = false;
       }
     }
-    this.getCompanies().then(()=>{
+    this.getCompanies(this.state.searchForm.companyId).then(()=>{
+      this.getAllCompaniesForSelect();
       this.updateView();
     })
   }
