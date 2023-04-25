@@ -74,7 +74,7 @@ function rollupWatchConfig(src, dest, port) {
 function rollupInputConfig(src) {
   return {
     input: src,
-    external: ["vue"],
+    external: ["vue", "bootstrap"],
     onwarn: (warning, warn) => {
       if (warning.code === "CIRCULAR_DEPENDENCY") return;
       if (warning.code === "THIS_IS_UNDEFINED") return;
@@ -105,12 +105,16 @@ function rollupOutputConfig(dest, project) {
     name: project,
     globals: {
       vue: "Vue",
+      bootstrap: "bootstrap",
     },
   };
 }
 
 function copyVue(distDir) {
   builder.files.copy("node_modules/vue/dist/vue.global.js", `${distDir}/vue.js`);
+}
+
+function copyBootstrap(distDir) {
   builder.files.copy("node_modules/bootstrap/dist/js/bootstrap.bundle.js", `${distDir}/bootstrap.js`);
 }
 
@@ -172,10 +176,11 @@ function copyFonts(distDir) {
 function copyAssets(srcDirs, distDir) {
   // Images
   fs.mkdirSync(`${distDir}/img`, { recursive: true });
-  builder.files.copyFilesByTypeToDirectory(srcDirs, `${distDir}/img`, "jpg", "jpeg", "png", "svg","gif");
+  builder.files.copyFilesByTypeToDirectory(srcDirs, `${distDir}/img`, "jpg", "jpeg", "png", "svg", "gif");
 
   // JS Vendor
   copyVue(distDir);
+  copyBootstrap(distDir);
 
   // Fonts
   copyFonts(distDir);
@@ -195,7 +200,7 @@ function postProcessHtmlInjects(htmlFile, environment, i18nHash) {
   replaceInFile(
     htmlFile,
     "<!--BUILD_BODY_INJECT-->",
-    `<script>window.process.env.NODE_ENV="${environment}";window.i18nFolderHash="${i18nHash}";</script>${frameJsReplacement}`
+    `<script>window.process.env.NODE_ENV="${environment}";window.i18nFolderHash="${i18nHash}";window.frameI18nPrefix="${""}";</script>${frameJsReplacement}`
   );
   replaceInFile(htmlFile, "<!--BUILD_HEADER_INJECT-->", frameCssReplacement);
 }

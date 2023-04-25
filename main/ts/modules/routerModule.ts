@@ -8,6 +8,7 @@ import AlertComponent from "qnect-sdk-web/lib/common/vue/ts/alertComponent";
 import CarouselComponent from "qnect-sdk-web/lib/common/vue/ts/carouselComponent";
 import CarouselItemComponent from "qnect-sdk-web/lib/common/vue/ts/carouselItemComponent";
 import ModalComponent from "qnect-sdk-web/lib/common/vue/ts/modalComponent";
+import OffcanvasComponent from "qnect-sdk-web/lib/common/vue/ts/offcanvasComponent";
 import PaginationComponent from "qnect-sdk-web/lib/common/vue/ts/paginationComponent";
 import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
 import Module from "qnect-sdk-web/lib/modules/core/ts/module";
@@ -40,6 +41,7 @@ export default class RouterModule implements Module {
           ["modal", ModalComponent],
           ["pagination", PaginationComponent],
           ["toast", ToastComponent],
+          ["offcanvas", OffcanvasComponent],
         ],
       })
     );
