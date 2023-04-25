@@ -50,10 +50,10 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
               <!--search-->
               <div class="col col-lg-12 mx-auto" v-show="model.showSearch">
                 <div class="card">
-                  <div class="card-body pt-1 pb-1">
+                  <div class="card-body">
                     <div class="card-title">
                       <form class="row g-3">
-                        <div class="col-md-4 ">
+                        <div class="col-md-3 ">
                           <label for="companyId" class="form-label">{{ model.labelInfo.companyId }}</label>
                           <select class="form-select" id="companyId" v-model="model.searchForm.companyId">
                             <option
@@ -66,7 +66,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                         </div>
                       </form>
                     </div>
-                    <hr class="m-1"/>
+                    <hr/>
                     <div class="row row-cols-auto g-2" style="float:right;">
                       <div class="col">
                         <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" @click="interactor.getCompanySites(model.searchForm.companyId)"></ButtonComponent>

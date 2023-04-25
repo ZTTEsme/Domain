@@ -51,10 +51,10 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                        <!--search-->
                        <div class="col col-lg-12 mx-auto" v-show="model.showSearch">
                          <div class="card">
-                           <div class="card-body pt-1 pb-1">
+                           <div class="card-body">
                              <div class="card-title">
                                <form class="row g-3">
-                                 <div class="col-md-4">
+                                 <div class="col-md-3">
                                    <label for="agentCompanyId" class="form-label">{{ model.labelInfo.agentCompanyLabel }}</label>
                                    <select class="form-select" id="agentCompanyId" v-model.number="model.searchForm.companyId">
                                      <option selected value=null>Choose All</option>
@@ -68,7 +68,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                  </div>
                                </form>
                              </div>
-                             <hr class="m-1"/>
+                             <hr/>
                              <div class="row row-cols-auto g-2" style="float:right;">
                                <div class="col">
                                  <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" @click="interactor.getCompanies(model.searchForm.companyId)"></ButtonComponent>
@@ -144,7 +144,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                              ele.customerId)"></ButtonComponent>
                                          <ButtonComponent btn-style="margin-left:10px;width:30px" icon="fa-solid fa-trash-can" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
                                          
-                                         <ButtonComponent btn-style="width:36px;height:36px;margin-left:10px" icon="fa-solid fa-right-to-bracket" @click="()=>interactor.goCompanySite(ele.id)">
+                                         <ButtonComponent btn-style="width:30px;height:30px;margin-left:10px" icon="fa-solid fa-right-to-bracket" @click="()=>interactor.goCompanySite(ele.id)">
                                          </ButtonComponent>
                                        </td>
                                    </tr>
@@ -225,7 +225,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                       <div class="col-md-12 position-relative">
                         <label for="type" class="form-label">Agent Company Name</label>
                         <select class="form-select" id="type" v-model.number="model.formData.agentCompanyId" :class="{'is-invalid':!!model.formErrors.agentCompanyId}">
-                          <option label="N/A" value=""></option>
+                          <option label="N/A" value=null></option>
                           <option
                             v-for="company in model.allCompanies"
                             :key="company.id"
