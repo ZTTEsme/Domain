@@ -214,9 +214,9 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                       <div class="col-md-12 position-relative">
                         <label for="type" class="form-label">Type</label>
                         <select class="form-select" id="type" v-model="model.formData.type" :class="{'is-invalid':!!model.formErrors.type}">
-                          <option value="CUSTOMER">customer</option>
-                          <option value="MANUFACTURER">manufacturer</option>
-                          <option value="TRADER">trader</option>
+                          <option value="CUSTOMER">CUSTOMER</option>
+                          <option value="MANUFACTURER">MANUFACTURER</option>
+                          <option value="TRADER">TRADER</option>
                         </select>
                         <div class="invalid-feedback" v-show="!!model.formErrors.type">{{ model.formErrors.type }}</div>
                       </div>
@@ -309,9 +309,9 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                     <div class="col-md-12 position-relative">
                       <label for="type" class="form-label">Type</label>
                       <select class="form-select" id="type" v-model="model.formData.type" :class="{'is-invalid':!!model.formErrors.type}">
-                        <option value="CUSTOMER">customer</option>
-                        <option value="MANUFACTURER">manufacturer</option>
-                        <option value="TRADER">trader</option>
+                        <option value="CUSTOMER">CUSTOMER</option>
+                        <option value="MANUFACTURER">MANUFACTURER</option>
+                        <option value="TRADER">TRADER</option>
                       </select>
                       <div class="invalid-feedback" v-show="!!model.formErrors.type">{{ model.formErrors.type }}</div>
                     </div>
