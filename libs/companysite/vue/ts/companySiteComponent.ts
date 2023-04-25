@@ -42,7 +42,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                 </nav>
               </div>
               <div class="ms-auto">
-                <ButtonComponent img-style="width:30px" img="./img/shift.gif"  @click="interactor.showSearch(model)"></ButtonComponent>
+                <ButtonComponent btn-style="width:30px" icon="fa-solid fa-repeat fa-rotate-90"  @click="interactor.showSearch(model)"></ButtonComponent>
               </div>
             </div>
 
@@ -69,10 +69,10 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                     <hr class="m-1"/>
                     <div class="row row-cols-auto g-2" style="float:right;">
                       <div class="col">
-                        <ButtonComponent img-style="width:30px" img="./img/searching.gif" @click="interactor.getCompanySites(model.searchForm.companyId)"></ButtonComponent>
+                        <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" @click="interactor.getCompanySites(model.searchForm.companyId)"></ButtonComponent>
                       </div>
                       <div class="col">
-                        <ButtonComponent img-style="width:30px" img="./img/reset.gif" @click="interactor.resetSearchForm(model)"></ButtonComponent>
+                        <ButtonComponent btn-style="width:30px" icon="fa-solid fa-arrows-rotate" @click="interactor.resetSearchForm(model)"></ButtonComponent>
                       </div>
 
                     </div>
@@ -109,7 +109,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                     <div class="card-title">
                       <div class="row row-cols-auto g-2">
                         <div class="col">
-                          <ButtonComponent img="./img/add.gif" img-style="width:30px" @click="() => interactor.openAddCompanySiteDialog()"></ButtonComponent>
+                          <ButtonComponent icon="a-solid fa-plus" btn-style="width:30px" @click="() => interactor.openAddCompanySiteDialog()"></ButtonComponent>
                         </div>
                       </div>
                     </div>
@@ -134,11 +134,11 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                   <h6 class="my-1 text-info">{{ ele.alias }}</h6>
                                   <p class="mb-0 font-13 mt-3">
 
-                                    <ButtonComponent img="./img/modify.gif" img-style="width:30px" @click="() => interactor.openModifyDialog(
+                                    <ButtonComponent icon="fa-solid fa-pen-to-square" btn-style="width:30px" @click="() => interactor.openModifyDialog(
                                              ele.alias,
                                              ele.id,
                                              ele.companyId)"></ButtonComponent>
-                                    <ButtonComponent btn-style="margin-left:10px;padding:2px" img="./img/delete.gif" img-style="width:30px" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
+                                    <ButtonComponent btn-style="margin-left:10px;width:30px" icon="fa-solid fa-trash-can" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
                                   </p>
                                 </div>
                               </div>
@@ -150,14 +150,14 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
 
                     <!--pagination-->
                     <div class="mt-auto">
-                      <div class="row float-end"  v-show="model.pageResultForCompanySite.total>0">
-                        <div class="col pe-0 ps-0" >
+                      <div class="row float-end m-1"  v-show="model.pageResultForCompanySite.total>0">
+                        <div class="col pe-0 ps-1" >
                           <select class="form-select" aria-label="Default select example"
                                   v-model="model.pageInfo.pageSize" @click="()=>interactor.changePageSize(model)">
                             <option v-for="item in model.pageInfo.pageItems" :value=item>{{ item }}</option>
                           </select>
                         </div>
-                        <div class="col">
+                        <div class="col pe-0 ps-1">
                           <pagination
                             :totalSize="model.pageResultForCompanySite.total"
                             :pageSize="model.pageInfo.pageSize"

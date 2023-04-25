@@ -3,6 +3,13 @@ import FormErrors from "../../../../common/entities/ts/formError";
 import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/companySite";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
+import AddCompanySiteFormData from "../entities/addCompanySiteFormData";
+import ModifyCompanySiteFormData from "../entities/modifyCompanySiteFormData";
+import LabelInfo from "../entities/labelInfo";
+import SearchForm from "../entities/searchForm";
+import TableAction from "../entities/tableAction";
+import CompanySiteTableColName from "../entities/companySiteTableColName";
+import Dialog from "../entities/dialog";
 
 export default class CompanySiteModel {
 
@@ -16,18 +23,12 @@ export default class CompanySiteModel {
   public breadcrumb: Breadcrumb[] = [];
 
   // add companySite
-  public addCompanySiteFormData={
-    alias:""
-  };
+  public addCompanySiteFormData: AddCompanySiteFormData = new AddCompanySiteFormData();
 
   public validAddCompanySiteFormErrors: FormErrors = {};
 
   // modify companySite
-  public modifyCompanySiteFormData={
-    alias:"",
-    companyId:"",
-    companySiteId:""
-  };
+  public modifyCompanySiteFormData: ModifyCompanySiteFormData = new ModifyCompanySiteFormData();
 
   public validModifyCompanySiteFormErrors: FormErrors = {};
 
@@ -39,68 +40,23 @@ export default class CompanySiteModel {
 
   public companiesForSelect:Company[] = [];
 
-
   public showSearch: boolean = true;
 
   public moduleName: string = "";
 
   public searchCompanySiteWasSuccess: boolean = false;
+
   public searchCompanySiteWasFailed: boolean = false;
 
-  public labelInfo:any = {
-    companyId:""
-  }
+  public labelInfo:LabelInfo = new LabelInfo();
 
-  public searchForm:any = {
-    companyId:"",
-    companySiteId:""
-  }
+  public searchForm:SearchForm = new SearchForm();
 
-  public tableAction: any = {
-    add:"",
-    delete:"",
-    modify:""
-  }
+  public tableAction:TableAction = new TableAction();
 
-  public companySiteTableColName:any={
-    id:"",
-    alias:"",
-    companyId:"",
-    operate:"",
-  }
+  public companySiteTableColName:CompanySiteTableColName = new CompanySiteTableColName();
 
-  public dialog: any = {
-    // add companySite
-    addCompanySite:"",
-    close:"",
-    submit:"",
-    openAddCompanySiteDialog:false,
-    showAddCompanySiteFailureMessage:false,
-    showAddCompanySiteSuccessMessage:false,
-    msgAddCompanySiteWithSuccess:"",
-    msgAddCompanySiteWithFailure:"",
-
-    // delete companySite
-    openDeleteDialog:false,
-    deleteCompanySiteTitle:"",
-    deleteTipInfo:"",
-    msgDeleteCompanySiteWithSuccess:"",
-    showDeleteCompanySiteSuccessMessage:false,
-
-    showDeleteCompanySiteFailureMessage:false,
-    msgDeleteCompanySiteWithFailure:"",
-    currentDeleteCompanySiteId:"",
-
-    // modify companySite
-    modifyCompanySiteTitle:"",
-    openModifyCompanySiteDialog:false,
-
-    showModifyCompanySiteSuccessMessage:false,
-    msgModifyCompanySiteWithSuccess:"",
-
-    showModifyCompanySiteFailureMessage:false,
-    msgModifyCompanySiteWithFailure:""
-  }
+  public dialog:Dialog = new Dialog();
 
   public constructor(init?: Partial<CompanySite>) {
     Object.assign(this,init);

@@ -43,7 +43,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                          </nav>
                        </div>
                        <div class="ms-auto">
-                         <ButtonComponent img-style="width:30px" img="./img/shift.gif"  @click="interactor.showSearch(model)"></ButtonComponent>
+                         <ButtonComponent btn-style="width:30px" icon="fa-solid fa-repeat fa-rotate-90"  @click="interactor.showSearch(model)"></ButtonComponent>
                        </div>
                      </div>
                      
@@ -71,10 +71,10 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                              <hr class="m-1"/>
                              <div class="row row-cols-auto g-2" style="float:right;">
                                <div class="col">
-                                 <ButtonComponent img-style="width:30px" img="./img/searching.gif" @click="interactor.getCompanies(model.searchForm.companyId)"></ButtonComponent>
+                                 <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" @click="interactor.getCompanies(model.searchForm.companyId)"></ButtonComponent>
                                </div>
                                <div class="col">
-                                 <ButtonComponent img-style="width:30px" img="./img/reset.gif" @click="interactor.resetSearchForm(model)"></ButtonComponent>
+                                 <ButtonComponent btn-style="width:30px" icon="fa-solid fa-arrows-rotate" @click="interactor.resetSearchForm(model)"></ButtonComponent>
                                </div>
                              </div>
                              <!--end row-->
@@ -110,7 +110,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                              <div class="card-title">
                                <div class="row row-cols-auto g-2">
                                  <div class="col">
-                                   <ButtonComponent img="./img/add.gif" img-style="width:30px" @click="() => interactor.openAddCompanyDialog()"></ButtonComponent>
+                                   <ButtonComponent icon="a-solid fa-plus" btn-style="width:30px" @click="() => interactor.openAddCompanyDialog()"></ButtonComponent>
                                  </div>
                                </div>
                              </div>
@@ -136,15 +136,15 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                        <td>{{ele.customerId}}</td>
                                        <td>{{ele.agentCompanyName}}</td>
                                        <td>
-                                         <ButtonComponent img="./img/modify.gif" img-style="width:30px" @click="() => interactor.openModifyDialog(
+                                         <ButtonComponent icon="fa-solid fa-pen-to-square" btn-style="width:30px" @click="() => interactor.openModifyDialog(
                                              ele.id,
                                              ele.agentCompanyId,
                                              ele.alias,
                                              ele.type,
                                              ele.customerId)"></ButtonComponent>
-                                         <ButtonComponent btn-style="margin-left:10px;padding:2px" img="./img/delete.gif" img-style="width:30px" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
+                                         <ButtonComponent btn-style="margin-left:10px;width:30px" icon="fa-solid fa-trash-can" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
                                          
-                                         <ButtonComponent btn-style="width:36px;height:36px;margin-left:10px" icon="fa-regular fa-paper-plane fa-bounce" @click="()=>interactor.goCompanySite(ele.id)">
+                                         <ButtonComponent btn-style="width:36px;height:36px;margin-left:10px" icon="fa-solid fa-right-to-bracket" @click="()=>interactor.goCompanySite(ele.id)">
                                          </ButtonComponent>
                                        </td>
                                    </tr>
@@ -154,12 +154,12 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                  <!--pagination-->
                                  <div class="mt-auto">
                                    <div  class="row float-end me-1" >
-                                     <div class="col ps-0 pe-0" >
+                                     <div class="col ps-0 pe-1" >
                                        <select class="form-select" aria-label="Default select example" v-model="model.pageInfo.pageSize" @click="()=>interactor.changePageSize(model)">
                                          <option v-for="item in model.pageInfo.pageItems" :value=item>{{ item }}</option>
                                        </select>
                                      </div>
-                                     <div class="col ps-0">
+                                     <div class="col ps-0 pe-0">
                                        <pagination
                                          :totalSize="model.pageResultForCompany.total"
                                          :pageSize="model.pageInfo.pageSize"

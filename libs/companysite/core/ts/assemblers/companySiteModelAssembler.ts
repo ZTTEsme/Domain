@@ -3,9 +3,6 @@ import CompanySiteState from "../interactors/companySiteState";
 import Router from "cloos-vue-router/lib/core/router";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
-import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
-import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
-import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/companySite";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
 export default class CompanySiteModelAssembler {

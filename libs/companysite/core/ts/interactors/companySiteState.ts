@@ -4,6 +4,8 @@ import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/company
 import ValidationError from "../../../../common/entities/ts/validationError";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
+import AddCompanySiteFormData from "../entities/addCompanySiteFormData";
+import ModifyCompanySiteFormData from "../entities/modifyCompanySiteFormData";
 
 export default class CompanySiteState{
 
@@ -34,29 +36,23 @@ export default class CompanySiteState{
   public showAddCompanySiteFailureMessage: boolean = false;
   public validAddCompanySiteErrors: ValidationError[]=[];
   public validAddCompanySiteFormErrors: FormErrors={};
-  public addCompanySiteFormData={
-    alias:""
-  };
+  public addCompanySiteFormData:AddCompanySiteFormData = new AddCompanySiteFormData();
 
   // modify companySite
   public openModifyCompanySiteDialog: boolean = false;
   public companySiteModifyAlias:string = "";
-  public companySiteModifyCompanyId:number = 0;
+  public companySiteModifyCompanyId:number|null = null;
   public showModifyCompanySiteFailureMessage=false;
   public showModifyCompanySiteSuccessMessage=false;
   public validModifyCompanySiteErrors: ValidationError[]=[];
   public validModifyCompanySiteFormErrors: FormErrors={};
-  public modifyCompanySiteFormData={
-    alias:"",
-    companyId:"",
-    companySiteId:""
-  };
+  public modifyCompanySiteFormData:ModifyCompanySiteFormData = new ModifyCompanySiteFormData();
 
   // delete companySite
   public openDeleteDialog: boolean = false;
   public showDeleteCompanySiteSuccessMessage: boolean = false;
   public showDeleteCompanySiteFailureMessage: boolean = false;
-  public currentDeleteCompanySiteId: number = 0;
+  public currentDeleteCompanySiteId: number|null = null;
 
 
   public resetCompanySiteAddInputState():void{
