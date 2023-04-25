@@ -1,11 +1,16 @@
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
 import FormErrors from "../../../../common/entities/ts/formError";
-import SelfCompany from "../entities/SelfCompany";
+import SelfCompany from "../entities/selfCompany";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
+import LabelInfo from "../entities/labelInfo";
+import SearchForm from "../entities/searchForm";
+import TableAction from "../entities/tableAction";
+import Dialog from "../entities/dialog";
+import FormDatas from "../entities/formDatas";
+import CompanyTableColName from "../entities/companyTableColName";
 
 export default class CompanyModel {
-
 
   public username:string="";
   public password:string="";
@@ -36,69 +41,17 @@ export default class CompanyModel {
 
   public isLoading:boolean = false
 
-  public labelInfo:any={
-    agentCompanyLabel:""
-  }
+  public labelInfo: LabelInfo = new LabelInfo();
 
-  public searchForm:any = {
-    agentCompanyId:null,
-    companyId:null
-  }
+  public searchForm: SearchForm = new SearchForm();
 
+  public tableAction:TableAction = new TableAction();
 
-  public tableAction: any = {
-    add:"",
-    delete:"",
-    modify:""
-  }
+  public dialog:Dialog = new Dialog();
 
-  public dialog: any = {
-    // add company
-    addCompany:"",
-    close:"",
-    submit:"",
-    openAddCompanyDialog:false,
-    showAddCompanyFailureMessage:false,
-    showAddCompanySuccessMessage:false,
-    msgAddCompanyWithSuccess:"",
-    msgAddCompanyWithFailure:"",
+  public formData:FormDatas = new FormDatas();
 
-    // delete company
-    openDeleteDialog:false,
-    deleteCompany:"",
-    deleteTipInfo:"",
-    msgDeleteCompanyWithSuccess:"",
-    showDeleteCompanyFailureMessage:false,
-    showDeleteCompanySuccessMessage:false,
-    msgDeleteCompanyWithFailure:"",
-    currentDeleteCompanyId:"",
-
-    // modify company
-    modifyCompanyTitle:"",
-    openModifyCompanyDialog:false,
-
-    showModifyCompanySuccessMessage:false,
-    msgModifyCompanyWithSuccess:"",
-
-    showModifyCompanyFailureMessage:false,
-    msgModifyCompanyWithFailure:""
-  }
-
-  public formData = {
-    alias:"",
-    type:"",
-    agentCompanyId:"",
-    customerId:""
-  }
-
-
-  public companyTableColName:any={
-    alias:"",
-    type:"",
-    agentCompanyId:"",
-    customerId:"",
-    operate:"",
-  }
+  public companyTableColName:CompanyTableColName = new CompanyTableColName();
 
   public constructor(init?: Partial<CompanyModel>) {
     Object.assign(this, init);

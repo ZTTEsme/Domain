@@ -159,7 +159,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                          <option v-for="item in model.pageInfo.pageItems" :value=item>{{ item }}</option>
                                        </select>
                                      </div>
-                                     <div class="col" style="padding-right:0px">
+                                     <div class="col ps-0">
                                        <pagination
                                          :totalSize="model.pageResultForCompany.total"
                                          :pageSize="model.pageInfo.pageSize"

@@ -2,6 +2,9 @@ import ValidationError from "../../../../common/entities/ts/validationError";
 import FormErrors from "../../../../common/entities/ts/formError";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
+import SearchForm from "../entities/searchForm";
+import Dialog from "../entities/dialog";
+import CompanyAddState from "../entities/companyAddState";
 
 export default class CompanyState {
 
@@ -17,10 +20,8 @@ export default class CompanyState {
 
   public type:string = "";
 
-
   public alias:string = "";
   public customerId:string = "";
-
 
   public validationErrors:ValidationError[]=[];
   public formErrors: FormErrors = {};
@@ -28,44 +29,14 @@ export default class CompanyState {
   public resCompanies:Company[] = []
   public allCompanies:Company[] = []
 
-  public searchForm:any = {
-    agentCompanyId:null,
-    companyId:null
-  }
+  public searchForm: SearchForm = new SearchForm();
 
+  public companyAddState:CompanyAddState = new CompanyAddState();
 
-  public companyAddState:any = {
-    id:"",
-    type :"",
-    agentCompanyId:"",
-    alias:"",
-    customerId:""
-  }
+  public dialog:Dialog = new Dialog();
 
   public searchCompaniesWasSuccess: boolean = false
   public searchCompaniesWasFailed: boolean = false
-
-  // delete company
-  public showDeleteCompanySuccessMessage: boolean = false;
-  public showDeleteCompanyFailureMessage: boolean = false;
-
-  // delete dialog
-  public openDeleteDialog: boolean = false;
-  public deleteSentWithSuccess: boolean = false;
-  public deleteSentWithFailure: boolean = false;
-  public msgDeleteCompanyWithSuccess: string = "";
-  public msgDeleteCompanyWithFailure: string = "";
-  public currentDeleteCompanyId: string= ""
-
-  // add company dialog
-  public openAddCompanyDialog:boolean = false;
-  public showAddCompanySuccessMessage:boolean = false;
-  public showAddCompanyFailureMessage:boolean = false;
-
-  // modify company dialog
-  public openModifyCompanyDialog:boolean = false;
-  public showModifyCompanySuccessMessage:boolean = false;
-  public showModifyCompanyFailureMessage:boolean = false;
 
   public resetInputState(): void {
     this.type = "";
@@ -77,7 +48,7 @@ export default class CompanyState {
 
   public resetCompanyAddInputState():void{
     this.companyAddState.type = "";
-    this.companyAddState.agentCompanyId = "";
+    this.companyAddState.agentCompanyId = null;
     this.companyAddState.alias = "";
     this.companyAddState.customerId = "";
   }

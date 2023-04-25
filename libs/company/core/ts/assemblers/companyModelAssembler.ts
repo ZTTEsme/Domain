@@ -3,13 +3,11 @@ import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil"
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CompanyModel from "../models/companyModel";
 import CompanyState from "../interactors/companyState";
-import SelfCompany from "../entities/SelfCompany";
+import SelfCompany from "../entities/selfCompany";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
 
 export default class CompanyModelAssembler {
-
-
 
   public static fromState(
     state:CompanyState,
@@ -67,27 +65,27 @@ export default class CompanyModelAssembler {
     model.dialog.submit = "submit"
     model.dialog.msgAddCompanyWithSuccess="Success to add company";
     model.dialog.msgAddCompanyWithFailure="Failed to add company";
-    model.dialog.showAddCompanyFailureMessage = state.showAddCompanyFailureMessage;
-    model.dialog.showAddCompanySuccessMessage = state.showAddCompanySuccessMessage;
-    model.dialog.openAddCompanyDialog = state.openAddCompanyDialog;
+    model.dialog.showAddCompanyFailureMessage = state.dialog.showAddCompanyFailureMessage;
+    model.dialog.showAddCompanySuccessMessage = state.dialog.showAddCompanySuccessMessage;
+    model.dialog.openAddCompanyDialog = state.dialog.openAddCompanyDialog;
 
     // delete company dialog
-    model.dialog.openDeleteDialog = state.openDeleteDialog;
+    model.dialog.openDeleteDialog = state.dialog.openDeleteDialog;
     model.dialog.msgDeleteCompanyWithFailure="Failed to delete company";
     model.dialog.msgDeleteCompanyWithSuccess="Success to delete company";
     model.dialog.deleteCompany="Delete Company"
     model.dialog.deleteTipInfo="Sure to delete this company?"
-    model.dialog.showDeleteCompanySuccessMessage = state.showDeleteCompanySuccessMessage;
-    model.dialog.showDeleteCompanyFailureMessage = state.showDeleteCompanyFailureMessage;
-    model.dialog.currentDeleteCompanyId = state.currentDeleteCompanyId;
+    model.dialog.showDeleteCompanySuccessMessage = state.dialog.showDeleteCompanySuccessMessage;
+    model.dialog.showDeleteCompanyFailureMessage = state.dialog.showDeleteCompanyFailureMessage;
+    model.dialog.currentDeleteCompanyId = state.dialog.currentDeleteCompanyId;
 
     // modify company dialog
-    model.dialog.openModifyCompanyDialog=state.openModifyCompanyDialog
+    model.dialog.openModifyCompanyDialog=state.dialog.openModifyCompanyDialog
     model.dialog.msgModifyCompanyWithFailure="Failed  to modify company";
     model.dialog.msgModifyCompanyWithSuccess="Success to modify company";
     model.dialog.modifyCompanyTitle="Modify Company"
-    model.dialog.showModifyCompanySuccessMessage = state.showModifyCompanySuccessMessage;
-    model.dialog.showModifyCompanyFailureMessage = state.showModifyCompanyFailureMessage;
+    model.dialog.showModifyCompanySuccessMessage = state.dialog.showModifyCompanySuccessMessage;
+    model.dialog.showModifyCompanyFailureMessage = state.dialog.showModifyCompanyFailureMessage;
 
     // search company
     model.searchCompaniesWasSuccess = state.searchCompaniesWasSuccess;

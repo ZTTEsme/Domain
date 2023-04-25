@@ -27,7 +27,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   }
 
   async onLoad(): Promise<void> {
-    await this.getCompanies();
+    await this.getCompanies(null);
   }
 
   onUnload(): Promise<void> {
@@ -43,7 +43,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.state.allCompanies = await this.gateWay.getCompanies();
   }
 
-  async getCompanies(agentId?: number | undefined):Promise<void> {
+  async getCompanies(agentId: number|null):Promise<void> {
     try{
       this.state.searchCompaniesWasFailed  = false;
       this.updateView();
@@ -80,14 +80,14 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   async deleteCompany(companyId: number): Promise<void> {
     try{
       if(companyId == undefined) {
-        this.state.showDeleteCompanyFailureMessage = true;
-        this.state.showDeleteCompanySuccessMessage = false;
+        this.state.dialog.showDeleteCompanyFailureMessage = true;
+        this.state.dialog.showDeleteCompanySuccessMessage = false;
         this.updateView();
       }
       else {
         await this.gateWay.deleteCompany(companyId);
-        this.state.showDeleteCompanyFailureMessage = false;
-        this.state.showDeleteCompanySuccessMessage = true;
+        this.state.dialog.showDeleteCompanyFailureMessage = false;
+        this.state.dialog.showDeleteCompanySuccessMessage = true;
         this.getCompanies(this.state.searchForm.companyId).then(()=>{
           this.getAllCompaniesForSelect();
           this.updateView();
@@ -95,8 +95,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
       }
     }
     catch(error){
-      this.state.showDeleteCompanyFailureMessage = true;
-      this.state.showDeleteCompanySuccessMessage = false;
+      this.state.dialog.showDeleteCompanyFailureMessage = true;
+      this.state.dialog.showDeleteCompanySuccessMessage = false;
       this.updateView();
     }
   }
@@ -169,8 +169,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
             alias:this.state.companyAddState.alias,
             agentCompanyId:this.state.companyAddState.agentCompanyId,
             customerId:this.state.companyAddState.customerId}));
-          this.state.showAddCompanyFailureMessage = false;
-          this.state.showAddCompanySuccessMessage = true;
+          this.state.dialog.showAddCompanyFailureMessage = false;
+          this.state.dialog.showAddCompanySuccessMessage = true;
         }
 
         // modify company
@@ -181,19 +181,19 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
             alias:this.state.companyAddState.alias,
             agentCompanyId:this.state.companyAddState.agentCompanyId,
             customerId:this.state.companyAddState.customerId}));
-          this.state.showModifyCompanyFailureMessage = false;
-          this.state.showModifyCompanySuccessMessage = true;
+          this.state.dialog.showModifyCompanyFailureMessage = false;
+          this.state.dialog.showModifyCompanySuccessMessage = true;
         }
       } catch (error) {
         // add company
         if(operateType === OperateType.ADD_COMPANY) {
-          this.state.showAddCompanyFailureMessage = true;
-          this.state.showAddCompanySuccessMessage = false;
+          this.state.dialog.showAddCompanyFailureMessage = true;
+          this.state.dialog.showAddCompanySuccessMessage = false;
         }
         // modify company
         if(operateType === OperateType.MODIFY_COMPANY){
-          this.state.showModifyCompanyFailureMessage = true;
-          this.state.showModifyCompanySuccessMessage = false;
+          this.state.dialog.showModifyCompanyFailureMessage = true;
+          this.state.dialog.showModifyCompanySuccessMessage = false;
         }
       } finally {
         this.state.isLoading = false;
@@ -207,32 +207,32 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
 
   // delete company dialog
   public openDeleteDialog(companyId:string): void {
-    this.state.openDeleteDialog = true;
-    this.state.deleteSentWithSuccess = false;
-    this.state.deleteSentWithFailure = false;
-    this.state.currentDeleteCompanyId = companyId;
+    this.state.dialog.openDeleteDialog = true;
+    this.state.dialog.deleteSentWithSuccess = false;
+    this.state.dialog.deleteSentWithFailure = false;
+    this.state.dialog.currentDeleteCompanyId = companyId;
     this.updateView();
   }
 
   public closeDeleteDialog():void {
-    this.state.openDeleteDialog = false;
-    this.state.showDeleteCompanySuccessMessage = false;
-    this.state.showDeleteCompanyFailureMessage = false;
+    this.state.dialog.openDeleteDialog = false;
+    this.state.dialog.showDeleteCompanySuccessMessage = false;
+    this.state.dialog.showDeleteCompanyFailureMessage = false;
     this.updateView();
   }
 
   // add company dialog
   public openAddCompanyDialog(): void {
-    this.state.openAddCompanyDialog = true;
+    this.state.dialog.openAddCompanyDialog = true;
     this.updateView();
   }
 
   public closeAddCompanyDialog():void{
     this.state.resetCompanyAddInputState();
     this.state.formErrors = {};
-    this.state.openAddCompanyDialog = false;
-    this.state.showAddCompanySuccessMessage = false;
-    this.state.showAddCompanyFailureMessage = false;
+    this.state.dialog.openAddCompanyDialog = false;
+    this.state.dialog.showAddCompanySuccessMessage = false;
+    this.state.dialog.showAddCompanyFailureMessage = false;
     this.updateViewWithOutValidationFeedBack();
 
   }
@@ -244,15 +244,15 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.state.companyAddState.alias = alias;
     this.state.companyAddState.type = type;
     this.state.companyAddState.customerId = customerId;
-    this.state.openModifyCompanyDialog = true;
+    this.state.dialog.openModifyCompanyDialog = true;
     this.updateViewWithOutValidationFeedBack();
   }
 
   public closeModifyDialog():void {
     this.state.resetCompanyAddInputState();
-    this.state.openModifyCompanyDialog = false;
-    this.state.showModifyCompanySuccessMessage = false;
-    this.state.showModifyCompanyFailureMessage = false;
+    this.state.dialog.openModifyCompanyDialog = false;
+    this.state.dialog.showModifyCompanySuccessMessage = false;
+    this.state.dialog.showModifyCompanyFailureMessage = false;
     this.updateViewWithOutValidationFeedBack();
   }
 
