@@ -35,6 +35,7 @@ export default class CompanyState {
 
 
   public companyAddState:any = {
+    id:"",
     type :"",
     agentCompanyId:"",
     alias:"",

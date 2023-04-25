@@ -137,6 +137,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                        <td>{{ele.agentCompanyName}}</td>
                                        <td>
                                          <ButtonComponent img="./img/modify.gif" img-style="width:30px" @click="() => interactor.openModifyDialog(
+                                             ele.id,
                                              ele.agentCompanyId,
                                              ele.alias,
                                              ele.type,

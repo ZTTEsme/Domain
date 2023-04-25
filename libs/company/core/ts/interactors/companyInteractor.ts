@@ -161,20 +161,26 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
 
     if (CommonUtils.isObjectEmpty(this.state.formErrors)) {
       try {
-        await this.gateWay.saveCompany(new Company({
-          type:CommonUtils.getCustomerEnumValue(this.state.companyAddState.type),
-          alias:this.state.companyAddState.alias,
-          agentCompanyId:this.state.companyAddState.agentCompanyId,
-          customerId:this.state.companyAddState.customerId}));
 
         // add company
         if(operateType === OperateType.ADD_COMPANY) {
+          await this.gateWay.saveCompany(new Company({
+            type:CommonUtils.getCustomerEnumValue(this.state.companyAddState.type),
+            alias:this.state.companyAddState.alias,
+            agentCompanyId:this.state.companyAddState.agentCompanyId,
+            customerId:this.state.companyAddState.customerId}));
           this.state.showAddCompanyFailureMessage = false;
           this.state.showAddCompanySuccessMessage = true;
         }
 
         // modify company
         if(operateType === OperateType.MODIFY_COMPANY){
+          await this.gateWay.saveCompany(new Company({
+            id:this.state.companyAddState.id,
+            type:CommonUtils.getCustomerEnumValue(this.state.companyAddState.type),
+            alias:this.state.companyAddState.alias,
+            agentCompanyId:this.state.companyAddState.agentCompanyId,
+            customerId:this.state.companyAddState.customerId}));
           this.state.showModifyCompanyFailureMessage = false;
           this.state.showModifyCompanySuccessMessage = true;
         }
@@ -232,7 +238,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   }
 
   // modify company dialog
-  public openModifyDialog(agent:number | null,alias:string,type:string,customerId:string):void{
+  public openModifyDialog(companyId:number|null,agent:number | null,alias:string,type:string,customerId:string):void{
+    this.state.companyAddState.id = companyId;
     this.state.companyAddState.agentCompanyId = agent;
     this.state.companyAddState.alias = alias;
     this.state.companyAddState.type = type;
