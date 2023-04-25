@@ -9,13 +9,15 @@ import PageInfo from "../../../../common/entities/ts/pageInfo";
 
 export default class CompanyModelAssembler {
 
+
+
   public static fromState(
     state:CompanyState,
     router: Router,
     i18nGateway: I18nGateway
   ): CompanyModel {
     const model: CompanyModel = new CompanyModel();
-    this.initPageParams(state,model,router)
+    this.initPageParams(state,model,router,i18nGateway)
     return model;
   }
 
@@ -25,11 +27,11 @@ export default class CompanyModelAssembler {
     i18nGateway: I18nGateway
   ): CompanyModel {
     const model: CompanyModel = new CompanyModel();
-    this.initPageParams(state,model,router)
+    this.initPageParams(state,model,router,i18nGateway)
     return model;
   }
 
-  private static initPageParams(state:CompanyState,model:CompanyModel,router: Router){
+  private static initPageParams(state:CompanyState,model:CompanyModel,router: Router,i18nGateway:I18nGateway){
     model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(router);
 
     model.moduleName = router.getCurrentRoute().name;

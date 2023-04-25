@@ -9,8 +9,6 @@ import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/company
 import CompanySiteModel from "../models/companySiteModel";
 import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restCompanyGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
-import ValidationError from "../../../../common/entities/ts/validationError";
-import FormErrors from "../../../../common/entities/ts/formError";
 
 export default class CompanySiteInteractor extends ViewInteractor<CompanySitePresenter> {
   private i18nGateway: I18nGateway;
@@ -32,10 +30,12 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   }
 
   async onLoad(): Promise<void> {
-    const companyId: string | undefined= this.router.getPathParams().get("id");
-    if (companyId != null) {
-      await this.getCompanySites(parseInt(companyId));
-    }
+    this.state.companyId = parseInt(this.router.getPathParams().get("id")!);
+
+    this.state.company = await this.restCompanyGateway.getCompany(this.state.companyId);
+
+    await this.getCompanySites(this.state.companyId);
+
     return Promise.resolve(undefined);
   }
 
@@ -59,7 +59,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
 
   resetSearchForm(model:CompanySiteModel){
     // 重置为第一个
-    model.searchForm.companyId=model.company[0].agentCompanyId;
+    model.searchForm.companyId=model.companiesForSelect[0].id;
   }
 
   // addCompanySite dialog
@@ -79,10 +79,11 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   }
 
   // modify companySite dialog
-  public openModifyDialog(alias:string,companyId:number):void{
+  public openModifyDialog(alias:string,companySiteId:number,companyId:number):void{
     this.state.modifyCompanySiteFormData = {
       alias:alias,
-      companyId: companyId.toString()
+      companyId: companyId.toString(),
+      companySiteId: companySiteId.toString()
     };
     this.state.openModifyCompanySiteDialog = true;
     this.updateView();
@@ -92,7 +93,8 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     this.state.validModifyCompanySiteFormErrors = {};
     this.state.modifyCompanySiteFormData = {
       alias:"",
-      companyId: ""
+      companyId: "",
+      companySiteId:""
     };
     this.state.openModifyCompanySiteDialog = false;
     this.state.showModifyCompanySiteSuccessMessage = false;
@@ -101,11 +103,11 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   }
 
   // delete companySite dialog
-  public openDeleteDialog(companyId:number): void {
+  public openDeleteDialog(companySiteId:number): void {
     this.state.openDeleteDialog = true;
     this.state.showDeleteCompanySiteSuccessMessage = false;
     this.state.showDeleteCompanySiteFailureMessage = false;
-    this.state.currentDeleteCompanyId = companyId;
+    this.state.currentDeleteCompanySiteId = companySiteId;
     this.updateView();
   }
 
@@ -144,19 +146,19 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   ): Promise<void> {
 
     this.state.addCompanySiteFormData = model.addCompanySiteFormData;
-
     this.state.validAddCompanySiteFormErrors = CommonUtils.validateForm(model.addCompanySiteFormData,this.rulesForAddCompanySite,this.state.validAddCompanySiteErrors,this.state.validAddCompanySiteFormErrors)
 
     if (CommonUtils.isObjectEmpty(this.state.validAddCompanySiteFormErrors)) {
       try {
-        await this.gateWay.saveCompanySite(new CompanySite({alias:this.state.addCompanySiteFormData.alias}));
+        await this.gateWay.saveCompanySite(new CompanySite({alias:this.state.addCompanySiteFormData.alias,companyId:this.state.companyId!}));
         this.state.showAddCompanySiteFailureMessage = false;
         this.state.showAddCompanySiteSuccessMessage = true;
-
+        this.state.companySite = await this.gateWay.getCompanySites(this.state.companyId!)
       } catch (error) {
         this.state.showAddCompanySiteFailureMessage = true;
         this.state.showAddCompanySiteSuccessMessage = false;
-      } finally {
+      }
+      finally {
         this.state.isLoading = false;
       }
     }
@@ -189,11 +191,14 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
 
     if (CommonUtils.isObjectEmpty(this.state.validModifyCompanySiteFormErrors)) {
       try {
+        await this.gateWay.saveCompanySite(new CompanySite({
+          id:parseInt(this.state.modifyCompanySiteFormData.companySiteId),
+          alias:this.state.modifyCompanySiteFormData.alias,
+          companyId:parseInt(this.state.modifyCompanySiteFormData.companyId)}));
 
-        await this.gateWay.saveCompanySite(new CompanySite({alias:this.state.modifyCompanySiteFormData.alias,companyId:parseInt(this.state.modifyCompanySiteFormData.companyId)}));
         this.state.showModifyCompanySiteFailureMessage = false;
         this.state.showModifyCompanySiteSuccessMessage = true;
-
+        this.state.companySite = await this.gateWay.getCompanySites(this.state.companyId!)
       } catch (error) {
         this.state.showModifyCompanySiteFailureMessage = true;
         this.state.showModifyCompanySiteSuccessMessage = false;
@@ -205,18 +210,19 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   }
 
 
-  async deleteCompanySite(companyId: number): Promise<void> {
+  async deleteCompanySite(companySiteId: number): Promise<void> {
     try{
       this.updateView();
-      if(companyId == undefined) {
+      if(companySiteId == undefined) {
         this.state.showDeleteCompanySiteFailureMessage = true;
         this.state.showDeleteCompanySiteSuccessMessage = false;
         this.updateView();
       }
       else {
-        await this.gateWay.deleteCompanySite(companyId);
+        await this.gateWay.deleteCompanySite(companySiteId);
         this.state.showDeleteCompanySiteFailureMessage = false;
         this.state.showDeleteCompanySiteSuccessMessage = true;
+        this.state.companySite = await this.gateWay.getCompanySites(this.state.companyId!)
         this.updateView();
       }
     }
@@ -231,10 +237,9 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     try{
       this.state.searchCompanySiteWasFailed  = false;
       this.updateView();
-      await this.gateWay.getCompanySite(companyId);
+      this.state.companySite = await this.gateWay.getCompanySites(companyId);
       this.state.searchCompanySiteWasFailed  = false;
       this.updateView();
-
     }catch(error){
       this.state.searchCompanySiteWasFailed  = true;
       this.updateView();

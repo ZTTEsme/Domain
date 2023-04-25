@@ -28,15 +28,15 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
           <div class="page-content">
             <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-1">
-              <div class="breadcrumb-title pe-3" style="border-right: 1.5px solid #aaa4a4;">{{ model.moduleName }}</div>
-              <div class="ps-3" style="margin-top: 15px;">
+              <div style="margin-top: 15px;">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item">
-                      <i class="fa-solid fa-house"></i>
+                      <img src="./img/home.gif" style="width:40px">
                     </li>
-                    <li style="margin-left:10px">
-                      <breadcrumb :items="model.breadcrumb"/>
+                    <!--<li class="ps-1" class="breadcrumb-title">{{model.moduleName}}</li>-->
+                    <li class="ps-1 pt-2">
+                      <breadcrumb :items="model.breadcrumb" />
                     </li>
                   </ol>
                 </nav>
@@ -54,13 +54,13 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                     <div class="card-title">
                       <form class="row g-3">
                         <div class="col-md-4 ">
-                          <label for="agentCompanyId" class="form-label">{{ model.labelInfo.companyId }}</label>
-                          <select class="form-select" id="agentCompanyId" v-model="model.searchForm.companyId">
+                          <label for="companyId" class="form-label">{{ model.labelInfo.companyId }}</label>
+                          <select class="form-select" id="companyId" v-model="model.searchForm.companyId">
                             <option
-                              v-for="company in model.company"
-                              :key="company.agentCompanyId"
+                              v-for="company in model.companiesForSelect"
+                              :key="company.id"
                               :label="company.alias"
-                              :value="company.agentCompanyId"
+                              :value="company.id"
                             />
                           </select>
                         </div>
@@ -136,8 +136,9 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
 
                                     <ButtonComponent img="./img/modify.gif" img-style="width:30px" @click="() => interactor.openModifyDialog(
                                              ele.alias,
+                                             ele.id,
                                              ele.companyId)"></ButtonComponent>
-                                    <ButtonComponent btn-style="margin-left:10px;padding:2px" img="./img/delete.gif" img-style="width:30px" @click="() => interactor.openDeleteDialog(ele.companyId)"></ButtonComponent>
+                                    <ButtonComponent btn-style="margin-left:10px;padding:2px" img="./img/delete.gif" img-style="width:30px" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
                                   </p>
                                 </div>
                               </div>
@@ -206,7 +207,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
           <div>
             <form class="row g-3">
               <div class="col-md-12 position-relative">
-                <label for="agentCompanyId" class="form-label">Alias</label>
+                <label for="alias" class="form-label">Alias</label>
                 <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddCompanySiteFormErrors.alias}"
                        id="alias" v-model="model.addCompanySiteFormData.alias">
                 <div class="invalid-feedback" v-show="!!model.validAddCompanySiteFormErrors.alias">
@@ -216,9 +217,8 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
             </form>
           </div>
           <template #footer>
-            <button type="button" class="btn btn-primary" @click='()=>interactor.addCompanySite(
-                                        model
-                                        )'>{{ model.dialog.submit }}
+            <button type="button" class="btn btn-primary" @click='()=>interactor.addCompanySite(model)'>
+              {{ model.dialog.submit }}
             </button>
           </template>
         </modal>
@@ -251,7 +251,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
           <template #footer>
             <button
               class="btn btn-primary"
-              @click='() => interactor.deleteCompanySite(model.dialog.currentDeleteCompanyId)'
+              @click='() => interactor.deleteCompanySite(model.dialog.currentDeleteCompanySiteId)'
             >
               {{ model.dialog.submit }}
             </button>
@@ -279,10 +279,10 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
               <select class="form-select" :class="{'is-invalid':!!model.validModifyCompanySiteFormErrors.companyId}"
                       id="companySiteId" v-model="model.modifyCompanySiteFormData.companyId">
                 <option
-                  v-for="company in model.company"
-                  :key="company.agentCompanyId"
+                  v-for="company in model.companiesForSelect"
+                  :key="company.id"
                   :label="company.alias"
-                  :value="company.agentCompanyId"
+                  :value="company.id"
                 />
               </select>
               <div class="invalid-feedback" v-show="!!model.validModifyCompanySiteFormErrors.companyId">

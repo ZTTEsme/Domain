@@ -21,6 +21,13 @@ export default class CompanySiteModelAssembler {
 
   private static updateCompanySiteModel(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway: I18nGateway){
 
+    model.company = state.company;
+
+    if( model.company !== null ) {
+      model.searchForm.companyId = model.company.id;
+      model.companiesForSelect.push(model.company);
+    }
+
     model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(router);
 
     model.moduleName = router.getCurrentRoute().name
@@ -50,11 +57,9 @@ export default class CompanySiteModelAssembler {
 
     // pagination by front
     model.pageInfo = state.pageInfo;
-    this.addTestTableData(model);
+    model.companySite = state.companySite;
+    this.updateCompanySiteInfos(model);
 
-    // 添加公司信息，默认选中第一条
-    this.addCompanyInfos(model);
-    model.searchForm.companyId = model.company[0].agentCompanyId;
 
   }
 
@@ -100,49 +105,14 @@ export default class CompanySiteModelAssembler {
     model.dialog.msgDeleteCompanySiteWithSuccess = "Success to delete companySite"
     model.dialog.msgDeleteCompanySiteWithFailure = "Failed to delete companySite"
     model.dialog.openDeleteDialog= state.openDeleteDialog;
-    model.dialog.currentDeleteCompanyId = state.currentDeleteCompanyId;
+    model.dialog.currentDeleteCompanySiteId = state.currentDeleteCompanySiteId;
     model.dialog.showDeleteCompanySiteSuccessMessage = state.showDeleteCompanySiteSuccessMessage;
     model.dialog.showDeleteCompanySiteFailureMessage = state.showDeleteCompanySiteFailureMessage;
   }
 
 
-  private static addTestTableData(model:CompanySiteModel){
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test2",companyId:3}));
-    model.companySite.push(new CompanySite({alias:"test3",companyId:4}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test2",companyId:3}));
-    model.companySite.push(new CompanySite({alias:"test3",companyId:4}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test2",companyId:3}));
-    model.companySite.push(new CompanySite({alias:"test3",companyId:4}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test2",companyId:3}));
-    model.companySite.push(new CompanySite({alias:"test3",companyId:4}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test2",companyId:3}));
-    model.companySite.push(new CompanySite({alias:"test3",companyId:4}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test2",companyId:3}));
-    model.companySite.push(new CompanySite({alias:"test3",companyId:4}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test2",companyId:3}));
-    model.companySite.push(new CompanySite({alias:"test3",companyId:4}));
-    model.companySite.push(new CompanySite({alias:"test1",companyId:2}));
-    model.companySite.push(new CompanySite({alias:"test2",companyId:3}));
-    model.companySite.push(new CompanySite({alias:"test3",companyId:4}));
+  private static updateCompanySiteInfos(model:CompanySiteModel){
     model.pageResultForCompanySite = CommonUtils.getPageData(model.companySite,model.pageInfo.pageNo,model.pageInfo.pageSize);
 
-  }
-
-  private static addCompanyInfos(model:CompanySiteModel){
-    model.company.push(new Company({agentCompanyId:2,alias:"埃斯顿01",type:CompanyType.CUSTOMER,customerId:"test"}));
-    model.company.push(new Company({agentCompanyId:3,alias:"埃斯顿02",type:CompanyType.CUSTOMER,customerId:"test"}));
-    model.company.push(new Company({agentCompanyId:4,alias:"埃斯顿03",type:CompanyType.CUSTOMER,customerId:"test"}));
   }
 }

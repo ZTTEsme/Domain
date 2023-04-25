@@ -126,7 +126,6 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     }
   }
 
-
   public rules = {
     alias: [
       {

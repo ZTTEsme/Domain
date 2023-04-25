@@ -19,5 +19,12 @@
         <target>编辑最爱</target>
       </segment>
     </unit>
+         <unit id="label">
+          <segment>
+                  <source>AgentCompanyLabel</source>
+                  <target>标签</target>
+          </segment>
+        </unit>
+
   </file>
 </xliff>

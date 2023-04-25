@@ -41,5 +41,11 @@
         <source>Failed to submit feedback, please try again later.</source>
       </segment>
     </unit>
+
+     <unit id="label">
+      <segment>
+        <source>AgentCompanyLabel</source>
+      </segment>
+    </unit>
   </file>
 </xliff>

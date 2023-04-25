@@ -19,19 +19,26 @@ export default class CompanySiteModel {
   public addCompanySiteFormData={
     alias:""
   };
+
   public validAddCompanySiteFormErrors: FormErrors = {};
 
   // modify companySite
   public modifyCompanySiteFormData={
     alias:"",
-    companyId:""
+    companyId:"",
+    companySiteId:""
   };
+
   public validModifyCompanySiteFormErrors: FormErrors = {};
 
   public isLoading: boolean = false;
 
   public companySite:CompanySite[] = [];
-  public company:Company[] = [];
+
+  public company:Company | null = null;
+
+  public companiesForSelect:Company[] = [];
+
 
   public showSearch: boolean = true;
 
@@ -82,7 +89,7 @@ export default class CompanySiteModel {
 
     showDeleteCompanySiteFailureMessage:false,
     msgDeleteCompanySiteWithFailure:"",
-    currentDeleteCompanyId:"",
+    currentDeleteCompanySiteId:"",
 
     // modify companySite
     modifyCompanySiteTitle:"",

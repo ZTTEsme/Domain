@@ -11,9 +11,11 @@ export default class CompanySiteState{
 
   public breadcrumb: Breadcrumb[] = [];
 
+  public companyId: number | null = null;
+
   public companySite:CompanySite[] = [];
 
-  public company:Company[] = [];
+  public company:Company | null = null;
 
   public showSearch: boolean = true;
 
@@ -46,14 +48,15 @@ export default class CompanySiteState{
   public validModifyCompanySiteFormErrors: FormErrors={};
   public modifyCompanySiteFormData={
     alias:"",
-    companyId:""
+    companyId:"",
+    companySiteId:""
   };
 
   // delete companySite
   public openDeleteDialog: boolean = false;
   public showDeleteCompanySiteSuccessMessage: boolean = false;
   public showDeleteCompanySiteFailureMessage: boolean = false;
-  public currentDeleteCompanyId: number = 0;
+  public currentDeleteCompanySiteId: number = 0;
 
 
   public resetCompanySiteAddInputState():void{
