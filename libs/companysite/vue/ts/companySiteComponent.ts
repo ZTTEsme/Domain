@@ -41,7 +41,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                   </ol>
                 </nav>
               </div>
-              <div class="ms-auto">
+              <div class="ms-auto mt-3">
                 <ButtonComponent btn-style="width:30px" icon="fa-solid fa-repeat fa-rotate-90"  @click="interactor.showSearch(model)"></ButtonComponent>
               </div>
             </div>
