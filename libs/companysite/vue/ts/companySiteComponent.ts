@@ -42,7 +42,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                 </nav>
               </div>
               <div class="ms-auto mt-3">
-                <ButtonComponent btn-style="width:30px" icon="fa-solid fa-repeat fa-rotate-90"  @click="interactor.showSearch(model)"></ButtonComponent>
+                <ButtonComponent btn-style="width:30px" shape="btn-outline-secondary" icon="fa-solid fa-repeat fa-rotate-90"  @click="interactor.showSearch(model)"></ButtonComponent>
               </div>
             </div>
 
@@ -72,7 +72,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                         <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" @click="interactor.getCompanySites(model.searchForm.companyId)"></ButtonComponent>
                       </div>
                       <div class="col">
-                        <ButtonComponent btn-style="width:30px" icon="fa-solid fa-arrows-rotate" @click="interactor.resetSearchForm(model)"></ButtonComponent>
+                        <ButtonComponent btn-style="width:30px" icon="fa-solid fa-arrows-rotate" shape="btn-outline-info" @click="interactor.resetSearchForm(model)"></ButtonComponent>
                       </div>
 
                     </div>
@@ -138,7 +138,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                              ele.alias,
                                              ele.id,
                                              ele.companyId)"></ButtonComponent>
-                                    <ButtonComponent btn-style="margin-left:10px;width:30px" icon="fa-solid fa-trash-can" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
+                                    <ButtonComponent btn-style="margin-left:10px;width:30px" shape="btn-outline-danger" icon="fa-solid fa-trash-can" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
                                   </p>
                                 </div>
                               </div>

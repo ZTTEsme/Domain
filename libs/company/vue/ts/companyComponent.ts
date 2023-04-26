@@ -43,7 +43,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                          </nav>
                        </div>
                        <div class="ms-auto mt-3">
-                         <ButtonComponent btn-style="width:30px" icon="fa-solid fa-repeat fa-rotate-90"  @click="interactor.showSearch(model)"></ButtonComponent>
+                         <ButtonComponent btn-style="width:30px" shape="btn-outline-secondary" icon="fa-solid fa-repeat fa-rotate-90"  @click="interactor.showSearch(model)"></ButtonComponent>
                        </div>
                      </div>
                      
@@ -74,7 +74,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                  <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" @click="interactor.getCompanies(model.searchForm.companyId)"></ButtonComponent>
                                </div>
                                <div class="col">
-                                 <ButtonComponent btn-style="width:30px" icon="fa-solid fa-arrows-rotate" @click="interactor.resetSearchForm(model)"></ButtonComponent>
+                                 <ButtonComponent btn-style="width:30px" shape="btn-outline-info" icon="fa-solid fa-arrows-rotate" @click="interactor.resetSearchForm(model)"></ButtonComponent>
                                </div>
                              </div>
                              <!--end row-->
@@ -142,9 +142,9 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                              ele.alias,
                                              ele.type,
                                              ele.customerId)"></ButtonComponent>
-                                         <ButtonComponent btn-style="margin-left:10px;width:30px" icon="fa-solid fa-trash-can" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
+                                         <ButtonComponent btn-style="margin-left:10px;width:30px" shape="btn-outline-danger" icon="fa-solid fa-trash-can" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
                                          
-                                         <ButtonComponent btn-style="width:30px;height:30px;margin-left:10px" icon="fa-solid fa-right-to-bracket" @click="()=>interactor.goCompanySite(ele.id)">
+                                         <ButtonComponent btn-style="width:30px;height:30px;margin-left:10px" shape="btn-outline-success" icon="fa-solid fa-right-to-bracket" @click="()=>interactor.goCompanySite(ele.id)">
                                          </ButtonComponent>
                                        </td>
                                    </tr>
