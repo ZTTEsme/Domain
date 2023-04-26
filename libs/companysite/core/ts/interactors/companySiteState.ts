@@ -17,7 +17,11 @@ export default class CompanySiteState{
 
   public companySite:CompanySite[] = [];
 
-  public company:Company | null = null;
+  public firstSelectedCompany: Company|null = null;
+
+  public selectedCompany:Company | null = null;
+
+  public companiesForSelect:Company[] = [];
 
   public showSearch: boolean = true;
 

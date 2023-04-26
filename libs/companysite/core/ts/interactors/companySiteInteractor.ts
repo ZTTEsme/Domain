@@ -32,7 +32,11 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   async onLoad(): Promise<void> {
     this.state.companyId = parseInt(this.router.getPathParams().get("id")!);
 
-    this.state.company = await this.restCompanyGateway.getCompany(this.state.companyId);
+    this.state.selectedCompany = await this.restCompanyGateway.getCompany(this.state.companyId);
+
+    this.state.companiesForSelect = await this.restCompanyGateway.getCompanies();
+
+    this.state.firstSelectedCompany = this.state.selectedCompany;
 
     await this.getCompanySites(this.state.companyId);
 
@@ -58,8 +62,11 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   }
 
   resetSearchForm(model:CompanySiteModel){
-    // 重置为第一个
-    model.searchForm.companyId=model.companiesForSelect[0].id;
+    // 重置为跳转时的companyId
+    if(this.state.firstSelectedCompany!==null){
+      model.searchForm.companyId = this.state.firstSelectedCompany.id;
+      this.getCompanySites(model.searchForm.companyId!).then();
+    }
   }
 
   // addCompanySite dialog
@@ -238,6 +245,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
       this.state.searchCompanySiteWasFailed  = false;
       this.updateView();
       this.state.companySite = await this.gateWay.getCompanySites(companyId);
+      this.state.selectedCompany = await this.restCompanyGateway.getCompany(companyId);
       this.state.searchCompanySiteWasFailed  = false;
       this.updateView();
     }catch(error){

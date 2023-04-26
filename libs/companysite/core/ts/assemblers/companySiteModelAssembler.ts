@@ -18,11 +18,12 @@ export default class CompanySiteModelAssembler {
 
   private static updateCompanySiteModel(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway: I18nGateway){
 
-    model.company = state.company;
+    model.selectedCompany = state.selectedCompany;
 
-    if( model.company !== null ) {
-      model.searchForm.companyId = model.company.id;
-      model.companiesForSelect.push(model.company);
+    model.companiesForSelect = state.companiesForSelect;
+
+    if( model.selectedCompany !== null ) {
+      model.searchForm.companyId = model.selectedCompany.id;
     }
 
     model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(router);

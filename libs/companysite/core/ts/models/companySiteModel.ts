@@ -36,7 +36,7 @@ export default class CompanySiteModel {
 
   public companySite:CompanySite[] = [];
 
-  public company:Company | null = null;
+  public selectedCompany:Company | null = null;
 
   public companiesForSelect:Company[] = [];
 
