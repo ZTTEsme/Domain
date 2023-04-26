@@ -19,7 +19,7 @@ export default class Dialog{
   public showDeleteCompanySiteFailureMessage:boolean = false;
   public msgDeleteCompanySiteWithFailure:string = "";
   public currentDeleteCompanySiteId:number|null = null;
-  //
+
   // modify companySite
   public modifyCompanySiteTitle:string="";
   public openModifyCompanySiteDialog:boolean=false;

@@ -259,7 +259,9 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     return Promise.resolve(undefined);
   }
 
-
+  public goCompanySiteUsers(companySiteId:number){
+    this.router.loadRoute(this.router.getRouteByName("User"), new Map([['id', companySiteId.toString()]])).then();
+  }
 }
 
 

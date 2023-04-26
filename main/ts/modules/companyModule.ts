@@ -34,9 +34,9 @@ export default class CompanyModule implements Module {
     companyGateway = new RestCompanyGateway(this.authModule.getRestClientProvider());
     this.routerModule.getRouter().register(
       new Route({
-        name: "Company",
+        name: "home",
         title: "Company Manage",
-        urlPattern: "/company/manage"
+        urlPattern: "/companies"
       }),
       new VueRouteHandler({
         controller: CompanyComponent,

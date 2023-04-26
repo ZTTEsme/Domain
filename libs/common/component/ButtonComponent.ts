@@ -6,7 +6,7 @@ import JsExtension from "qnect-sdk-web/lib/common/core/ts/jsExtension";
   emits: ["click"],
   template: `
     <button :disabled="disabled" :style="btnStyle" type="button" class="btn btn-sm" :class="shape" @click="buttonClick" >
-          <i   v-show="hasIcon" class="flex-shrink-0" :class="icon" :style="iconStyle"></i>
+          <i   v-show="hasIcon" class="flex-shrink-0" :class="icon" :style="iconStyle" style="cursor: pointer"></i>
           <img v-show="hasImg" :src="img" class="img-fluid mx-auto d-block" alt="" :style="imgStyle" >
           <span v-show="hasMsg">{{msg}}</span>
     </button>

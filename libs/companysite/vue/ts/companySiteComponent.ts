@@ -139,6 +139,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                              ele.id,
                                              ele.companyId)"></ButtonComponent>
                                     <ButtonComponent btn-style="margin-left:10px;width:30px" shape="btn-outline-danger" icon="fa-solid fa-trash-can" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
+                                    <ButtonComponent btn-style="width:30px;height:30px;margin-left:10px" shape="btn-outline-success" icon="fa-solid fa-right-to-bracket" @click="()=>interactor.goCompanySiteUsers(ele.id)">
                                   </p>
                                 </div>
                               </div>
