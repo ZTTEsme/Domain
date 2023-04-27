@@ -388,5 +388,112 @@
       </segment>
     </unit>
 
+
+    <!--CompanySite User-->
+    <unit id="companySiteUser.table.alias">
+      <segment>
+        <source>Alias</source>
+      </segment>
+    </unit>
+
+     <unit id="companySiteUser.table.email">
+      <segment>
+        <source>Email</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.table.role">
+      <segment>
+        <source>Role</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.table.operate">
+      <segment>
+        <source>Operate</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.dialog.msgAddUserWithSuccess">
+      <segment>
+        <source>Success to add user</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.dialog.msgAddUserWithFailure">
+      <segment>
+        <source>Failed to add user</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.dialog.addUserDialogTitle">
+      <segment>
+        <source>Add CompanySite User</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.dialog.submit">
+      <segment>
+        <source>submit</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.dialog.deleteUserDialogTitle">
+      <segment>
+        <source>Delete User</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.dialog.deleteUserTipInfo">
+      <segment>
+        <source>Sure to delete user</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.dialog.msgDeleteUserWithFailure">
+      <segment>
+        <source>Failed to delete user</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.dialog.msgDeleteUserWithSuccess">
+      <segment>
+        <source>Success to delete user</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.label.email">
+      <segment>
+        <source>Email</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.label.role">
+      <segment>
+        <source>Role</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.label.ADMINISTRATOR">
+      <segment>
+        <source>ADMINISTRATOR</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.label.USER">
+      <segment>
+        <source>USER</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.label.serverErrorInfo">
+      <segment>
+        <source>Server Internal Error!!!</source>
+      </segment>
+    </unit>
+
+
+
+
   </file>
 </xliff>

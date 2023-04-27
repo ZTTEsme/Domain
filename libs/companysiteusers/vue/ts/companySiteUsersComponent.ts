@@ -171,7 +171,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
               <div class="font-35 text-danger"><i class="bx bxs-message-square-x"></i>
               </div>
               <div class="ms-3">
-                <span class="mb-0 text-danger" style="font-size:20px">Server Internal Error!!!</span>
+                <span class="mb-0 text-danger" style="font-size:20px">{{ model.labelInfo.serverErrorInfo }}</span>
               </div>
             </div>
           </div>
@@ -201,7 +201,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
 <!--                  {{ model.validAddUserFormErrors.alias }}-->
 <!--                </div> -->
                 
-                <label for="email" class="form-label">Email</label>
+                <label for="email" class="form-label">{{ model.labelInfo.emailLabel }}</label>
                 <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddUserFormErrors.email}"
                        id="email" v-model="model.addUserFormData.email">
                 <div class="invalid-feedback" v-show="!!model.validAddUserFormErrors.email">
@@ -210,10 +210,10 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
               </div>
               
               <div class="col-md-12 position-relative">
-                <label for="role" class="form-label">Role</label>
+                <label for="role" class="form-label">{{ model.labelInfo.roleLabel }}</label>
                 <select class="form-select" id="type" v-model="model.addUserFormData.role" :class="{'is-invalid':!!model.validAddUserFormErrors.role}">
-                  <option value="ADMINISTRATOR">ADMINISTRATOR</option>
-                  <option value="USER">USER</option>
+                  <option value="ADMINISTRATOR">{{ model.labelInfo.ADMINISTRATOR }}</option>
+                  <option value="USER">{{ model.labelInfo.USER }}</option>
                 </select>
                 <div class="invalid-feedback" v-show="!!model.validAddUserFormErrors.role">
                   {{ model.validAddUserFormErrors.role }}
