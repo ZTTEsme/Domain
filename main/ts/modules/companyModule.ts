@@ -35,7 +35,7 @@ export default class CompanyModule implements Module {
     this.routerModule.getRouter().register(
       new Route({
         name: "home",
-        title: "Company Manage",
+        title: this.i18nModule.getI18nGateway().get("company.router.name"),
         urlPattern: "/companies"
       }),
       new VueRouteHandler({

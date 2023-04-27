@@ -14,7 +14,7 @@ export default class CompanySiteUsersModule implements Module {
   public constructor(
     private auth: AuthModule,
     private readonly router: RouterModule,
-    private readonly i18n: I18nModule
+    private readonly i18nModule: I18nModule
   ) {
   }
 
@@ -28,7 +28,7 @@ export default class CompanySiteUsersModule implements Module {
     this.router.getRouter().register(
       new Route({
         name: "User",
-        title: "User Manage",
+        title: this.i18nModule.getI18nGateway().get("companySiteUser.router.name"),
         urlPattern: ":companySiteId/users",
         parent:this.router.getRouter().getRouteByName("CompanySite")
       }),
@@ -37,7 +37,7 @@ export default class CompanySiteUsersModule implements Module {
         controller: CompanySiteUsersComponent,
         interactor: new CompanySiteUsersInteractor(
           this.router.getRouter(),
-          this.i18n.getI18nGateway(),
+          this.i18nModule.getI18nGateway(),
           gateway),
       })
     );

@@ -38,7 +38,7 @@ export default class CompanySiteModule implements Module {
     this.routerModule.getRouter().register(
       new Route({
         name: "CompanySite",
-        title: "CompanySite Manage",
+        title: this.i18nModule.getI18nGateway().get("companySite.router.name"),
         urlPattern: ":id/sites",
         parent:this.routerModule.getRouter().getRouteByName("home")
       }),
