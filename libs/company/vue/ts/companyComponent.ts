@@ -57,7 +57,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                                  <div class="col-md-3">
                                    <label for="agentCompanyId" class="form-label">{{ model.labelInfo.agentCompanyLabel }}</label>
                                    <select class="form-select" id="agentCompanyId" v-model.number="model.searchForm.companyId">
-                                     <option selected value=null>Choose All</option>
+                                     <option selected value=null>{{ model.labelInfo.chooseAllLabel }}</option>
                                      <option
                                        v-for="company in model.allCompanies"
                                        :key="company.id"
@@ -213,17 +213,17 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                   <div>
                     <form class="row g-3">
                       <div class="col-md-12 position-relative">
-                        <label for="type" class="form-label">Type</label>
+                        <label for="type" class="form-label">{{model.labelInfo.typeLabel}}</label>
                         <select class="form-select" id="type" v-model="model.formData.type" :class="{'is-invalid':!!model.formErrors.type}">
-                          <option value="CUSTOMER">CUSTOMER</option>
-                          <option value="MANUFACTURER">MANUFACTURER</option>
-                          <option value="TRADER">TRADER</option>
+                          <option value="CUSTOMER">{{model.labelInfo.CUSTOMER}}</option>
+                          <option value="MANUFACTURER">{{ model.labelInfo.MANUFACTURER }}</option>
+                          <option value="TRADER">{{model.labelInfo.TRADER}}</option>
                         </select>
                         <div class="invalid-feedback" v-show="!!model.formErrors.type">{{ model.formErrors.type }}</div>
                       </div>
                       
                       <div class="col-md-12 position-relative">
-                        <label for="type" class="form-label">Agent Company Name</label>
+                        <label for="type" class="form-label">{{model.labelInfo.agentCompanyNameLabel}}</label>
                         <select class="form-select" id="type" v-model.number="model.formData.agentCompanyId" :class="{'is-invalid':!!model.formErrors.agentCompanyId}">
                           <option label="N/A" value=null></option>
                           <option
@@ -237,13 +237,13 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                       </div>
                       
                       <div class="col-md-12 position-relative">
-                        <label for="alias" class="form-label">Alias</label>
+                        <label for="alias" class="form-label">{{model.labelInfo.aliasLabel}}</label>
                         <input type="text" class="form-control" :class="{'is-invalid':!!model.formErrors.alias}" id="alias" v-model="model.formData.alias">
                         <div class="invalid-feedback" v-show="!!model.formErrors.alias">{{ model.formErrors.alias }}</div>
                       </div>
 
                       <div class="col-md-12 position-relative">
-                        <label for="customerId" class="form-label">Customer ID</label>
+                        <label for="customerId" class="form-label">{{model.labelInfo.customerIdLabel}}</label>
                         <input type="text" class="form-control" :class="{'is-invalid':!!model.formErrors.customerId}" id="customerId" v-model="model.formData.customerId">
                         <div class="invalid-feedback" v-show="!!model.formErrors.customerId">{{ model.formErrors.customerId }}</div>
                       </div>
@@ -310,15 +310,15 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                     <div class="col-md-12 position-relative">
                       <label for="type" class="form-label">Type</label>
                       <select class="form-select" id="type" v-model="model.formData.type" :class="{'is-invalid':!!model.formErrors.type}">
-                        <option value="CUSTOMER">CUSTOMER</option>
-                        <option value="MANUFACTURER">MANUFACTURER</option>
-                        <option value="TRADER">TRADER</option>
+                        <option value="CUSTOMER">{{ model.labelInfo.CUSTOMER }}</option>
+                        <option value="MANUFACTURER">{{ model.labelInfo.MANUFACTURER }}</option>
+                        <option value="TRADER">{{ model.labelInfo.TRADER }}</option>
                       </select>
                       <div class="invalid-feedback" v-show="!!model.formErrors.type">{{ model.formErrors.type }}</div>
                     </div>
 
                     <div class="col-md-12 position-relative">
-                      <label for="type" class="form-label">Agent Company Name</label>
+                      <label for="type" class="form-label">{{ model.labelInfo.agentCompanyLabel }}</label>
                       <select class="form-select" id="type" v-model.number="model.formData.agentCompanyId" :class="{'is-invalid':!!model.formErrors.agentCompanyId}">
                         <option label="N/A" value=null></option>
                         <option
