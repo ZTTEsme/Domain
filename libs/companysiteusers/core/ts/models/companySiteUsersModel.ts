@@ -6,6 +6,8 @@ import UserTableColName from "../entities/userTableColName";
 import Dialog from "../entities/dialog";
 import FormErrors from "../../../../common/entities/ts/formError";
 import AddUserFormData from "../entities/addUserFormData";
+import CompanySiteWithUsers from "qnect-sdk-web/lib/company-site/core/ts/entities/companySiteWithUsers";
+import CompanySiteUser from "qnect-sdk-web/lib/company-site/core/ts/entities/companySiteUser";
 
 export default class CompanySiteUsersModel{
 
@@ -35,5 +37,9 @@ export default class CompanySiteUsersModel{
   public validAddUserFormErrors: FormErrors = {};
 
   public addUserFormData:AddUserFormData = new AddUserFormData();
+
+  public companySiteWithUsers: CompanySiteWithUsers = new CompanySiteWithUsers();
+
+  public companySiteUsers:CompanySiteUser[] = [];
 
 }

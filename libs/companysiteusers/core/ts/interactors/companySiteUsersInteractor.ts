@@ -1,17 +1,17 @@
-import CompanySitePresenter from "../../../../companysite/core/ts/interactors/companySitePresenter";
 import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
 import CompanySiteUsersPresenter from "./companySiteUsersPresenter";
 import CompanySiteUsersAssembler from "../assemblers/companySiteUsersAssembler";
-import CompanySiteState from "../../../../companysite/core/ts/interactors/companySiteState";
 import Router from "cloos-vue-router/lib/core/router";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import RestCompanySiteGateway from "qnect-sdk-web/lib/company-site/rest/ts/gateways/restCompanySiteGateway";
 import CompanySiteUsersModel from "../models/companySiteUsersModel";
+import CompanySiteUsersState from "./companySiteUsersState";
+import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
 export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySiteUsersPresenter> {
 
   private presenter: CompanySiteUsersPresenter | null = null;
-  private readonly state: CompanySiteState = new CompanySiteState();
+  private readonly state: CompanySiteUsersState = new CompanySiteUsersState();
 
   public constructor(
     router: Router,
@@ -26,7 +26,9 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
     this.updateView();
   }
 
-  onLoad(): Promise<void> {
+  async onLoad(): Promise<void> {
+    this.state.companySiteWithUsers = await this.gateWay.getCompanySite(parseInt(this.router.getPathParams().get("companySiteId")!));
+    this.state.companySiteUsers = this.state.companySiteWithUsers.users;
     return Promise.resolve(undefined);
   }
 
@@ -38,35 +40,106 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
     this.presenter?.updateView(CompanySiteUsersAssembler.fromState(this.state,this.router,this.i18nGateway));
   }
 
-  public openAddUserDialog(){
-
+  public rulesForAddCompanySiteUser = {
+    email: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: 'email is required',
+      },
+    ],
+    role: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: 'role is required',
+      },
+    ]
   }
 
   public changePageSize(model:CompanySiteUsersModel){
-
+    if(this.state.pageInfo.pageSize !== this.state.pageInfo.currentPageSize) {
+      this.state.pageInfo.pageNo = 1;
+      this.state.pageInfo.pageSize = model.pageInfo.pageSize;
+      this.state.pageInfo.currentPageSize = model.pageInfo.pageSize;
+      this.updateView();
+    }
   }
 
   public changePage(pageNo:number){
-
+    this.state.pageInfo.pageNo = pageNo;
+    this.updateView();
   }
 
-  public openDeleteUserDialog(){
+  public openDeleteUserDialog(userId:string){
+    this.state.dialog.openDeleteUserDialog = true;
+    this.state.dialog.currentDeleteCompanySiteUserId = userId;
+    this.updateView();
+  }
 
+  public openAddUserDialog(){
+    this.state.dialog.showAddUserSuccessMessage = false;
+    this.state.dialog.showAddUserFailureMessage = false;
+    this.state.dialog.openAddUserDialog = true;
+    this.updateView();
   }
 
   public closeAddCompanySiteUserDialog(){
-
+    this.state.dialog.openAddUserDialog = false;
+    this.updateView();
   }
 
-  public addCompanySiteUser(model:CompanySiteUsersModel){
+  public async addCompanySiteUser(model:CompanySiteUsersModel){
+
+    this.state.addUserFormData = model.addUserFormData;
+
+    this.state.validAddCompanySiteUserFormErrors = CommonUtils.validateForm(model.addUserFormData,this.rulesForAddCompanySiteUser,this.state.validAddCompanySiteUserErrors,this.state.validAddCompanySiteUserFormErrors)
+
+    if (CommonUtils.isObjectEmpty(this.state.validAddCompanySiteUserFormErrors)) {
+      try {
+        await this.gateWay.inviteUserToCompanySite(parseInt(this.router.getPathParams().get("id")!),model.addUserFormData.email,model.addUserFormData.role);
+        this.state.dialog.showAddUserFailureMessage = false;
+        this.state.dialog.showAddUserSuccessMessage = true;
+        this.state.companySiteWithUsers = await this.gateWay.getCompanySite(parseInt(this.router.getPathParams().get("companySiteId")!));
+      } catch (error) {
+        this.state.dialog.showAddUserFailureMessage = true;
+        this.state.dialog.showAddUserSuccessMessage = false;
+      }
+      finally {
+        this.state.isLoading = false;
+      }
+    }
+    this.updateView();
 
   }
 
   public closeDeleteUserDialog(){
-
+    this.state.dialog.openDeleteUserDialog = false;
+    this.state.dialog.showDeleteUserSuccessMessage = false;
+    this.state.dialog.showDeleteUserFailureMessage = false;
+    this.updateView();
   }
 
-  public deleteCompanySiteUser(){
+  public async  deleteCompanySiteUser(userId:string){
+    try{
+      this.updateView();
+      if(userId == undefined) {
+        this.state.dialog.showDeleteUserFailureMessage = true;
+        this.state.dialog.showDeleteUserSuccessMessage = false;
+        this.updateView();
+      }
+      else {
+        debugger
+        await this.gateWay.removeUserFromCompanySite(parseInt(this.router.getPathParams().get("id")!),userId);
+        this.state.dialog.showDeleteUserFailureMessage = false;
+        this.state.dialog.showDeleteUserSuccessMessage = true;
+        this.state.companySiteWithUsers = await this.gateWay.getCompanySite(parseInt(this.router.getPathParams().get("companySiteId")!));
+        this.updateView();
+      }
+    }
+    catch(error){
+      this.state.dialog.showDeleteUserFailureMessage = true;
+      this.state.dialog.showDeleteUserSuccessMessage = false;
+      this.updateView();
+    }
 
   }
 

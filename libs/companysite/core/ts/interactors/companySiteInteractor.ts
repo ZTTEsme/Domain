@@ -215,8 +215,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     }
     this.updateView();
   }
-
-
+  
   async deleteCompanySite(companySiteId: number): Promise<void> {
     try{
       this.updateView();
@@ -259,8 +258,10 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     return Promise.resolve(undefined);
   }
 
-  public goCompanySiteUsers(companySiteId:number){
-    this.router.loadRoute(this.router.getRouteByName("User"), new Map([['id', companySiteId.toString()]])).then();
+  public goCompanySiteUsers(companySiteId:number,companyId:number){
+    this.router.loadRoute(this.router.getRouteByName("User"), new Map(
+      [['companySiteId', companySiteId.toString()],['id', companyId.toString()]]
+    )).then();
   }
 }
 

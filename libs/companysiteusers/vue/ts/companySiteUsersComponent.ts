@@ -127,7 +127,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                             <td>{{ele.email}}</td>
                             <td>{{ele.role}}</td>
                             <td>
-                              <ButtonComponent icon="fa-solid fa-pen-to-square" btn-style="width:30px" @click="() => interactor.openDeleteUserDialog()"></ButtonComponent>
+                              <ButtonComponent shape="btn-outline-danger" icon="fa-solid fa-trash-can" btn-style="width:30px" @click="() => interactor.openDeleteUserDialog(ele.id)"></ButtonComponent>
                             </td>
                           </tr>
                           </tbody>
@@ -177,8 +177,8 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
           </div>
         </toast>
 
-        <!--add companySite modal-->
-        <modal name="add companySite"
+        <!--add companySiteUser modal-->
+        <modal name="add companySiteUser"
                :show="model.dialog.openAddUserDialog"
                :title="model.dialog.addUserDialogTitle"
                :labelClose="true"
@@ -194,21 +194,27 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
           <div>
             <form class="row g-3">
               <div class="col-md-12 position-relative">
-                <label for="alias" class="form-label">Alias</label>
-                <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddUserFormErrors.alias}"
-                       id="alias" v-model="model.addUserFormData.alias">
-                <div class="invalid-feedback" v-show="!!model.validAddUserFormErrors.alias">
-                  {{ model.validAddUserFormErrors.alias }}
-                </div>               
+<!--                <label for="alias" class="form-label">Alias</label>-->
+<!--                <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddUserFormErrors.alias}"-->
+<!--                       id="alias" v-model="model.addUserFormData.alias">-->
+<!--                <div class="invalid-feedback" v-show="!!model.validAddUserFormErrors.alias">-->
+<!--                  {{ model.validAddUserFormErrors.alias }}-->
+<!--                </div> -->
+                
                 <label for="email" class="form-label">Email</label>
                 <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddUserFormErrors.email}"
                        id="email" v-model="model.addUserFormData.email">
                 <div class="invalid-feedback" v-show="!!model.validAddUserFormErrors.email">
                   {{ model.validAddUserFormErrors.email }}
-                </div>               
+                </div>
+              </div>
+              
+              <div class="col-md-12 position-relative">
                 <label for="role" class="form-label">Role</label>
-                <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddUserFormErrors.role}"
-                       id="role" v-model="model.addUserFormData.role">
+                <select class="form-select" id="type" v-model="model.addUserFormData.role" :class="{'is-invalid':!!model.validAddUserFormErrors.role}">
+                  <option value="ADMINISTRATOR">ADMINISTRATOR</option>
+                  <option value="USER">USER</option>
+                </select>
                 <div class="invalid-feedback" v-show="!!model.validAddUserFormErrors.role">
                   {{ model.validAddUserFormErrors.role }}
                 </div>
@@ -248,7 +254,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
             </div>
           </div>
           <template #footer>
-            <button class="btn btn-primary" @click='() => interactor.deleteCompanySiteUser()'>
+            <button class="btn btn-primary" @click='() => interactor.deleteCompanySiteUser(model.dialog.currentDeleteCompanySiteUserId)'>
               {{ model.dialog.submit }}
             </button>
           </template>

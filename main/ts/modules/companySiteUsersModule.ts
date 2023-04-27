@@ -29,7 +29,7 @@ export default class CompanySiteUsersModule implements Module {
       new Route({
         name: "User",
         title: "User Manage",
-        urlPattern: "users",
+        urlPattern: ":companySiteId/users",
         parent:this.router.getRouter().getRouteByName("CompanySite")
       }),
       // /company/manage/companySite/manage/:id/user/manage/:companySiteId

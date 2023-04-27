@@ -39,7 +39,7 @@ export default class CompanySiteModule implements Module {
       new Route({
         name: "CompanySite",
         title: "CompanySite Manage",
-        urlPattern: "sites/:id",
+        urlPattern: ":id/sites",
         parent:this.routerModule.getRouter().getRouteByName("home")
       }),
       new VueRouteHandler({

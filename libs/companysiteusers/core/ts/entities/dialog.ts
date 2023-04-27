@@ -17,6 +17,6 @@ export default class Dialog{
   public showDeleteUserSuccessMessage:boolean=false;
   public showDeleteUserFailureMessage:boolean=false;
   public msgDeleteUserWithFailure:string="";
-  public currentDeleteUserId:number|null=null;
+  public currentDeleteCompanySiteUserId:string = "";
 
 }

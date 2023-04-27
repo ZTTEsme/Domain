@@ -32,15 +32,15 @@ export default class CompanySiteModelAssembler {
 
     model.showSearch = state.showSearch;
 
-    model.labelInfo.companyId = "Company Alias Name";
+    model.labelInfo.companyId = "Company Name";
 
     model.tableAction.add = "add";
     model.tableAction.delete = "delete"
     model.tableAction.modify = "modify"
 
     model.companySiteTableColName.id = "ID"
-    model.companySiteTableColName.alias = "Company Site Alias Name"
-    model.companySiteTableColName.companyId = "Company Alias Name"
+    model.companySiteTableColName.alias = "CompanySite Name"
+    model.companySiteTableColName.companyId = "Company Name"
     model.companySiteTableColName.operate = "Operate"
 
     // search
