@@ -182,7 +182,8 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
         <toast :show="model.searchCompanySiteWasFailed">
           <div class="toast-body">
             <div class="d-flex align-items-center">
-              <div class="font-35 text-danger"><i class="bx bxs-message-square-x"></i>
+              <div class="font-35 text-danger">
+                <i class="bx bxs-message-square-x"></i>
               </div>
               <div class="ms-3">
                 <span class="mb-0 text-danger" style="font-size:20px">{{ model.labelInfo.serverErrorInfo }}</span>
