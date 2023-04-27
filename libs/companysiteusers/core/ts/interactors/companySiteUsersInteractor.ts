@@ -44,13 +44,13 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
     email: [
       {
         validator: (value: any) => value.length > 0,
-        message: 'email is required',
+        message: this.i18nGateway.get("companySiteUser.valid.email")
       },
     ],
     role: [
       {
         validator: (value: any) => value.length > 0,
-        message: 'role is required',
+        message: this.i18nGateway.get("companySiteUser.valid.role")
       },
     ]
   }

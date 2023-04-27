@@ -43,6 +43,24 @@
     </unit>
 
     <!--company module-->
+    <unit id="company.add.valid.alias">
+      <segment>
+        <source>Alias is required</source>
+      </segment>
+    </unit>
+
+    <unit id="company.add.valid.type">
+      <segment>
+        <source>Type is required</source>
+      </segment>
+    </unit>
+
+    <unit id="company.add.valid.customerId">
+      <segment>
+        <source>Customer ID is required</source>
+      </segment>
+    </unit>
+
     <unit id="company.label.serverErrorInfo">
       <segment>
         <source>Server Internal Error</source>
@@ -388,6 +406,25 @@
       </segment>
     </unit>
 
+    <unit id="companySite.add.valid.alias">
+      <segment>
+        <source>Alias is required</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.modify.valid.alias">
+      <segment>
+        <source>Alias is required</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.modify.valid.companyId">
+      <segment>
+        <source>Company ID is required</source>
+      </segment>
+    </unit>
+
+
 
     <!--CompanySite User-->
     <unit id="companySiteUser.table.alias">
@@ -491,6 +528,20 @@
         <source>Server Internal Error!!!</source>
       </segment>
     </unit>
+
+    <unit id="companySiteUser.valid.email">
+      <segment>
+        <source>email is required</source>
+      </segment>
+    </unit>
+
+    <unit id="companySiteUser.valid.role">
+      <segment>
+        <source>role is required</source>
+      </segment>
+    </unit>
+
+
 
 
 

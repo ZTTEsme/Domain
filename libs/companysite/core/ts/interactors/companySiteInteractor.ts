@@ -11,7 +11,6 @@ import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restC
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
 export default class CompanySiteInteractor extends ViewInteractor<CompanySitePresenter> {
-  private i18nGateway: I18nGateway;
   private presenter: CompanySitePresenter | null = null;
   private readonly gateWay: RestCompanySiteGateway;
   private readonly restCompanyGateway: RestCompanyGateway;
@@ -19,12 +18,11 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
 
   public constructor(
     router: Router,
-    i18nGateway: I18nGateway,
+    private i18nGateway: I18nGateway,
     gateWay: RestCompanySiteGateway,
     restCompanyGateway:RestCompanyGateway
   ) {
     super(router);
-    this.i18nGateway = i18nGateway;
     this.gateWay = gateWay;
     this.restCompanyGateway = restCompanyGateway
   }
@@ -143,7 +141,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     alias: [
       {
         validator: (value: any) => value.length > 0,
-        message: 'Alias is required',
+        message: this.i18nGateway.get("companySite.add.valid.alias"),
       },
     ]
   };
@@ -176,13 +174,13 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     alias: [
       {
         validator: (value: any) => value.length > 0,
-        message: 'Alias is required',
+        message: this.i18nGateway.get("companySite.modify.valid.alias"),
       },
     ],
     companyId: [
       {
         validator: (value: any) => value.length > 0,
-        message: 'companyId is required',
+        message: this.i18nGateway.get("companySite.modify.valid.companyId"),
       },
     ]
   }
@@ -215,7 +213,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     }
     this.updateView();
   }
-  
+
   async deleteCompanySite(companySiteId: number): Promise<void> {
     try{
       this.updateView();

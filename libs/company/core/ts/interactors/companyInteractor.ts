@@ -11,14 +11,13 @@ import OperateType from "../enums/operateType";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
 export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
-  private readonly i18nGateway: I18nGateway;
   private readonly gateWay: RestCompanyGateway;
   private presenter: CompanyPresenter | null =null;
   private readonly state: CompanyState =new CompanyState();
 
   public constructor(
     router: Router,
-    i18nGateway: I18nGateway,
+    private readonly i18nGateway: I18nGateway,
     gateWay: RestCompanyGateway,
   ) {
     super(router);
@@ -130,24 +129,24 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     alias: [
       {
         validator: (value: any) => value.length > 0,
-        message: 'Alias is required',
+        message: this.i18nGateway.get("company.add.valid.alias"),
       },
     ],
     type: [
       {
         validator: (value: any) => value.length > 0,
-        message: 'Type is required',
+        message: this.i18nGateway.get("company.add.valid.type"),
       },
     ],
     customerId: [
       {
         validator: (value: any) => value.length > 0,
-        message: 'CustomerId is required',
+        message: this.i18nGateway.get("company.add.valid.customerId"),
       },
     ],
   };
 
-  public async saveCompany(
+  public async saveCompany (
     model:CompanyModel,
     operateType:string
   ): Promise<void> {
