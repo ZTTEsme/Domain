@@ -13,6 +13,7 @@ declare global {
       authGateway: AuthGateway;
       axiosRestClientProvider: AxiosRestClientProvider;
       updateAppConfigsHook: VoidFunction | undefined;
+      i18nPrefix: string | undefined;
     }) => Promise<void>;
   }
 }
@@ -32,10 +33,13 @@ export default class FrameModule implements Module {
         authUserDataProvider: this.authModule.getAuthUserDataProvider(),
         authGateway: this.authModule.getAuthGateway(),
         axiosRestClientProvider: this.authModule.getRestClientProvider(),
-        updateAppConfigsHook: () => {}
+        updateAppConfigsHook: () => {
+          // do nothing
+        },
+        i18nPrefix: "http://192.168.10.165:8080",
       });
     } catch (error) {
-      console.error("Could not init qnect frame.");
+      console.error("Could not init qnect frame.", error);
     }
   }
 

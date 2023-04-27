@@ -1,13 +1,13 @@
 {
-  "name": "qnect-web",
-  "version": "1.1.7",
+  "name": "customer-management-app",
+  "version": "1.0.0",
   "description": "",
   "scripts": {
     "clean": "shx rm -rf build",
     "build": "npm run clean && node build-scripts/build.js build qnect-web",
     "watch": "npm run clean && node build-scripts/build.js watch qnect-web"
   },
-  "author": "Carl Cloos Schweisstechnick GmbH",
+  "author": "Carl Cloos Schweisstechnik GmbH",
   "license": "UNLICENSED",
   "devDependencies": {
     "@rollup/plugin-alias": "^4.0.3",
