@@ -42,6 +42,7 @@ export default class CompanyModelAssembler {
     model.showSearch = state.showSearch;
 
     // label info
+    model.labelInfo.serverErrorInfo =  i18nGateway.get("company.label.serverErrorInfo");
     model.labelInfo.typeLabel =  i18nGateway.get("company.label.type");
     model.labelInfo.agentCompanyNameLabel =  i18nGateway.get("company.label.agentCompanyName");
     model.labelInfo.aliasLabel =  i18nGateway.get("company.label.alias");

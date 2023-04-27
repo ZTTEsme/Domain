@@ -191,7 +191,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                        <div class="font-35 text-danger"><i class="bx bxs-message-square-x"></i>
                        </div>
                        <div class="ms-3">
-                         <span class="mb-0 text-danger" style="font-size:20px">Server Internal Error!!!</span>
+                         <span class="mb-0 text-danger" style="font-size:20px">{{ model.labelInfo.serverErrorInfo }}</span>
                        </div>
                      </div>
                   </div>

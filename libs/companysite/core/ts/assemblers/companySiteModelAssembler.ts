@@ -32,16 +32,22 @@ export default class CompanySiteModelAssembler {
 
     model.showSearch = state.showSearch;
 
-    model.labelInfo.companyId = "Company Name";
+    model.labelInfo.serverErrorInfo = i18nGateway.get("companySite.label.serverErrorInfo");
+    model.labelInfo.companyId = i18nGateway.get("companySite.label.companyId");
+    model.labelInfo.aliasLabel = i18nGateway.get("companySite.label.aliasLabel");
+    model.labelInfo.companyNameLabel = i18nGateway.get("companySite.label.companyNameLabel");
+    model.labelInfo.companySiteNameLabel = i18nGateway.get("companySite.label.companySiteNameLabel");
+    model.labelInfo.companyAliasNameLabel = i18nGateway.get("companySite.label.companyAliasNameLabel");
+    model.labelInfo.companySiteAliasNameLabel = i18nGateway.get("companySite.label.companySiteAliasNameLabel");
 
-    model.tableAction.add = "add";
-    model.tableAction.delete = "delete"
-    model.tableAction.modify = "modify"
+    model.tableAction.add = i18nGateway.get("companySite.action.add");
+    model.tableAction.delete = i18nGateway.get("companySite.action.delete");
+    model.tableAction.modify = i18nGateway.get("companySite.action.modify");
 
-    model.companySiteTableColName.id = "ID"
-    model.companySiteTableColName.alias = "CompanySite Name"
-    model.companySiteTableColName.companyId = "Company Name"
-    model.companySiteTableColName.operate = "Operate"
+    model.companySiteTableColName.id = i18nGateway.get("companySite.tableName.id");
+    model.companySiteTableColName.alias = i18nGateway.get("companySite.tableName.alias");
+    model.companySiteTableColName.companyId = i18nGateway.get("companySite.tableName.companyName");
+    model.companySiteTableColName.operate = i18nGateway.get("companySite.tableName.operate");
 
     // search
     model.searchCompanySiteWasFailed = state.searchCompanySiteWasFailed;
@@ -51,7 +57,7 @@ export default class CompanySiteModelAssembler {
 
     this.renderModelForModifyCompanySiteDialog(state,model,router,i18nGateway);
 
-    this.renderModelForDeleteCompanySiteDialog(state,model,router);
+    this.renderModelForDeleteCompanySiteDialog(state,model,router,i18nGateway);
 
     // pagination by front
     model.pageInfo = state.pageInfo;
@@ -61,20 +67,12 @@ export default class CompanySiteModelAssembler {
 
   }
 
-  private static initSelect(state:CompanySiteState,model:CompanySiteModel,router: Router){
-    // if(state.agentCompanyId === undefined) {
-    //   // -1代表全部
-    //   state.agentCompanyId=-1;
-    // }
-    // model.searchForm.agentCompanyId = state.agentCompanyId;
-  }
-
   // add dialog
   private static renderModelForAddCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway){
-    model.dialog.submit = "submit";
-    model.dialog.addCompanySite = "Add Company Site";
-    model.dialog.msgAddCompanySiteWithSuccess = "Success to add companySite";
-    model.dialog.msgAddCompanySiteWithFailure = "Failed to add companySite";
+    model.dialog.submit = i18nGateway.get("companySite.dialog.submit");
+    model.dialog.addCompanySite = i18nGateway.get("companySite.dialog.addCompanySite");
+    model.dialog.msgAddCompanySiteWithSuccess = i18nGateway.get("companySite.dialog.msgAddCompanySiteWithSuccess");
+    model.dialog.msgAddCompanySiteWithFailure = i18nGateway.get("companySite.dialog.msgAddCompanySiteWithFailure");
     model.addCompanySiteFormData = state.addCompanySiteFormData;
     model.dialog.showAddCompanySiteFailureMessage = state.showAddCompanySiteFailureMessage;
     model.dialog.showAddCompanySiteSuccessMessage = state.showAddCompanySiteSuccessMessage;
@@ -85,9 +83,9 @@ export default class CompanySiteModelAssembler {
 
   // modify dialog
   private static renderModelForModifyCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway){
-    model.dialog.modifyCompanySiteTitle = "Modify CompanySite";
-    model.dialog.msgModifyCompanySiteWithSuccess = "Success Modify CompanySite";
-    model.dialog.msgModifyCompanySiteWithFailure = "Failed Modify CompanySite";
+    model.dialog.modifyCompanySiteTitle = i18nGateway.get("companySite.dialog.modifyCompanySiteTitle");
+    model.dialog.msgModifyCompanySiteWithSuccess = i18nGateway.get("companySite.dialog.msgModifyCompanySiteWithSuccess");
+    model.dialog.msgModifyCompanySiteWithFailure = i18nGateway.get("companySite.dialog.msgModifyCompanySiteWithFailure");
     model.dialog.showModifyCompanySiteFailureMessage = state.showModifyCompanySiteFailureMessage;
     model.dialog.showModifyCompanySiteSuccessMessage = state.showModifyCompanySiteSuccessMessage;
     model.modifyCompanySiteFormData = state.modifyCompanySiteFormData;
@@ -97,11 +95,11 @@ export default class CompanySiteModelAssembler {
 
 
   // delete dialog
-  private static renderModelForDeleteCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router){
-    model.dialog.deleteCompanySiteTitle = "Delete companySite";
-    model.dialog.deleteTipInfo = "Sure to delete?"
-    model.dialog.msgDeleteCompanySiteWithSuccess = "Success to delete companySite"
-    model.dialog.msgDeleteCompanySiteWithFailure = "Failed to delete companySite"
+  private static renderModelForDeleteCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway){
+    model.dialog.deleteCompanySiteTitle = i18nGateway.get("companySite.dialog.deleteCompanySiteTitle");
+    model.dialog.deleteTipInfo = i18nGateway.get("companySite.dialog.deleteTipInfo");
+    model.dialog.msgDeleteCompanySiteWithSuccess = i18nGateway.get("companySite.dialog.msgDeleteCompanySiteWithSuccess");
+    model.dialog.msgDeleteCompanySiteWithFailure = i18nGateway.get("companySite.dialog.msgDeleteCompanySiteWithFailure");
     model.dialog.openDeleteDialog= state.openDeleteDialog;
     model.dialog.currentDeleteCompanySiteId = state.currentDeleteCompanySiteId;
     model.dialog.showDeleteCompanySiteSuccessMessage = state.showDeleteCompanySiteSuccessMessage;

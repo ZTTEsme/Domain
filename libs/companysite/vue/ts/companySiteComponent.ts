@@ -185,7 +185,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
               <div class="font-35 text-danger"><i class="bx bxs-message-square-x"></i>
               </div>
               <div class="ms-3">
-                <span class="mb-0 text-danger" style="font-size:20px">Server Internal Error!!!</span>
+                <span class="mb-0 text-danger" style="font-size:20px">{{ model.labelInfo.serverErrorInfo }}</span>
               </div>
             </div>
           </div>
@@ -208,7 +208,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
           <div>
             <form class="row g-3">
               <div class="col-md-12 position-relative">
-                <label for="alias" class="form-label">Alias</label>
+                <label for="alias" class="form-label">{{ model.labelInfo.aliasLabel }}</label>
                 <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddCompanySiteFormErrors.alias}"
                        id="alias" v-model="model.addCompanySiteFormData.alias">
                 <div class="invalid-feedback" v-show="!!model.validAddCompanySiteFormErrors.alias">
@@ -276,7 +276,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
 
           <form class="row g-3">
             <div class="col-md-12 position-relative">
-              <label for="companySiteId" class="form-label">Company Alias Name</label>
+              <label for="companySiteId" class="form-label">{{ model.labelInfo.companyAliasNameLabel}}</label>
               <select class="form-select" :class="{'is-invalid':!!model.validModifyCompanySiteFormErrors.companyId}"
                       id="companySiteId" v-model="model.modifyCompanySiteFormData.companyId">
                 <option
@@ -292,7 +292,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
             </div>
 
             <div class="col-md-12 position-relative">
-              <label for="alias" class="form-label">Company Site Alias Name</label>
+              <label for="alias" class="form-label">{{ model.labelInfo.companySiteAliasNameLabel }}</label>
               <input type="text" class="form-control"
                      :class="{'is-invalid': !!model.validModifyCompanySiteFormErrors.alias}" id="alias"
                      v-model="model.modifyCompanySiteFormData.alias">

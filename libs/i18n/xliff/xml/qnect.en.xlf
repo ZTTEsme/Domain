@@ -43,6 +43,12 @@
     </unit>
 
     <!--company module-->
+    <unit id="company.label.serverErrorInfo">
+      <segment>
+        <source>Server Internal Error</source>
+      </segment>
+    </unit>
+
     <unit id="company.label.agentCompanyName">
       <segment>
         <source>Agent Company Name</source>
@@ -217,5 +223,170 @@
         <source>Operate</source>
       </segment>
     </unit>
+
+
+    <!--Company Site Module-->
+
+    <unit id="companySite.companyName">
+      <segment>
+        <source>Company Name</source>
+      </segment>
+    </unit>
+
+
+    <unit id="companySite.action.add">
+      <segment>
+        <source>add</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.action.delete">
+      <segment>
+        <source>delete</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.action.modify">
+      <segment>
+        <source>modify</source>
+      </segment>
+    </unit>
+
+
+    <unit id="companySite.tableName.id">
+      <segment>
+        <source>ID</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.tableName.alias">
+      <segment>
+        <source>CompanySite Name</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.tableName.companyName">
+      <segment>
+        <source>Company Name</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.tableName.operate">
+      <segment>
+        <source>Operate</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.dialog.submit">
+      <segment>
+        <source>submit</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.dialog.addCompanySite">
+      <segment>
+        <source>Add Company Site</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.dialog.msgAddCompanySiteWithSuccess">
+      <segment>
+        <source>Success to add companySite</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.dialog.msgAddCompanySiteWithFailure">
+      <segment>
+        <source>Failed to add companySite</source>
+      </segment>
+    </unit>
+
+
+    <unit id="companySite.dialog.modifyCompanySiteTitle">
+      <segment>
+        <source>Modify CompanySite</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.dialog.msgModifyCompanySiteWithSuccess">
+      <segment>
+        <source>Success Modify CompanySite</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.dialog.msgModifyCompanySiteWithFailure">
+      <segment>
+        <source>Failed Modify CompanySite</source>
+      </segment>
+    </unit>
+
+
+    <unit id="companySite.dialog.deleteCompanySiteTitle">
+      <segment>
+        <source>Delete companySite</source>
+      </segment>
+    </unit>
+
+
+    <unit id="companySite.dialog.deleteTipInfo">
+      <segment>
+        <source>Sure to delete</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.dialog.msgDeleteCompanySiteWithSuccess">
+      <segment>
+        <source>Success to delete companySite</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.dialog.msgDeleteCompanySiteWithFailure">
+      <segment>
+        <source>Failed to delete CompanySite</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.label.serverErrorInfo">
+      <segment>
+        <source>Server Internal Error</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.label.companyId">
+      <segment>
+        <source>Company Name</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.label.aliasLabel">
+      <segment>
+        <source>Alias</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.label.companyNameLabel">
+      <segment>
+        <source>Company Name</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.label.companySiteNameLabel">
+      <segment>
+        <source>CompanySite Name</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.label.companyAliasNameLabel">
+      <segment>
+        <source>Company Alias Name</source>
+      </segment>
+    </unit>
+
+    <unit id="companySite.label.companySiteAliasNameLabel">
+      <segment>
+        <source>CompanySite Alias Name</source>
+      </segment>
+    </unit>
+
   </file>
 </xliff>
