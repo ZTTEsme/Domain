@@ -8,6 +8,7 @@ import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
 import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbComponent";
 import NoDataComponent from "../../../common/component/noDataComponent";
 import ButtonComponent from "../../../common/component/ButtonComponent";
+import ShuttleBoxComponent from "../../../common/component/shuttleBox/ShuttleBoxComponent";
 
 
 @Component({
@@ -18,7 +19,8 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
     toast: ToastComponent,
     breadcrumb:BreadcrumbComponent,
     NoDataComponent:NoDataComponent,
-    ButtonComponent: ButtonComponent
+    ButtonComponent: ButtonComponent,
+    ShuttleBoxComponent: ShuttleBoxComponent,
   },
   template:`
     <div class="container company-site-users">
@@ -68,7 +70,6 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                       <div class="col">
                         <ButtonComponent btn-style="width:30px" icon="fa-solid fa-arrows-rotate" shape="btn-outline-info"></ButtonComponent>
                       </div>
-
                     </div>
                     <!--end row-->
                   </div>

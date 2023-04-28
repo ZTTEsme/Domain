@@ -140,7 +140,11 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
       this.state.dialog.showDeleteUserSuccessMessage = false;
       this.updateView();
     }
+  }
 
+  public getSelectedItems(items:Item[]){
+
+    console.log( JSON.parse(JSON.stringify(items)));
   }
 
 }

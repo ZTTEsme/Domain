@@ -2,12 +2,12 @@ import Module from "qnect-sdk-web/lib/modules/core/ts/module";
 import I18nModule from "./i18nModule";
 import RouterModule from "./routerModule";
 import AuthModule from "qnect-sdk-web/lib/modules/main/ts/authModule";
-import CompanySiteGateway from "qnect-sdk-web/lib/company-site/core/ts/gateways/companySiteGateway";
 import RestCompanySiteGateway from "qnect-sdk-web/lib/company-site/rest/ts/gateways/restCompanySiteGateway";
 import Route from "cloos-vue-router/lib/core/route";
 import VueRouteHandler from "cloos-vue-router/lib/vue/vueRouteHandler";
 import CompanySiteUsersComponent from "../../../libs/companysiteusers/vue/ts/companySiteUsersComponent";
 import CompanySiteUsersInteractor from "../../../libs/companysiteusers/core/ts/interactors/companySiteUsersInteractor";
+
 
 export default class CompanySiteUsersModule implements Module {
 
