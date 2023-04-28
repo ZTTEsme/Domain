@@ -9,6 +9,7 @@ import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbC
 import NoDataComponent from "../../../common/component/noDataComponent";
 import ButtonComponent from "../../../common/component/ButtonComponent";
 import ShuttleBoxComponent from "../../../common/component/shuttleBox/ShuttleBoxComponent";
+import TableComponent from "../../../common/component/table/tableComponent";
 
 
 @Component({
@@ -21,8 +22,10 @@ import ShuttleBoxComponent from "../../../common/component/shuttleBox/ShuttleBox
     NoDataComponent:NoDataComponent,
     ButtonComponent: ButtonComponent,
     ShuttleBoxComponent: ShuttleBoxComponent,
+    TableComponent: TableComponent,
   },
   template:`
+ 
     <div class="container company-site-users">
     
     <div class="wrapper">

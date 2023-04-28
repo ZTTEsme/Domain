@@ -148,4 +148,14 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
     console.log( JSON.parse(JSON.stringify(items)));
   }
 
+  public changePageForTable(pageNo:number,pageSize:number){
+    console.log(pageNo);
+    console.log(pageSize);
+  }
+
+  public sort(field:string,type:string){
+    console.log(field);
+    console.log(type);
+  }
+
 }
