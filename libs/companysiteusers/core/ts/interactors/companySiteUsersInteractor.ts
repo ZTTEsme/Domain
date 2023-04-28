@@ -76,6 +76,7 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
   }
 
   public openAddUserDialog(){
+    this.state.validAddCompanySiteUserFormErrors = {};
     this.state.dialog.showAddUserSuccessMessage = false;
     this.state.dialog.showAddUserFailureMessage = false;
     this.state.dialog.openAddUserDialog = true;
