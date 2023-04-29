@@ -25,7 +25,30 @@ import TableComponent from "../../../common/component/table/tableComponent";
     TableComponent: TableComponent,
   },
   template:`
- 
+
+    <ShuttleBoxComponent ref="shuttleBox"
+                         :leftItems="model.items"
+                         left-title="All Items"
+                         right-title="Selected Items">
+    <button type="button" class="btn btn-outline-primary" @click="interactor.getSelectedItems(this.$refs.shuttleBox.selectedItems)">submit</button>
+    </ShuttleBoxComponent>
+
+    <TableComponent
+      :columns="model.columns"
+      :data="model.items"
+      :totalCount="model.items.length"
+      :page-sizes="5"
+      :page-items="[5,10,20]"
+      @changePage="(pageNo,pageSize)=>interactor.changePageForTable(pageNo,pageSize)"
+      @sort="(field,sortType)=>interactor.sort(field,sortType)"
+      :back-end="false"
+      sorted-order="asc"
+      sorted-fields="[name,age,email]">
+    <template v-slot:operate="{row}">
+      <ButtonComponent btn-style="width:30px" shape="btn-outline-secondary" icon="fa-solid fa-repeat fa-rotate-90">{{row.name}}</ButtonComponent>
+    </template>
+    </TableComponent>
+    
     <div class="container company-site-users">
     
     <div class="wrapper">
