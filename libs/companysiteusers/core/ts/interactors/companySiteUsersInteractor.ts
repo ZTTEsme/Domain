@@ -144,7 +144,6 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
   }
 
   public getSelectedItems(items:Item[]){
-
     console.log( JSON.parse(JSON.stringify(items)));
   }
 
@@ -157,5 +156,6 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
     console.log(field);
     console.log(type);
   }
+
 
 }

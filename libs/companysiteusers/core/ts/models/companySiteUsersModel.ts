@@ -43,15 +43,13 @@ export default class CompanySiteUsersModel{
   public companySiteUsers:CompanySiteUser[] = [];
 
   public columns: Column[] = [
-    { label: 'Name', field: 'name',render(value){
+    { label: 'Name',
+      field: 'name',
+      render(value){
         return `<button type="button" class="btn btn-primary">`+value+`</button>`;
       }},
-    { label: 'Age', field: 'age',render(value){
-        return value;
-      }},
-    { label: 'Email', field: 'email',render(value){
-        return value;
-      }},
+    { label: 'Age', field: 'age'},
+    { label: 'Email', field: 'email'},
   ];
 
   public items: Item[] = [

@@ -22,7 +22,7 @@ import TableComponent from "../../../common/component/table/tableComponent";
     NoDataComponent:NoDataComponent,
     ButtonComponent: ButtonComponent,
     ShuttleBoxComponent: ShuttleBoxComponent,
-    TableComponent: TableComponent,
+    tableComponent: TableComponent
   },
   template:`
 
@@ -33,7 +33,8 @@ import TableComponent from "../../../common/component/table/tableComponent";
     <button type="button" class="btn btn-outline-primary" @click="interactor.getSelectedItems(this.$refs.shuttleBox.selectedItems)">submit</button>
     </ShuttleBoxComponent>
 
-    <TableComponent
+    <tableComponent
+      :checked="true"
       :columns="model.columns"
       :data="model.items"
       :totalCount="model.items.length"
@@ -41,13 +42,17 @@ import TableComponent from "../../../common/component/table/tableComponent";
       :page-items="[5,10,20]"
       @changePage="(pageNo,pageSize)=>interactor.changePageForTable(pageNo,pageSize)"
       @sort="(field,sortType)=>interactor.sort(field,sortType)"
+      @getSelectedRows="(items)=>interactor.getSelectedItems(items)"
       :back-end="false"
-      sorted-order="asc"
-      sorted-fields="[name,age,email]">
-    <template v-slot:operate="{row}">
-      <ButtonComponent btn-style="width:30px" shape="btn-outline-secondary" icon="fa-solid fa-repeat fa-rotate-90">{{row.name}}</ButtonComponent>
-    </template>
-    </TableComponent>
+      :operateInfo="{operate:true,colName:'测试'}"
+      sorted-order="desc"
+      sorted-fields="[name,age,email]"
+    >
+      <template v-slot:operate="{row}">
+         <ButtonComponent btn-style="width:30px" shape="btn-outline-secondary" icon="fa-solid fa-repeat fa-rotate-90">{{row.name}}</ButtonComponent>
+      </template>
+    </tableComponent>
+    
     
     <div class="container company-site-users">
     

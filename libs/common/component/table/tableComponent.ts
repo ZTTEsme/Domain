@@ -1,4 +1,4 @@
-import {Component, Prop, Vue, Watch} from "vue-facing-decorator";
+import {Component, Prop, Vue, Watch, Ref, Emit} from "vue-facing-decorator";
 
 @Component({
   emits: ["changePage","sort","update:modelValue"],
@@ -7,17 +7,27 @@ import {Component, Prop, Vue, Watch} from "vue-facing-decorator";
     <table class="table table-striped table-bordered text-center ">
       <thead>
       <tr>
-        <th v-for="column in columns" :key="column.field" @click="sort(column.field)">
+        <th v-if="checked">
+          <input type="checkbox" v-model="allSelected" @change="selectAll" style="cursor:pointer">
+        </th>
+        <th v-for="column in columns" :key="column.field" @click="sort(column.field,column)" style="cursor:pointer" :style="{width:column.width}">
           {{ column.label }}
-          <span v-if="sortField.includes(column.field)">
-               <i class="fa-solid fa-repeat fa-rotate-90"></i>
+          <span v-if="sortField.includes(column.field)" class="ms-1">
+               <i v-if='sortOrder === "asc"'      class="fa-solid fa-arrow-up-short-wide fa-xs"></i>
+               <i v-else-if='sortOrder ==="desc"' class="fa-solid fa-arrow-up-short-wide fa-xs fa-rotate-180" :class="column.sortRotate"></i>
           </span>
         </th>
-        <th>操作</th>
+        <th v-if="operateInfo.operate">
+          {{ operateInfo.${'colName'} }}
+        </th>
+        
       </tr>
       </thead>
       <tbody>
       <tr v-for="item in items" :key="item.id">
+        <td v-if="checked">
+          <input type="checkbox" :value="item" v-model="item.selected" @change="selectRow(item)" style="cursor:pointer">
+        </td>
         <td v-for="column in columns" :key="column.field">
           <span v-if="column.render">
              <span v-html="reRender(column,item)"></span>
@@ -26,7 +36,7 @@ import {Component, Prop, Vue, Watch} from "vue-facing-decorator";
             {{item[column.field]}}
           </span>
         </td>
-        <td>
+        <td v-if="operateInfo.operate">
           <slot name="operate" :row="item"></slot>
         </td>
       </tr>
@@ -78,6 +88,16 @@ export default class TableComponent extends Vue {
 
   private sortField:string = '';
 
+  private allSelected=false
+
+  private allSelectedRows:Item[] = [];
+
+  @Prop()
+  private checked:boolean = false;
+
+  @Prop()
+  private operateInfo:any = {};
+
   @Prop()
   private sortedOrder:string="";
 
@@ -101,9 +121,8 @@ export default class TableComponent extends Vue {
 
   @Prop({default:[]})
   private pageItems:number[] = [];
-
   public reRender(column:Column,item:Item){
-    return  column.render(item[column.field]);
+    return column.render?.(item[column.field]);
   }
 
   private get totalPages(): number {
@@ -136,7 +155,14 @@ export default class TableComponent extends Vue {
     this.pageSize = this.pageSizes;
     this.sortOrder = this.sortedOrder;
     this.sortField = this.sortedFields;
-    this.items = this.paginatedItems;
+    //前端分页
+    if(!this.backEnd){
+      this.items = this.paginatedItems;
+    }
+    //后端分页
+    else {
+      this.items = this.data;
+    }
   }
 
   private get paginatedItems(): Item[] {
@@ -145,7 +171,7 @@ export default class TableComponent extends Vue {
     return this.data.slice(start, end);
   }
 
-  private sort(field: string): void {
+  private sort(field: string,column:Column): void {
     if(this.backEnd){
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
       this.$emit("sort",field,this.sortOrder);
@@ -165,6 +191,7 @@ export default class TableComponent extends Vue {
         }
       });
     }
+    column.sortRotate = "fa-rotate-180"
   }
 
   private prevPage(): void {
@@ -180,7 +207,6 @@ export default class TableComponent extends Vue {
   }
 
   public nextPage(): void {
-    debugger
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
       if(this.backEnd){
@@ -202,8 +228,16 @@ export default class TableComponent extends Vue {
     }
   }
 
+  @Watch("items")
+  watchItems(newValue: Item[]){
+    this.allSelectedRows = newValue;
+  }
+
   @Watch("pageSize")
   watchPageSize(newValue: number, oldValue: number) {
+    if(this.checked) {
+      this.allSelected = false;
+    }
     this.currentPage = 1;
     if(this.backEnd){
       this.$emit("changePage",this.currentPage,this.pageSize);
@@ -213,4 +247,24 @@ export default class TableComponent extends Vue {
     }
   }
 
+  selectAll() {
+    this.allSelectedRows.forEach(item => {
+      item.selected = this.allSelected;
+    });
+    this.$emit("getSelectedRows",this.allSelectedRows.filter(row => row.selected));
+  }
+
+  selectRow(item:Item){
+    if (!item.selected) {
+      this.allSelected = false;
+    } else {
+      const allRowsSelected = this.allSelectedRows.every(item => {
+        return item.selected;
+      });
+      if (allRowsSelected) {
+        this.allSelected = true;
+      }
+    }
+    this.$emit("getSelectedRows",this.allSelectedRows.filter(row => row.selected));
+  }
 }
