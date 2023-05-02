@@ -2,11 +2,13 @@
 const builder = require("slim-frontend-builder");
 const helpers = require("./helpers");
 const process = require("process");
-const config = require("./config.json");
+const defaultConfig = require("./config.default.json");
+const userConfig = require("./config.json");
 
 async function build(project) {
   const before = Date.now();
   builder.log.info("Building:", project);
+  const config = helpers.mergeConfig(defaultConfig, userConfig);
 
   try {
     builder.styles.compileSass(config.styles.inputFile, config.styles.outputFile);
@@ -40,6 +42,7 @@ async function build(project) {
 
 async function watch(project) {
   builder.log.info("Watching:", project);
+  const config = helpers.mergeConfig(defaultConfig, userConfig);
 
   builder.styles.compileSass(config.styles.inputFile, config.styles.outputFile);
   await builder.xliff.compileXliff(config.translations.inputDirectory, config.translations.outputDirectory);

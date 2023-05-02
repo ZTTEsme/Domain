@@ -11,6 +11,7 @@ const json = require("@rollup/plugin-json");
 const resolve = require("@rollup/plugin-node-resolve");
 const serve = require("rollup-plugin-serve");
 const typescript = require("@rollup/plugin-typescript");
+const { config } = require("process");
 
 const rollupPluginAlias = alias({ entries: { vue: "node_modules/vue/dist/vue.esm-bundler.js" } });
 
@@ -247,7 +248,34 @@ function getImageMatcher(config) {
   };
 }
 
+function mergeConfig(defaultConfig, userConfig) {
+  return mergeDeep(defaultConfig, userConfig);
+}
+
+function isObject(item) {
+  return item && typeof item === "object" && !Array.isArray(item);
+}
+
+function mergeDeep(target, ...sources) {
+  if (!sources.length) return target;
+  const source = sources.shift();
+
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) Object.assign(target, { [key]: {} });
+        mergeDeep(target[key], source[key]);
+      } else {
+        Object.assign(target, { [key]: source[key] });
+      }
+    }
+  }
+
+  return mergeDeep(target, ...sources);
+}
+
 module.exports = {
+  mergeConfig,
   copyFiles,
   copyImages,
   getIndexMatcher,
