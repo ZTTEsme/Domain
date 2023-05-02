@@ -110,88 +110,23 @@ function rollupOutputConfig(dest, project) {
   };
 }
 
-function copyVue(distDir) {
-  builder.files.copy("node_modules/vue/dist/vue.global.js", `${distDir}/vue.js`);
+function copyImages(srcDirs, distDir, fileTypes) {
+  fs.mkdirSync(distDir, { recursive: true });
+  builder.files.copyFilesByTypeToDirectory(srcDirs, distDir, ...fileTypes);
 }
 
-function copyBootstrap(distDir) {
-  builder.files.copy("node_modules/bootstrap/dist/js/bootstrap.bundle.js", `${distDir}/bootstrap.js`);
+function copyFiles(configs) {
+  configs.forEach((config) => {
+    builder.files.copy(config.inputFile, config.outputFile);
+  });
 }
 
-function copyFonts(distDir) {
-  // Source Sans Pro
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-200-italic.woff",
-    `${distDir}/fonts/source-sans-pro-200-italic.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-200-normal.woff",
-    `${distDir}/fonts/source-sans-pro-200-normal.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-300-italic.woff",
-    `${distDir}/fonts/source-sans-pro-300-italic.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-300-normal.woff",
-    `${distDir}/fonts/source-sans-pro-300-normal.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-400-italic.woff",
-    `${distDir}/fonts/source-sans-pro-400-italic.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-400-normal.woff",
-    `${distDir}/fonts/source-sans-pro-400-normal.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-600-italic.woff",
-    `${distDir}/fonts/source-sans-pro-600-italic.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-600-normal.woff",
-    `${distDir}/fonts/source-sans-pro-600-normal.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-700-italic.woff",
-    `${distDir}/fonts/source-sans-pro-700-italic.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-700-normal.woff",
-    `${distDir}/fonts/source-sans-pro-700-normal.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-900-italic.woff",
-    `${distDir}/fonts/source-sans-pro-900-italic.woff`
-  );
-  builder.files.copy(
-    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-900-normal.woff",
-    `${distDir}/fonts/source-sans-pro-900-normal.woff`
-  );
-
-  // Font Awesome
-  builder.files.copy("node_modules/@fortawesome/fontawesome-free/webfonts", `${distDir}/fonts`);
-}
-
-function copyAssets(srcDirs, distDir) {
-  // Images
-  fs.mkdirSync(`${distDir}/img`, { recursive: true });
-  builder.files.copyFilesByTypeToDirectory(srcDirs, `${distDir}/img`, "jpg", "jpeg", "png", "svg", "gif");
-
-  // JS Vendor
-  copyVue(distDir);
-  copyBootstrap(distDir);
-
-  // Fonts
-  copyFonts(distDir);
-}
-
-function postProcessHtmlInjects(htmlFile, environment, i18nHash) {
+function postProcessHtmlInjects(htmlFile, environment, i18nHash, frameUrl) {
   builder.log.action("Post processing HTML injects");
-  //192.168.10.165
-  let frameJsReplacement = '\n<script src="http://localhost:8080/qnect-frame.js"></script>';
-  let frameCssReplacement =
-    '<link rel="stylesheet" type="text/css" href="http://localhost:8080/qnect-frame.css" />';
+
+  let frameJsReplacement = `\n<script src="${frameUrl}/qnect-frame.js"></script>`;
+  let frameCssReplacement = `<link rel="stylesheet" type="text/css" href="${frameUrl}/qnect-frame.css" />`;
+
   if (environment === "production") {
     frameJsReplacement = '\n<script src="../../qnect-frame.js"></script>';
     frameCssReplacement = '<link rel="stylesheet" type="text/css" href="../../qnect-frame.css" />';
@@ -200,7 +135,7 @@ function postProcessHtmlInjects(htmlFile, environment, i18nHash) {
   replaceInFile(
     htmlFile,
     "<!--BUILD_BODY_INJECT-->",
-    `<script>window.process.env.NODE_ENV="${environment}";window.i18nFolderHash="${i18nHash}";window.frameI18nPrefix="${""}";</script>${frameJsReplacement}`
+    `<script>window.process.env.NODE_ENV="${environment}";window.i18nFolderHash="${i18nHash}";window.frameI18nPrefix="${frameUrl}";</script>${frameJsReplacement}`
   );
   replaceInFile(htmlFile, "<!--BUILD_HEADER_INJECT-->", frameCssReplacement);
 }
@@ -271,49 +206,50 @@ function getDummyTsMatcher() {
   };
 }
 
-function getIndexMatcher(srcDir, distDir) {
+function getIndexMatcher(config) {
   return {
     pattern: new RegExp(/index.html$/, "i"),
     callback: (event, filePath) => {
-      builder.files.copy(`${srcDir}/html/index.html`, `${distDir}/index.html`);
-      postProcessHtmlInjects(`${distDir}/index.html`, "development", "");
+      builder.files.copy(config.templates.inputFile, config.templates.outputFile);
+      postProcessHtmlInjects(config.templates.outputFile, "development", "", config.watch.frameUrl);
     },
   };
 }
 
-function getScssMatcher(srcDir, distDir) {
+function getScssMatcher(config) {
   return {
     pattern: new RegExp(/.*\.scss$/, "i"),
     callback: (event, filePath) => {
-      builder.styles.compileSass(`${srcDir}/sass/main.scss`, `${distDir}/main.css`);
+      builder.styles.compileSass(config.styles.inputFile, config.styles.outputFile);
     },
   };
 }
 
-function getI18nMatcher(srcDir, distDir) {
+function getI18nMatcher(config) {
   return {
     pattern: new RegExp(/.*\.xlf$/, "i"),
-    callback: (event, filePath) => {
-      builder.xliff.compileXliff(srcDir, distDir);
+    callback: async (event, filePath) => {
+      await builder.xliff.compileXliff(config.translations.inputDirectory, config.translations.outputDirectory);
     },
   };
 }
 
-function getImageMatcher(distDir) {
+function getImageMatcher(config) {
   return {
     pattern: new RegExp(/.*\.(jpg|jpeg|png|svg)$/, "i"),
     callback: (event, filePath) => {
       if (event === "remove") {
-        builder.files.removeFile(`${distDir}/img/${path.basename(filePath)}`);
+        builder.files.removeFile(`${config.images.outputDirectory}/${path.basename(filePath)}`);
       } else {
-        builder.files.copy(filePath, `${distDir}/img/${path.basename(filePath)}`);
+        builder.files.copy(filePath, `${config.images.outputDirectory}/${path.basename(filePath)}`);
       }
     },
   };
 }
 
 module.exports = {
-  copyAssets,
+  copyFiles,
+  copyImages,
   getIndexMatcher,
   getScssMatcher,
   getI18nMatcher,

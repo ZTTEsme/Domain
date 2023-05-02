@@ -3,3 +3,4 @@ node_modules
 build
 .rollup.cache
 tsconfig.tsbuildinfo
+build-scripts/config.json

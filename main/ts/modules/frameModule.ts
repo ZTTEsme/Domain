@@ -36,7 +36,7 @@ export default class FrameModule implements Module {
         updateAppConfigsHook: () => {
           // do nothing
         },
-        i18nPrefix: "http://192.168.10.165:8080",
+        i18nPrefix: <string>(<any>window).frameI18nPrefix || "",
       });
     } catch (error) {
       console.error("Could not init qnect frame.", error);
