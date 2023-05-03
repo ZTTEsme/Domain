@@ -248,8 +248,14 @@ function getImageMatcher(config) {
   };
 }
 
-function mergeConfig(defaultConfig, userConfig) {
-  return mergeDeep(defaultConfig, userConfig);
+function getConfig() {
+  const defaultConfig = require("./config.default.json");
+  try {
+    const userConfig = require("./config.json");
+    return mergeDeep(defaultConfig, userConfig);
+  } catch (error) {
+    return defaultConfig;
+  }
 }
 
 function isObject(item) {
@@ -275,7 +281,7 @@ function mergeDeep(target, ...sources) {
 }
 
 module.exports = {
-  mergeConfig,
+  getConfig,
   copyFiles,
   copyImages,
   getIndexMatcher,
