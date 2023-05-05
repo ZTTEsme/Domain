@@ -5,7 +5,7 @@ import {Component, Prop, Vue} from "vue-facing-decorator";
   template:`
     <div class="row">
          <div class="col-12 text-center">
-           <div v-show="showToast" class="mb-3 p-1 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3 text-center">
+           <div v-show="showToast" class="mb-3 p-1 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3 text-center">
              {{ fileTypeValidMsg }}
            </div>
 
