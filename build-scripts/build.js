@@ -3,68 +3,68 @@ const builder = require("slim-frontend-builder");
 const helpers = require("./helpers");
 const process = require("process");
 
-const watchPort = 8018;
-
 async function build(project) {
+  const before = Date.now();
   builder.log.info("Building:", project);
-
-  const srcDir = "main";
-  const libsDir = "libs";
-  const distDir = "build";
-  const i18nSrcDir = "libs/i18n/xliff/xml";
+  const config = helpers.getConfig();
 
   try {
-    builder.styles.compileSass(`${srcDir}/sass/main.scss`, `${distDir}/main.css`);
+    builder.styles.compileSass(config.styles.inputFile, config.styles.outputFile);
     await builder.scripts.compileTypescript(
-      helpers.rollupInputConfig(`${srcDir}/ts/main.ts`),
-      helpers.rollupOutputConfig(`${distDir}/main.js`, project)
+      helpers.rollupInputConfig(config.scripts.inputFile),
+      helpers.rollupOutputConfig(config.scripts.outputFile, project)
     );
-    await builder.xliff.compileXliff(i18nSrcDir, `${distDir}/i18n`);
-    builder.files.copy(`${srcDir}/html/index.html`, `${distDir}/index.html`);
-    helpers.copyAssets([srcDir, libsDir], distDir);
-    await helpers.postProcessCss(`${distDir}/main.css`, `${distDir}/index.html`);
+    await builder.xliff.compileXliff(config.translations.inputDirectory, config.translations.outputDirectory);
+    builder.files.copy(config.templates.inputFile, config.templates.outputFile);
+    helpers.copyImages(config.images.inputDirectories, config.images.outputDirectory, config.images.types);
+    helpers.copyFiles(config.fonts.files);
+    helpers.copyFiles(config.scripts.vendors);
+    await helpers.postProcessCss(config.styles.outputFile, config.templates.outputFile);
     await helpers.postProcessJavascript(
-      `${distDir}/index.html`,
-      `${distDir}/main.js`,
-      `${distDir}/vue.js`,
-      `${distDir}/bootstrap.js`
+      config.templates.outputFile,
+      config.scripts.outputFile,
+      ...config.scripts.vendors.map((v) => v.outputFile)
     );
-    const i18nHash = await helpers.postProcessI18n(i18nSrcDir, `${distDir}/i18n`);
-    helpers.postProcessHtmlInjects(`${distDir}/index.html`, "production", i18nHash);
+    const i18nHash = await helpers.postProcessI18n(
+      config.translations.inputDirectory,
+      config.translations.outputDirectory
+    );
+    helpers.postProcessHtmlInjects(config.templates.outputFile, "production", i18nHash, config.watch.frameUrl);
   } catch (error) {
     console.log(error);
     process.exit(1);
   }
+
+  builder.log.info("Done in", builder.log.prettyDuration(Date.now() - before));
 }
 
 async function watch(project) {
   builder.log.info("Watching:", project);
+  const config = helpers.getConfig();
 
-  const srcDir = "main";
-  const libsDir = "libs";
-  const distDir = "build";
-  const i18nSrcDir = "libs/i18n/xliff/xml";
-  const i18nDistDir = `${distDir}/i18n`;
+  builder.styles.compileSass(config.styles.inputFile, config.styles.outputFile);
+  await builder.xliff.compileXliff(config.translations.inputDirectory, config.translations.outputDirectory);
+  builder.files.copy(config.templates.inputFile, config.templates.outputFile);
+  helpers.copyImages(config.images.inputDirectories, config.images.outputDirectory, config.images.types);
+  helpers.copyFiles(config.fonts.files);
+  helpers.copyFiles(config.scripts.vendors);
+  helpers.postProcessHtmlInjects(config.templates.outputFile, "development", "", config.watch.frameUrl);
 
-  builder.styles.compileSass(`${srcDir}/sass/main.scss`, `${distDir}/main.css`);
-  await builder.xliff.compileXliff(i18nSrcDir, i18nDistDir);
-  builder.files.copy(`${srcDir}/html/index.html`, `${distDir}/index.html`);
-  helpers.postProcessHtmlInjects(`${distDir}/index.html`, "development", "");
-  helpers.copyAssets([srcDir, libsDir], distDir);
-
-  builder.scripts.watchTypescript(helpers.rollupWatchConfig(`${srcDir}/ts/main.ts`, `${distDir}/main.js`, watchPort));
+  builder.scripts.watchTypescript(
+    helpers.rollupWatchConfig(config.scripts.inputFile, config.scripts.outputFile, config.watch.port)
+  );
 
   builder.watcher.watchProject({
-    baseSourcePaths: [srcDir, libsDir],
+    baseSourcePaths: config.watch.inputDirectories,
     matchers: [
       helpers.getDummyTsMatcher(),
-      helpers.getIndexMatcher(srcDir, distDir),
-      helpers.getScssMatcher(srcDir, distDir),
-      helpers.getI18nMatcher(i18nSrcDir, i18nDistDir),
-      helpers.getImageMatcher(distDir),
+      helpers.getIndexMatcher(config),
+      helpers.getScssMatcher(config),
+      helpers.getI18nMatcher(config),
+      helpers.getImageMatcher(config),
     ],
   });
-  builder.log.info("Serving on localhost:", watchPort);
+  builder.log.info("Serving on localhost:", config.watch.port);
 }
 
 const cmdArg = process.argv[2];

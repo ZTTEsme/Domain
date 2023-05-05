@@ -1,0 +1,85 @@
+{
+  "watch": {
+    "port": 8018,
+    "inputDirectories": ["main", "libs"],
+    "frameUrl": "http://localhost:8080"
+  },
+  "styles": {
+    "inputFile": "main/sass/main.scss",
+    "outputFile": "build/main.css"
+  },
+  "scripts": {
+    "inputFile": "main/ts/main.ts",
+    "outputFile": "build/main.js",
+    "vendors": [
+      { "inputFile": "node_modules/vue/dist/vue.global.js", "outputFile": "build/vue.js" },
+      { "inputFile": "node_modules/bootstrap/dist/js/bootstrap.bundle.js", "outputFile": "build/bootstrap.js" }
+    ]
+  },
+  "translations": {
+    "inputDirectory": "libs/i18n/xliff/xml",
+    "outputDirectory": "build/i18n"
+  },
+  "templates": {
+    "inputFile": "main/html/index.html",
+    "outputFile": "build/index.html"
+  },
+  "images": {
+    "inputDirectories": ["main", "libs"],
+    "outputDirectory": "build/img",
+    "types": ["jpg", "jpeg", "png", "svg", "gif"]
+  },
+  "fonts": {
+    "files": [
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-200-italic.woff",
+        "outputFile": "build/fonts/source-sans-pro-200-italic.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-200-normal.woff",
+        "outputFile": "build/fonts/source-sans-pro-200-normal.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-300-italic.woff",
+        "outputFile": "build/fonts/source-sans-pro-300-italic.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-300-normal.woff",
+        "outputFile": "build/fonts/source-sans-pro-300-normal.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-400-italic.woff",
+        "outputFile": "build/fonts/source-sans-pro-400-italic.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-400-normal.woff",
+        "outputFile": "build/fonts/source-sans-pro-400-normal.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-600-italic.woff",
+        "outputFile": "build/fonts/source-sans-pro-600-italic.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-600-normal.woff",
+        "outputFile": "build/fonts/source-sans-pro-600-normal.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-700-italic.woff",
+        "outputFile": "build/fonts/source-sans-pro-700-italic.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-700-normal.woff",
+        "outputFile": "build/fonts/source-sans-pro-700-normal.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-900-italic.woff",
+        "outputFile": "build/fonts/source-sans-pro-900-italic.woff"
+      },
+      {
+        "inputFile": "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-all-900-normal.woff",
+        "outputFile": "build/fonts/source-sans-pro-900-normal.woff"
+      },
+      { "inputFile": "node_modules/@fortawesome/fontawesome-free/webfonts", "outputFile": "build/fonts" }
+    ]
+  }
+}
