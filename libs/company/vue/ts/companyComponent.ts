@@ -24,10 +24,6 @@ import FileUploadComponent from "../../../common/component/fileUpload/FileUpload
   template: `
     <div class="container company">
     
-    <file-upload-component
-      @getFile="(file)=>interactor.formData(file)"
-    ></file-upload-component>
-    
          <div class="wrapper">
               <!--content -->
               <section>
