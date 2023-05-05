@@ -266,4 +266,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   public goCompanySite(id:number){
     this.router.loadRoute(this.router.getRouteByName("CompanySite"), new Map([['id', id.toString()]])).then();
   }
+
+  public formData(file:Blob){
+    console.log(file);
+  }
 }

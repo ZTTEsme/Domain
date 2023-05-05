@@ -8,8 +8,6 @@ import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
 import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbComponent";
 import NoDataComponent from "../../../common/component/noDataComponent";
 import ButtonComponent from "../../../common/component/ButtonComponent";
-import ShuttleBoxComponent from "../../../common/component/shuttleBox/ShuttleBoxComponent";
-import TableComponent from "../../../common/component/table/tableComponent";
 
 
 @Component({
@@ -20,39 +18,9 @@ import TableComponent from "../../../common/component/table/tableComponent";
     toast: ToastComponent,
     breadcrumb:BreadcrumbComponent,
     NoDataComponent:NoDataComponent,
-    ButtonComponent: ButtonComponent,
-    ShuttleBoxComponent: ShuttleBoxComponent,
-    tableComponent: TableComponent
+    ButtonComponent: ButtonComponent
   },
   template:`
-
-    <ShuttleBoxComponent ref="shuttleBox"
-                         :leftItems="model.items"
-                         left-title="All Items"
-                         right-title="Selected Items">
-    <button type="button" class="btn btn-outline-primary" @click="interactor.getSelectedItems(this.$refs.shuttleBox.selectedItems)">submit</button>
-    </ShuttleBoxComponent>
-
-    <tableComponent
-      :checked="true"
-      :columns="model.columns"
-      :data="model.items"
-      :totalCount="model.items.length"
-      :page-sizes="5"
-      :page-items="[5,10,20]"
-      @changePage="(pageNo,pageSize)=>interactor.changePageForTable(pageNo,pageSize)"
-      @sort="(field,sortType)=>interactor.sort(field,sortType)"
-      @getSelectedRows="(items)=>interactor.getSelectedItems(items)"
-      :back-end="false"
-      :operateInfo="{operate:true,colName:'测试'}"
-      sorted-order="desc"
-      sorted-fields="[name,age,email]"
-    >
-      <template v-slot:operate="{row}">
-         <ButtonComponent btn-style="width:30px" shape="btn-outline-secondary" icon="fa-solid fa-repeat fa-rotate-90">{{row.name}}</ButtonComponent>
-      </template>
-    </tableComponent>
-    
     
     <div class="container company-site-users">
     

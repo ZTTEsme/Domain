@@ -8,6 +8,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
 import CompanyPresenter from "../../core/ts/interactors/companyPresenter";
 import NoDataComponent from "../../../common/component/noDataComponent";
 import ButtonComponent from "../../../common/component/ButtonComponent";
+import FileUploadComponent from "../../../common/component/fileUpload/FileUploadComponent";
 
 @Component({
   name: "CompanyComponent",
@@ -18,9 +19,15 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
     breadcrumb:BreadcrumbComponent,
     NoDataComponent:NoDataComponent,
     ButtonComponent:ButtonComponent,
+    fileUploadComponent: FileUploadComponent
   },
   template: `
     <div class="container company">
+    
+    <file-upload-component
+      @getFile="(file)=>interactor.formData(file)"
+    ></file-upload-component>
+    
          <div class="wrapper">
               <!--content -->
               <section>
