@@ -8,7 +8,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
 import CompanyPresenter from "../../core/ts/interactors/companyPresenter";
 import NoDataComponent from "../../../common/component/noDataComponent";
 import ButtonComponent from "../../../common/component/ButtonComponent";
-import FileUploadComponent from "../../../common/component/fileUpload/FileUploadComponent";
+import TimePickerComponent from "../../../common/component/timePicker/TimePickerComponent";
 
 @Component({
   name: "CompanyComponent",
@@ -19,11 +19,10 @@ import FileUploadComponent from "../../../common/component/fileUpload/FileUpload
     breadcrumb:BreadcrumbComponent,
     NoDataComponent:NoDataComponent,
     ButtonComponent:ButtonComponent,
-    fileUploadComponent: FileUploadComponent
+    timePickerComponent: TimePickerComponent,
   },
   template: `
     <div class="container company">
-    
          <div class="wrapper">
               <!--content -->
               <section>
