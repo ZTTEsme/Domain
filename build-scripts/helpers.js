@@ -125,18 +125,19 @@ function copyFiles(configs) {
 function postProcessHtmlInjects(htmlFile, environment, i18nHash, frameUrl) {
   builder.log.action("Post processing HTML injects");
 
-  let frameJsReplacement = `\n<script src="${frameUrl}/qnect-frame.js"></script>`;
+  let frameJsReplacement = `\n<script>window.frameI18nPrefix="${frameUrl}";</script>\n<script src="${frameUrl}/qnect-frame.js"></script>`;
   let frameCssReplacement = `<link rel="stylesheet" type="text/css" href="${frameUrl}/qnect-frame.css" />`;
 
   if (environment === "production") {
-    frameJsReplacement = '\n<script src="../../qnect-frame.js"></script>';
+    frameJsReplacement =
+      '\n<script>window.frameI18nPrefix="../../";</script>\n<script src="../../qnect-frame.js"></script>';
     frameCssReplacement = '<link rel="stylesheet" type="text/css" href="../../qnect-frame.css" />';
   }
 
   replaceInFile(
     htmlFile,
     "<!--BUILD_BODY_INJECT-->",
-    `<script>window.process.env.NODE_ENV="${environment}";window.i18nFolderHash="${i18nHash}";window.frameI18nPrefix="${frameUrl}";</script>${frameJsReplacement}`
+    `<script>window.process.env.NODE_ENV="${environment}";window.i18nFolderHash="${i18nHash}";</script>${frameJsReplacement}`
   );
   replaceInFile(htmlFile, "<!--BUILD_HEADER_INJECT-->", frameCssReplacement);
 }
