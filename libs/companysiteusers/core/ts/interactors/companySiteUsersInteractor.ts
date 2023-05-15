@@ -96,7 +96,7 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
 
     if (CommonUtils.isObjectEmpty(this.state.validAddCompanySiteUserFormErrors)) {
       try {
-        await this.gateWay.inviteUserToCompanySite(parseInt(this.router.getPathParams().get("id")!),model.addUserFormData.email,model.addUserFormData.role);
+        await this.gateWay.inviteUserToCompanySite(parseInt(this.router.getPathParams().get("companySiteId")!),model.addUserFormData.email,model.addUserFormData.role);
         this.state.dialog.showAddUserFailureMessage = false;
         this.state.dialog.showAddUserSuccessMessage = true;
         this.state.companySiteWithUsers = await this.gateWay.getCompanySite(parseInt(this.router.getPathParams().get("companySiteId")!));
