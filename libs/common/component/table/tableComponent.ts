@@ -23,7 +23,7 @@ import {Component, Prop, Vue, Watch, Ref, Emit} from "vue-facing-decorator";
         
       </tr>
       </thead>
-      <tbody>
+      <tbody v-if="items.length !==0">
       <tr v-for="item in items" :key="item.id">
         <td v-if="checked">
           <input type="checkbox" :value="item" v-model="item.selected" @change="selectRow(item)" style="cursor:pointer">
@@ -42,7 +42,7 @@ import {Component, Prop, Vue, Watch, Ref, Emit} from "vue-facing-decorator";
       </tr>
       </tbody>
     </table>
-    <nav style="float:right">
+    <nav style="float:right" v-if="items.length !==0">
       <div class="mt-auto">
         <div  class="row float-end me-1" >
           <div class="col ps-0 pe-1" >
@@ -95,7 +95,7 @@ export default class TableComponent extends Vue {
   @Prop()
   private checked:boolean = false;
 
-  @Prop()
+  @Prop({default:{}})
   private operateInfo:any = {};
 
   @Prop()
