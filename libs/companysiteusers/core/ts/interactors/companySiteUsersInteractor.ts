@@ -41,6 +41,12 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
   }
 
   public rulesForAddCompanySiteUser = {
+    alias: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: this.i18nGateway.get("companySiteUser.valid.alias")
+      },
+    ],
     email: [
       {
         validator: (value: any) => value.length > 0,
@@ -100,6 +106,7 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
         this.state.dialog.showAddUserFailureMessage = false;
         this.state.dialog.showAddUserSuccessMessage = true;
         this.state.companySiteWithUsers = await this.gateWay.getCompanySite(parseInt(this.router.getPathParams().get("companySiteId")!));
+        this.state.companySiteUsers = this.state.companySiteWithUsers.users;
       } catch (error) {
         this.state.dialog.showAddUserFailureMessage = true;
         this.state.dialog.showAddUserSuccessMessage = false;
@@ -108,6 +115,7 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
         this.state.isLoading = false;
       }
     }
+
     this.updateView();
 
   }
@@ -129,10 +137,11 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
       }
       else {
         debugger
-        await this.gateWay.removeUserFromCompanySite(parseInt(this.router.getPathParams().get("id")!),userId);
+        await this.gateWay.removeUserFromCompanySite(parseInt(this.router.getPathParams().get("companySiteId")!),userId);
         this.state.dialog.showDeleteUserFailureMessage = false;
         this.state.dialog.showDeleteUserSuccessMessage = true;
         this.state.companySiteWithUsers = await this.gateWay.getCompanySite(parseInt(this.router.getPathParams().get("companySiteId")!));
+        this.state.companySiteUsers = this.state.companySiteWithUsers.users;
         this.updateView();
       }
     }

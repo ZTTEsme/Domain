@@ -192,12 +192,12 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
           <div>
             <form class="row g-3">
               <div class="col-md-12 position-relative">
-<!--                <label for="alias" class="form-label">Alias</label>-->
-<!--                <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddUserFormErrors.alias}"-->
-<!--                       id="alias" v-model="model.addUserFormData.alias">-->
-<!--                <div class="invalid-feedback" v-show="!!model.validAddUserFormErrors.alias">-->
-<!--                  {{ model.validAddUserFormErrors.alias }}-->
-<!--                </div> -->
+                <label for="alias" class="form-label">Alias</label>
+                <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddUserFormErrors.alias}"
+                       id="alias" v-model="model.addUserFormData.alias">
+                <div class="invalid-feedback" v-show="!!model.validAddUserFormErrors.alias">
+                  {{ model.validAddUserFormErrors.alias }}
+                </div> 
                 
                 <label for="email" class="form-label">{{ model.labelInfo.emailLabel }}</label>
                 <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddUserFormErrors.email}"

@@ -556,6 +556,12 @@
       </segment>
     </unit>
 
+    <unit id="companySiteUser.valid.alias">
+      <segment>
+        <source>User alias is required</source>
+      </segment>
+    </unit>
+
     <unit id="companySiteUser.valid.email">
       <segment>
         <source>email is required</source>
