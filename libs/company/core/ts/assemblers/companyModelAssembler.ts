@@ -51,6 +51,7 @@ export default class CompanyModelAssembler {
     model.labelInfo.CUSTOMER =  i18nGateway.get("company.label.CUSTOMER");
     model.labelInfo.MANUFACTURER =  i18nGateway.get("company.label.MANUFACTURER");
     model.labelInfo.TRADER =  i18nGateway.get("company.label.TRADER");
+    model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
 
     // searchForm
     model.labelInfo.agentCompanyLabel = i18nGateway.get("company.label.agentCompanyName")

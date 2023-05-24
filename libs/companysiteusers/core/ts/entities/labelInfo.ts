@@ -5,6 +5,8 @@ export default class LabelInfo {
 
   public serverErrorInfo:string="";
 
+  public noDataLabel:string="";
+
   public ADMINISTRATOR:string="";
 
   public USER:string = "";

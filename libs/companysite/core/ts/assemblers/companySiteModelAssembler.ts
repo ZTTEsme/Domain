@@ -32,6 +32,7 @@ export default class CompanySiteModelAssembler {
 
     model.showSearch = state.showSearch;
 
+    model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
     model.labelInfo.serverErrorInfo = i18nGateway.get("companySite.label.serverErrorInfo");
     model.labelInfo.companyId = i18nGateway.get("companySite.label.companyId");
     model.labelInfo.aliasLabel = i18nGateway.get("companySite.label.aliasLabel");

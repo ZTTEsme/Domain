@@ -1,8 +1,6 @@
 import Router from "cloos-vue-router/lib/core/router";
 import VueRouter from "cloos-vue-router/lib/vue/vueRouter";
 import VueRouterOptions from "cloos-vue-router/lib/vue/vueRouterOptions";
-import AppLinkComponent from "qnect-sdk-web/lib/apps/vue/ts/appLinkComponent";
-import AppLinkContainerComponent from "qnect-sdk-web/lib/apps/vue/ts/appLinkContainerComponent";
 import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbComponent";
 import AlertComponent from "qnect-sdk-web/lib/common/vue/ts/alertComponent";
 import CarouselComponent from "qnect-sdk-web/lib/common/vue/ts/carouselComponent";
@@ -33,8 +31,6 @@ export default class RouterModule implements Module {
         plugins: [],
         components: [
           ["alert", AlertComponent],
-          ["app-link", AppLinkComponent],
-          ["app-link-container", AppLinkContainerComponent],
           ["breadcrumb", BreadcrumbComponent],
           ["carousel-item", CarouselItemComponent],
           ["carousel", CarouselComponent],

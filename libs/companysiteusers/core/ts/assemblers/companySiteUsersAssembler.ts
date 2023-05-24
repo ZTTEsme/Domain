@@ -27,6 +27,7 @@ export default class CompanySiteUsersAssembler {
     model.labelInfo.ADMINISTRATOR = i18nGateway.get("companySiteUser.label.ADMINISTRATOR");
     model.labelInfo.USER = i18nGateway.get("companySiteUser.label.USER");
     model.labelInfo.serverErrorInfo = i18nGateway.get("companySiteUser.label.serverErrorInfo");
+    model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
 
     // table pagination
     model.pageInfo = state.pageInfo;

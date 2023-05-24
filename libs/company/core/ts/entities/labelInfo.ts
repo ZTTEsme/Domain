@@ -20,4 +20,6 @@ export default class LabelInfo{
 
   public serverErrorInfo = "";
 
+  public noDataLabel = "";
+
 }

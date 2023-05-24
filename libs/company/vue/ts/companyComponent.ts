@@ -30,28 +30,23 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                    <div class="page-content">
                      <!--breadcrumb-->
                      <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-1">
-                       
-                       <div style="margin-top: 15px;">
+                       <div class="mt-3">
                          <nav aria-label="breadcrumb">
                            <ol class="breadcrumb mb-0 p-0">
                              <li class="breadcrumb-item">
-                               <img src="./img/home.gif" style="width:40px">
+                               <i class="fa-solid fa-house fa-2xl"></i>
                              </li>
-<!--                             <li class="ps-1" class="breadcrumb-title">{{model.moduleName}}</li>-->
-                             <li class="ps-1 pt-2">
+                             <li class="ps-1 ms-2">
                                <breadcrumb :items="model.breadcrumb" />
                              </li>
                            </ol>
                          </nav>
                        </div>
-                       <div class="ms-auto mt-3">
-                         <ButtonComponent btn-style="width:30px" shape="btn-outline-secondary" icon="fa-solid fa-repeat fa-rotate-90"  @click="interactor.showSearch(model)"></ButtonComponent>
-                       </div>
                      </div>
                      
                      <div class="main row gy-2">
                        <!--search-->
-                       <div class="col col-lg-12 mx-auto" v-show="model.showSearch">
+                       <div class="col-sm-12 col-md-12 col-lg-12 mx-auto" v-show="model.showSearch">
                          <div class="card">
                            <div class="card-body">
                              <div class="card-title">
@@ -84,7 +79,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                          </div>
                        </div>
                        <!--table-->
-                       <div class="col col-lg-12 mx-auto">
+                       <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
                          <div v-show="model.isLoading" style="position: absolute;left: 43%;top: 60%;z-index: 100;">
                            <div class="spinner-grow text-primary" role="status"><span
                              class="visually-hidden">Loading...</span>
@@ -117,7 +112,9 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                                </div>
                              </div>
                              <hr/>
-                             <NoDataComponent v-show="model.pageResultForCompany.total<=0" img="./img/no-data-available.gif"></NoDataComponent>
+                             <NoDataComponent v-show="model.pageResultForCompany.total<=0" img="./img/no-data-available.gif">
+                               <span>{{model.labelInfo.noDataLabel}}</span>
+                             </NoDataComponent>
                              <div class="row row-cols-auto g-3" style="min-height:300px" v-show="model.pageResultForCompany.total>0">
                                <div class="table-responsive d-flex flex-column" style="width:100%;" >
                                  <!--table-->
