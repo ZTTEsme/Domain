@@ -65,7 +65,6 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                                  </div>
                                </form>
                              </div>
-                             <hr/>
                              <div class="row row-cols-auto g-2" style="float:right;">
                                <div class="col">
                                  <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" @click="interactor.getCompanies(model.searchForm.companyId)"></ButtonComponent>

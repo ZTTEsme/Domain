@@ -62,7 +62,6 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                         </div>
                       </form>
                     </div>
-                    <hr/>
                     <div class="row row-cols-auto g-2" style="float:right;">
                       <div class="col">
                         <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" @click="interactor.getCompanySites(model.searchForm.companyId)"></ButtonComponent>
