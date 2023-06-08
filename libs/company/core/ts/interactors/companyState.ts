@@ -40,8 +40,8 @@ export default class CompanyState {
 
   public resetInputState(): void {
     this.type = "";
-    this.searchForm.agentCompanyId = null;
-    this.searchForm.companyId = null;
+    this.searchForm.agentCompanyId = undefined;
+    this.searchForm.companyId = undefined;
     this.alias = "";
     this.customerId = "";
   }

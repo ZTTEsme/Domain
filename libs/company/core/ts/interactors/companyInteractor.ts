@@ -50,7 +50,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   }
 
   public async onLoad(): Promise<void> {
-    await this.getCompanies(null);
+    await this.getCompanies(undefined);
   }
 
   public onUnload(): Promise<void> {
@@ -66,7 +66,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.state.allCompanies = await this.gateWay.getCompanies();
   }
 
-  public async getCompanies(agentId: number|null):Promise<void> {
+  public async getCompanies(agentId: number|undefined):Promise<void> {
     try{
       this.state.searchCompaniesWasFailed  = false;
       this.updateView();
@@ -129,8 +129,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
   }
 
   public async resetSearchForm(model:CompanyModel):Promise<void>{
-    model.searchForm.agentCompanyId=null;
-    model.searchForm.companyId=null;
+    model.searchForm.agentCompanyId=undefined;
+    model.searchForm.companyId=undefined;
     await this.getCompanies(model.searchForm.companyId);
   }
 

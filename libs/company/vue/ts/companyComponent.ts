@@ -368,7 +368,7 @@ export default class CompanyComponent extends Vue implements CompanyPresenter {
   // 数据原型
   public model: CompanyModel = new CompanyModel();
 
-  public key:number|null = this.model.searchForm.agentCompanyId
+  public key:number|undefined = this.model.searchForm.agentCompanyId
 
   // 当前分页大小
   public readonly pageNo:number = this.model.pageInfo.pageNo;

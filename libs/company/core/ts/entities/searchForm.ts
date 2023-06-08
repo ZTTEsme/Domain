@@ -1,7 +1,7 @@
 export default class SearchForm{
 
-  public agentCompanyId:number|null = null;
+  public agentCompanyId:number|undefined = undefined;
 
-  public companyId:number|null = null;
+  public companyId:number|undefined = undefined;
 
 }
