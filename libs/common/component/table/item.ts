@@ -1,3 +1,3 @@
-interface Item {
+export default class Item {
   [key: string]: any;
 }
