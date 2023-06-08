@@ -8,6 +8,7 @@ import CompanyAddState from "../entities/companyAddState";
 
 export default class CompanyState {
 
+
   public pageResultForCompany:PageResult = {
     data: [],
     total: 0
@@ -27,6 +28,7 @@ export default class CompanyState {
   public formErrors: FormErrors = {};
 
   public resCompanies:Company[] = []
+
   public allCompanies:Company[] = []
 
   public searchForm: SearchForm = new SearchForm();
@@ -52,4 +54,6 @@ export default class CompanyState {
     this.companyAddState.alias = "";
     this.companyAddState.customerId = "";
   }
+
+
 }

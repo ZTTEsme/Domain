@@ -1,4 +1,4 @@
-import { Component, Prop, Vue,Watch } from "vue-facing-decorator";
+import { Component, Prop, Vue, Watch } from "vue-facing-decorator";
 import ModalComponent from "qnect-sdk-web/lib/common/vue/ts/modalComponent";
 import PaginationComponent from "qnect-sdk-web/lib/common/vue/ts/paginationComponent";
 import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
@@ -16,9 +16,9 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
     pagination: PaginationComponent,
     modal: ModalComponent,
     toast: ToastComponent,
-    breadcrumb:BreadcrumbComponent,
-    NoDataComponent:NoDataComponent,
-    ButtonComponent:ButtonComponent,
+    breadcrumb: BreadcrumbComponent,
+    NoDataComponent: NoDataComponent,
+    ButtonComponent: ButtonComponent,
     timePickerComponent: TimePickerComponent,
   },
   template: `
@@ -368,21 +368,21 @@ export default class CompanyComponent extends Vue implements CompanyPresenter {
   // 数据原型
   public model: CompanyModel = new CompanyModel();
 
-  public key:number|undefined = this.model.searchForm.agentCompanyId
+  public key: number | undefined = this.model.searchForm.agentCompanyId
 
   // 当前分页大小
-  public readonly pageNo:number = this.model.pageInfo.pageNo;
+  public readonly pageNo: number = this.model.pageInfo.pageNo;
 
-  @Watch("pageNo",{deep:true,immediate: true})
-  public propertyWatcher(newValue: string, oldValue: string):void {
-    if(newValue !== oldValue){
+  @Watch("pageNo", { deep: true, immediate: true })
+  public propertyWatcher(newValue: string, oldValue: string): void {
+    if (newValue !== oldValue) {
       this.interactor.changePageSize(this.model);
     }
   }
 
 
-  @Watch("key",{deep:true,immediate: true})
-  public propertyWatcherOne(newValue: string, oldValue: string):void {
+  @Watch("key", { deep: true, immediate: true })
+  public propertyWatcherOne(newValue: string, oldValue: string): void {
     console.log(newValue)
     console.log(oldValue)
   }

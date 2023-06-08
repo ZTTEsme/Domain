@@ -129,7 +129,7 @@ public watchItemsFromParent():void {
     if(!this.isDropDown) {
       this.searchTerm = "";
     }
-    this.isDropDown = true;
+    this.isDropDown = !this.isDropDown;
   }
 
   public switchSelect(item:SelectItem):void{

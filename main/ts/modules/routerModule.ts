@@ -10,6 +10,7 @@ import OffcanvasComponent from "qnect-sdk-web/lib/common/vue/ts/offcanvasCompone
 import PaginationComponent from "qnect-sdk-web/lib/common/vue/ts/paginationComponent";
 import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
 import Module from "qnect-sdk-web/lib/modules/core/ts/module";
+import SelectComponent from "../../../libs/common/component/select/selectComponent";
 
 export default class RouterModule implements Module {
   private router!: Router;
@@ -38,6 +39,7 @@ export default class RouterModule implements Module {
           ["pagination", PaginationComponent],
           ["toast", ToastComponent],
           ["offcanvas", OffcanvasComponent],
+          ["SelectComponent",SelectComponent]
         ],
       })
     );

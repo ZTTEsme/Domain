@@ -11,6 +11,7 @@ import CompanyModel from "../models/companyModel";
 import CompanyState from "./companyState";
 import OperateType from "../enums/operateType";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
+import SelectItem from "../../../../common/component/select/selectItem";
 
 export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
 
