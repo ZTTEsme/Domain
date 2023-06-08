@@ -54,7 +54,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                                  <div class="col-md-3">
                                    <label for="agentCompanyId" class="form-label">{{ model.labelInfo.agentCompanyLabel }}</label>
                                    <select class="form-select" id="agentCompanyId" v-model.number="model.searchForm.companyId">
-                                     <option selected value=null>{{ model.labelInfo.chooseAllLabel }}</option>
+                                     <option selected value=undefined>{{ model.labelInfo.chooseAllLabel }}</option>
                                      <option
                                        v-for="company in model.allCompanies"
                                        :key="company.id"
