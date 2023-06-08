@@ -43,7 +43,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                          </nav>
                        </div>
                      </div>
-                     
+
                      <div class="main row gy-2">
                        <!--search-->
                        <div class="col-sm-12 col-md-12 col-lg-12 mx-auto" v-show="model.showSearch">
@@ -141,14 +141,14 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                                              ele.type,
                                              ele.customerId)"></ButtonComponent>
                                          <ButtonComponent btn-style="margin-left:10px;width:30px" shape="btn-outline-danger" icon="fa-solid fa-trash-can" @click="() => interactor.openDeleteDialog(ele.id)"></ButtonComponent>
-                                         
+
                                          <ButtonComponent btn-style="width:30px;height:30px;margin-left:10px" shape="btn-outline-success" icon="fa-solid fa-right-to-bracket" @click="()=>interactor.goCompanySite(ele.id)">
                                          </ButtonComponent>
                                        </td>
                                    </tr>
                                    </tbody>
                                  </table>
-                                 
+
                                  <!--pagination-->
                                  <div class="mt-auto">
                                    <div  class="row float-end me-1" >
@@ -177,10 +177,10 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                      </div>
                      <!--end row-->
                    </div>
-                   
+
                  </div>
               </section>
-           
+
               <section>
                 <!--tip-->
                 <toast :show="model.searchCompaniesWasFailed" :delay=1000>
@@ -194,7 +194,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                      </div>
                   </div>
                 </toast>
-                
+
                 <!--add company modal-->
                 <modal name="add company"
                        :show="model.dialog.openAddCompanyDialog"
@@ -219,7 +219,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                         </select>
                         <div class="invalid-feedback" v-show="!!model.formErrors.type">{{ model.formErrors.type }}</div>
                       </div>
-                      
+
                       <div class="col-md-12 position-relative">
                         <label for="type" class="form-label">{{model.labelInfo.agentCompanyNameLabel}}</label>
                         <select class="form-select" id="type" v-model.number="model.formData.agentCompanyId" :class="{'is-invalid':!!model.formErrors.agentCompanyId}">
@@ -233,7 +233,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                         </select>
                         <div class="invalid-feedback" v-show="!!model.formErrors.agentCompanyId">{{ model.formErrors.agentCompanyId }}</div>
                       </div>
-                      
+
                       <div class="col-md-12 position-relative">
                         <label for="alias" class="form-label">{{model.labelInfo.aliasLabel}}</label>
                         <input type="text" class="form-control" :class="{'is-invalid':!!model.formErrors.alias}" id="alias" v-model="model.formData.alias">
@@ -255,21 +255,21 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                     </button>
                   </template>
                 </modal>
-                
+
                 <!--delete company modal-->
                 <modal name="delete company"
-                       :show="model.dialog.openDeleteDialog" 
+                       :show="model.dialog.openDeleteDialog"
                        :title="model.dialog.deleteCompany"
-                       :labelClose="true" 
+                       :labelClose="true"
                        :abortFunction="()=>interactor.closeDeleteDialog()">
-                  
+
                        <alert :show="model.dialog.showDeleteCompanySuccessMessage" color="success" icon="fas fa-gift">
                              {{ model.dialog.msgDeleteCompanyWithSuccess }}
                        </alert>
                        <alert :show="model.dialog.showDeleteCompanyFailureMessage" color="danger" icon="fas fa-triangle-exclamation">
                              {{ model.dialog.msgDeleteCompanyWithFailure }}
                        </alert>
-                  
+
                        <div
                            class="alert border-0 border-start border-5 border-warning alert-dismissible fade show py-2">
                            <div class="d-flex align-items-center">
@@ -289,7 +289,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                            </button>
                       </template>
                 </modal>
-                
+
                 <!--modify company modal-->
                 <modal name="modify company"
                        :show="model.dialog.openModifyCompanyDialog"
@@ -328,7 +328,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                       </select>
                       <div class="invalid-feedback" v-show="!!model.formErrors.agentCompanyId">{{ model.formErrors.agentCompanyId }}</div>
                     </div>
-                    
+
                     <div class="col-md-12 position-relative">
                       <label for="alias" class="form-label">Alias</label>
                       <input type="text" class="form-control" id="alias" :class="{'is-invalid':!!model.formErrors.alias}" v-model="model.formData.alias">
@@ -341,7 +341,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                       <div class="invalid-feedback" v-show="!!model.formErrors.customerId">{{ model.formErrors.customerId }}</div>
                     </div>
                   </form>
-                  
+
                   <template #footer>
                     <button
                       class="btn btn-primary"
@@ -359,35 +359,38 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
   `,
 })
 export default class CompanyComponent extends Vue implements CompanyPresenter {
-  // 数据原型
-  private model: CompanyModel = new CompanyModel();
 
-  // 当前分页大小
-  pageNo = this.model.pageInfo.pageNo;
 
   // 页面JS
   @Prop
-  private readonly interactor!: CompanyInteractor;
+  public readonly interactor!: CompanyInteractor;
 
-  public mounted(): void {
-    this.interactor.startPresenting(this);
-  }
+  // 数据原型
+  public model: CompanyModel = new CompanyModel();
+
+  public key:number|null = this.model.searchForm.agentCompanyId
+
+  // 当前分页大小
+  public readonly pageNo:number = this.model.pageInfo.pageNo;
 
   @Watch("pageNo",{deep:true,immediate: true})
-  propertyWatcher(newValue: string, oldValue: string) {
-    debugger
+  public propertyWatcher(newValue: string, oldValue: string):void {
     if(newValue !== oldValue){
       this.interactor.changePageSize(this.model);
     }
   }
 
 
-  key = this.model.searchForm.agentCompanyId
   @Watch("key",{deep:true,immediate: true})
-  propertyWatcherOne(newValue: string, oldValue: string) {
+  public propertyWatcherOne(newValue: string, oldValue: string):void {
     console.log(newValue)
     console.log(oldValue)
   }
+
+  public mounted(): void {
+    this.interactor.startPresenting(this);
+  }
+
 
   public updateView(model: CompanyModel): void {
     this.model = model;

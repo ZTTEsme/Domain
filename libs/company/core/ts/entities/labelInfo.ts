@@ -18,8 +18,8 @@ export default class LabelInfo{
 
   public TRADER:string = "";
 
-  public serverErrorInfo = "";
+  public serverErrorInfo:string = "";
 
-  public noDataLabel = "";
+  public noDataLabel:string = "";
 
 }

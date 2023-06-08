@@ -21,9 +21,9 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
     ButtonComponent: ButtonComponent
   },
   template:`
-    
+
     <div class="container company-site-users">
-    
+
     <div class="wrapper">
       <!--content -->
       <section>
@@ -197,8 +197,8 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                        id="alias" v-model="model.addUserFormData.alias">
                 <div class="invalid-feedback" v-show="!!model.validAddUserFormErrors.alias">
                   {{ model.validAddUserFormErrors.alias }}
-                </div> 
-                
+                </div>
+
                 <label for="email" class="form-label">{{ model.labelInfo.emailLabel }}</label>
                 <input type="text" class="form-control" :class="{'is-invalid': !!model.validAddUserFormErrors.email}"
                        id="email" v-model="model.addUserFormData.email">
@@ -206,7 +206,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                   {{ model.validAddUserFormErrors.email }}
                 </div>
               </div>
-              
+
               <div class="col-md-12 position-relative">
                 <label for="role" class="form-label">{{ model.labelInfo.roleLabel }}</label>
                 <select class="form-select" id="type" v-model="model.addUserFormData.role" :class="{'is-invalid':!!model.validAddUserFormErrors.role}">
@@ -260,16 +260,16 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
 
       </section>
     </div>
-    
+
     </div>
   `
 })
 export default class CompanySiteUsersComponent extends Vue implements CompanySiteUsersPresenter {
 
-  private model: CompanySiteUsersModel = new CompanySiteUsersModel();
-
   @Prop
   private readonly interactor!: CompanySiteUsersInteractor;
+
+  private model: CompanySiteUsersModel = new CompanySiteUsersModel();
 
   public mounted(): void {
     this.interactor.startPresenting(this);

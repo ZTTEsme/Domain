@@ -108,7 +108,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                         </div>
                       </div>
                     </div>
-                    
+
                     <hr/>
 
                     <NoDataComponent v-show="model.pageResultForCompanySite.total<=0" img="./img/no-data-available.gif">
@@ -315,10 +315,11 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
 })
 export default class CompanySiteComponent extends Vue implements CompanySitePresenter {
 
-  private model: CompanySiteModel = new CompanySiteModel();
-
   @Prop
   private readonly interactor!: CompanySiteInteractor;
+
+  private model: CompanySiteModel = new CompanySiteModel();
+
 
   public mounted(): void {
     this.interactor.startPresenting(this);

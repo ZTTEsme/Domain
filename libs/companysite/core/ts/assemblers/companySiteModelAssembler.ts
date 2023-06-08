@@ -16,7 +16,7 @@ export default class CompanySiteModelAssembler {
     return model;
   }
 
-  private static updateCompanySiteModel(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway: I18nGateway){
+  private static updateCompanySiteModel(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway: I18nGateway):void{
 
     model.selectedCompany = state.selectedCompany;
 
@@ -69,7 +69,7 @@ export default class CompanySiteModelAssembler {
   }
 
   // add dialog
-  private static renderModelForAddCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway){
+  private static renderModelForAddCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway):void{
     model.dialog.submit = i18nGateway.get("companySite.dialog.submit");
     model.dialog.addCompanySite = i18nGateway.get("companySite.dialog.addCompanySite");
     model.dialog.msgAddCompanySiteWithSuccess = i18nGateway.get("companySite.dialog.msgAddCompanySiteWithSuccess");
@@ -83,7 +83,7 @@ export default class CompanySiteModelAssembler {
   }
 
   // modify dialog
-  private static renderModelForModifyCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway){
+  private static renderModelForModifyCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway):void{
     model.dialog.modifyCompanySiteTitle = i18nGateway.get("companySite.dialog.modifyCompanySiteTitle");
     model.dialog.msgModifyCompanySiteWithSuccess = i18nGateway.get("companySite.dialog.msgModifyCompanySiteWithSuccess");
     model.dialog.msgModifyCompanySiteWithFailure = i18nGateway.get("companySite.dialog.msgModifyCompanySiteWithFailure");
@@ -96,7 +96,7 @@ export default class CompanySiteModelAssembler {
 
 
   // delete dialog
-  private static renderModelForDeleteCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway){
+  private static renderModelForDeleteCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway):void{
     model.dialog.deleteCompanySiteTitle = i18nGateway.get("companySite.dialog.deleteCompanySiteTitle");
     model.dialog.deleteTipInfo = i18nGateway.get("companySite.dialog.deleteTipInfo");
     model.dialog.msgDeleteCompanySiteWithSuccess = i18nGateway.get("companySite.dialog.msgDeleteCompanySiteWithSuccess");
@@ -108,7 +108,7 @@ export default class CompanySiteModelAssembler {
   }
 
 
-  private static updateCompanySiteInfos(model:CompanySiteModel){
+  private static updateCompanySiteInfos(model:CompanySiteModel):void{
     model.pageResultForCompanySite = CommonUtils.getPageData(model.companySite,model.pageInfo.pageNo,model.pageInfo.pageSize);
 
   }

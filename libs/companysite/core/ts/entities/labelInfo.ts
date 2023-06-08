@@ -14,6 +14,6 @@ export default class LabelInfo{
 
   public noDataLabel:string = "";
 
-  public serverErrorInfo = "";
+  public serverErrorInfo:string = "";
 
 }

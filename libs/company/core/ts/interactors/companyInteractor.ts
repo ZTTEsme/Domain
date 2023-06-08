@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
 import CompanyPresenter from "./companyPresenter";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
@@ -11,6 +13,28 @@ import OperateType from "../enums/operateType";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
 export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
+
+  public rules:Record<string, ValidationRule[]> = {
+    alias: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: this.i18nGateway.get("company.add.valid.alias"),
+      },
+    ],
+    type: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: this.i18nGateway.get("company.add.valid.type"),
+      },
+    ],
+    customerId: [
+      {
+        validator: (value: any) => value.length > 0,
+        message: this.i18nGateway.get("company.add.valid.customerId"),
+      },
+    ],
+  };
+
   private readonly gateWay: RestCompanyGateway;
   private presenter: CompanyPresenter | null =null;
   private readonly state: CompanyState =new CompanyState();
@@ -25,24 +49,24 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.gateWay = gateWay;
   }
 
-  async onLoad(): Promise<void> {
+  public async onLoad(): Promise<void> {
     await this.getCompanies(null);
   }
 
-  onUnload(): Promise<void> {
+  public onUnload(): Promise<void> {
     return Promise.resolve(undefined);
   }
 
-  startPresenting(presenter: CompanyPresenter): void {
+  public startPresenting(presenter: CompanyPresenter): void {
     this.presenter = presenter;
     this.updateView();
   }
 
-  async getAllCompaniesForSelect(){
+  public async getAllCompaniesForSelect():Promise<void>{
     this.state.allCompanies = await this.gateWay.getCompanies();
   }
 
-  async getCompanies(agentId: number|null):Promise<void> {
+  public async getCompanies(agentId: number|null):Promise<void> {
     try{
       this.state.searchCompaniesWasFailed  = false;
       this.updateView();
@@ -76,9 +100,9 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     }
   }
 
-  async deleteCompany(companyId: number): Promise<void> {
+  public async deleteCompany(companyId: number): Promise<void> {
     try{
-      if(companyId == undefined) {
+      if(companyId === undefined) {
         this.state.dialog.showDeleteCompanyFailureMessage = true;
         this.state.dialog.showDeleteCompanySuccessMessage = false;
         this.updateView();
@@ -87,10 +111,9 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
         await this.gateWay.deleteCompany(companyId);
         this.state.dialog.showDeleteCompanyFailureMessage = false;
         this.state.dialog.showDeleteCompanySuccessMessage = true;
-        this.getCompanies(this.state.searchForm.companyId).then(()=>{
-          this.getAllCompaniesForSelect();
-          this.updateView();
-        })
+        await this.getCompanies(this.state.searchForm.companyId);
+        await this.getAllCompaniesForSelect();
+        this.updateView();
       }
     }
     catch(error){
@@ -100,23 +123,23 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     }
   }
 
-  showSearch(model:CompanyModel){
+  public showSearch(model:CompanyModel):void{
     this.state.showSearch = !model.showSearch;
     this.updateView();
   }
 
-  resetSearchForm(model:CompanyModel){
+  public async resetSearchForm(model:CompanyModel):Promise<void>{
     model.searchForm.agentCompanyId=null;
     model.searchForm.companyId=null;
-    this.getCompanies(model.searchForm.companyId).then(()=>{});
+    await this.getCompanies(model.searchForm.companyId);
   }
 
-  public changePage(pageNo:number,model?:CompanyModel){
+  public changePage(pageNo:number,model?:CompanyModel):void{
     this.state.pageInfo.pageNo = pageNo;
     this.updateView();
   }
 
-  public changePageSize(model:CompanyModel){
+  public changePageSize(model:CompanyModel):void{
     if(this.state.pageInfo.pageSize !== this.state.pageInfo.currentPageSize) {
       this.state.pageInfo.pageNo = 1;
       this.state.pageInfo.pageSize = model.pageInfo.pageSize;
@@ -125,26 +148,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     }
   }
 
-  public rules = {
-    alias: [
-      {
-        validator: (value: any) => value.length > 0,
-        message: this.i18nGateway.get("company.add.valid.alias"),
-      },
-    ],
-    type: [
-      {
-        validator: (value: any) => value.length > 0,
-        message: this.i18nGateway.get("company.add.valid.type"),
-      },
-    ],
-    customerId: [
-      {
-        validator: (value: any) => value.length > 0,
-        message: this.i18nGateway.get("company.add.valid.customerId"),
-      },
-    ],
-  };
+
 
   public async saveCompany (
     model:CompanyModel,
@@ -198,10 +202,9 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
         this.state.isLoading = false;
       }
     }
-    this.getCompanies(this.state.searchForm.companyId).then(()=>{
-      this.getAllCompaniesForSelect().then();
-      this.updateView();
-    })
+    await this.getCompanies(this.state.searchForm.companyId);
+    await this.getAllCompaniesForSelect();
+    this.updateView();
   }
 
   // delete company dialog
@@ -255,6 +258,10 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.updateViewWithOutValidationFeedBack();
   }
 
+  public async goCompanySite(id:number):Promise<void>{
+    await this.router.loadRoute(this.router.getRouteByName("CompanySite"), new Map([['id', id.toString()]]));
+  }
+
   private updateView() {
     this.presenter?.updateView(CompanyModelAssembler.fromState(this.state,this.router,this.i18nGateway));
   }
@@ -263,7 +270,4 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
     this.presenter?.updateView(CompanyModelAssembler.fromStateWithOutValidationFeedBack(this.state,this.router,this.i18nGateway));
   }
 
-  public goCompanySite(id:number){
-    this.router.loadRoute(this.router.getRouteByName("CompanySite"), new Map([['id', id.toString()]])).then();
-  }
 }

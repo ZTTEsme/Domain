@@ -11,6 +11,34 @@ import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restC
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
 export default class CompanySiteInteractor extends ViewInteractor<CompanySitePresenter> {
+
+  public rulesForAddCompanySite:Record<string, ValidationRule[]> = {
+    alias: [
+      {
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        validator: (value: string) => value.length > 0,
+        message: this.i18nGateway.get("companySite.add.valid.alias"),
+      },
+    ]
+  };
+
+  public rulesForModifyCompanySite:Record<string, ValidationRule[]> = {
+    alias: [
+      {
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        validator: (value: string) => value.length > 0,
+        message: this.i18nGateway.get("companySite.modify.valid.alias"),
+      },
+    ],
+    companyId: [
+      {
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        validator: (value: string) => value.length > 0,
+        message: this.i18nGateway.get("companySite.modify.valid.companyId"),
+      },
+    ]
+  }
+
   private presenter: CompanySitePresenter | null = null;
   private readonly gateWay: RestCompanySiteGateway;
   private readonly restCompanyGateway: RestCompanyGateway;
@@ -18,7 +46,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
 
   public constructor(
     router: Router,
-    private i18nGateway: I18nGateway,
+    private readonly i18nGateway: I18nGateway,
     gateWay: RestCompanySiteGateway,
     restCompanyGateway:RestCompanyGateway
   ) {
@@ -27,7 +55,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     this.restCompanyGateway = restCompanyGateway
   }
 
-  async onLoad(): Promise<void> {
+  public async onLoad(): Promise<void> {
     this.state.companyId = parseInt(this.router.getPathParams().get("id")!);
 
     this.state.selectedCompany = await this.restCompanyGateway.getCompany(this.state.companyId);
@@ -41,34 +69,34 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     return Promise.resolve(undefined);
   }
 
-  onUnload(): Promise<void> {
+  public onUnload(): Promise<void> {
     return Promise.resolve(undefined);
   }
 
-  startPresenting(presenter: CompanySitePresenter): void {
+  public startPresenting(presenter: CompanySitePresenter): void {
     this.presenter = presenter;
     this.updateView();
   }
 
-  private updateView() {
+  public updateView():void {
     this.presenter?.updateView(CompanySiteModelAssembler.fromState(this.state,this.router, this.i18nGateway));
   }
 
-  showSearch(model:CompanySiteModel){
+  public showSearch(model:CompanySiteModel):void{
     this.state.showSearch = !model.showSearch;
     this.updateView();
   }
 
-  resetSearchForm(model:CompanySiteModel){
+  public resetSearchForm(model:CompanySiteModel):void{
     // 重置为跳转时的companyId
     if(this.state.firstSelectedCompany!==null){
       model.searchForm.companyId = this.state.firstSelectedCompany.id;
-      this.getCompanySites(model.searchForm.companyId!).then();
+      void this.getCompanySites(model.searchForm.companyId!);
     }
   }
 
   // addCompanySite dialog
-  openAddCompanySiteDialog(){
+  public openAddCompanySiteDialog():void{
     this.state.openAddCompanySiteDialog = true;
     this.updateView();
   }
@@ -123,12 +151,12 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     this.updateView();
   }
 
-  public changePage(pageNo:number){
+  public changePage(pageNo:number):void{
     this.state.pageInfo.pageNo = pageNo;
     this.updateView();
   }
 
-  public changePageSize(model:CompanySiteModel){
+  public changePageSize(model:CompanySiteModel):void{
     if(this.state.pageInfo.pageSize !== this.state.pageInfo.currentPageSize) {
       this.state.pageInfo.pageNo = 1;
       this.state.pageInfo.pageSize = model.pageInfo.pageSize;
@@ -137,14 +165,6 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     }
   }
 
-  public rulesForAddCompanySite = {
-    alias: [
-      {
-        validator: (value: any) => value.length > 0,
-        message: this.i18nGateway.get("companySite.add.valid.alias"),
-      },
-    ]
-  };
 
   public async addCompanySite(
     model:CompanySiteModel
@@ -170,20 +190,6 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     this.updateView();
   }
 
-  public rulesForModifyCompanySite = {
-    alias: [
-      {
-        validator: (value: any) => value.length > 0,
-        message: this.i18nGateway.get("companySite.modify.valid.alias"),
-      },
-    ],
-    companyId: [
-      {
-        validator: (value: any) => value.length > 0,
-        message: this.i18nGateway.get("companySite.modify.valid.companyId"),
-      },
-    ]
-  }
 
 
   public async modifyCompanySite(
@@ -214,10 +220,10 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     this.updateView();
   }
 
-  async deleteCompanySite(companySiteId: number): Promise<void> {
+  public async deleteCompanySite(companySiteId: number): Promise<void> {
     try{
       this.updateView();
-      if(companySiteId == undefined) {
+      if(companySiteId === undefined) {
         this.state.showDeleteCompanySiteFailureMessage = true;
         this.state.showDeleteCompanySiteSuccessMessage = false;
         this.updateView();
@@ -237,7 +243,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     }
   }
 
-  async getCompanySites(companyId: number): Promise<void> {
+  public async getCompanySites(companyId: number): Promise<void> {
     try{
       this.state.searchCompanySiteWasFailed  = false;
       this.updateView();
@@ -251,15 +257,15 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
     }
   }
 
-  async getCompanies():Promise<void>{
+  public async getCompanies():Promise<void>{
     await this.restCompanyGateway.getCompanies();
     return Promise.resolve(undefined);
   }
 
-  public goCompanySiteUsers(companySiteId:number,companyId:number){
-    this.router.loadRoute(this.router.getRouteByName("User"), new Map(
+  public goCompanySiteUsers(companySiteId:number,companyId:number):void{
+    void this.router.loadRoute(this.router.getRouteByName("User"), new Map(
       [['companySiteId', companySiteId.toString()],['id', companyId.toString()]]
-    )).then();
+    ));
   }
 }
 

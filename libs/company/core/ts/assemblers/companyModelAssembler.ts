@@ -29,7 +29,7 @@ export default class CompanyModelAssembler {
     return model;
   }
 
-  private static initPageParams(state:CompanyState,model:CompanyModel,router: Router,i18nGateway:I18nGateway){
+  private static initPageParams(state:CompanyState,model:CompanyModel,router: Router,i18nGateway:I18nGateway):void{
     model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(router);
 
     model.moduleName = router.getCurrentRoute().name;
@@ -117,7 +117,7 @@ export default class CompanyModelAssembler {
     model.formErrors = state.formErrors;
   }
 
-  private static updateCompanies(model:CompanyModel,pageInfo:PageInfo,state:CompanyState){
+  private static updateCompanies(model:CompanyModel,pageInfo:PageInfo,state:CompanyState):void{
 
     // allCompanies 表示 全量公司， resCompanies 表示 跟具体搜索条件关联的公司
     model.allCompanies = state.allCompanies;
@@ -126,14 +126,14 @@ export default class CompanyModelAssembler {
       model.company.push(new SelfCompany({id:company.id,alias:company.alias,type:company.type,customerId:company.customerId,agentCompanyId:company.agentCompanyId}));
     }
 
-    let map:Map<number|null,string|undefined> = new Map();
+    const map:Map<number|null,string|undefined> = new Map();
 
     model.allCompanies.forEach((ele)=>{
       map.set(ele.id,ele.alias);
     });
 
     model.company.forEach((ele)=>{
-      let agentCompanyName = map.get(ele.agentCompanyId);
+      let agentCompanyName:string|undefined = map.get(ele.agentCompanyId);
       if(CommonUtils.isNullOrUndefined(agentCompanyName)){
         agentCompanyName = "N/A";
       }

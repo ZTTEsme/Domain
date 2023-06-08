@@ -18,7 +18,7 @@ export default class CompanySiteUsersAssembler {
     return model;
   }
 
-  private static updateCompanySiteUserModel(model:CompanySiteUsersModel,state:CompanySiteUsersState, i18nGateway: I18nGateway){
+  private static updateCompanySiteUserModel(model:CompanySiteUsersModel,state:CompanySiteUsersState, i18nGateway: I18nGateway):void{
     model.isLoading = state.isLoading;
 
     // label
@@ -56,7 +56,7 @@ export default class CompanySiteUsersAssembler {
     this.updateCompanySiteUserInfos(model);
   }
 
-  private static updateCompanySiteUserInfos(model:CompanySiteUsersModel){
+  private static updateCompanySiteUserInfos(model:CompanySiteUsersModel):void{
     model.pageResultForUsers = CommonUtils.getPageData(model.companySiteUsers,model.pageInfo.pageNo,model.pageInfo.pageSize);
   }
 }
