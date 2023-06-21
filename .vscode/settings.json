@@ -1,4 +1,0 @@
-{
-  "stylelint.validate": ["css", "scss", "postcss"],
-  "typescript.tsdk": "node_modules/typescript/lib"
-}
