@@ -1,18 +1,18 @@
-import Module from "qnect-sdk-web/lib/modules/core/ts/module";
-import I18nModule from "./i18nModule";
-import RouterModule from "./routerModule";
-import AuthModule from "qnect-sdk-web/lib/modules/main/ts/authModule";
-import RestCompanySiteGateway from "qnect-sdk-web/lib/company-site/rest/ts/gateways/restCompanySiteGateway";
 import Route from "cloos-vue-router/lib/core/route";
 import VueRouteHandler from "cloos-vue-router/lib/vue/vueRouteHandler";
-import CompanySiteUsersComponent from "../../../libs/companysiteusers/vue/ts/companySiteUsersComponent";
+import RestCompanySiteGateway from "qnect-sdk-web/lib/company-site/rest/ts/gateways/restCompanySiteGateway";
+import Module from "qnect-sdk-web/lib/modules/core/ts/module";
+import AuthModule from "qnect-sdk-web/lib/modules/main/ts/authModule";
 import CompanySiteUsersInteractor from "../../../libs/companysiteusers/core/ts/interactors/companySiteUsersInteractor";
+import CompanySiteUsersComponent from "../../../libs/companysiteusers/vue/ts/companySiteUsersComponent";
+import I18nModule from "./i18nModule";
+import RouterModule from "./routerModule";
 
 
 export default class CompanySiteUsersModule implements Module {
 
   public constructor(
-    private auth: AuthModule,
+    private readonly auth: AuthModule,
     private readonly router: RouterModule,
     private readonly i18nModule: I18nModule
   ) {
@@ -24,7 +24,7 @@ export default class CompanySiteUsersModule implements Module {
 
   public async load(): Promise<void> {
 
-    let gateway: RestCompanySiteGateway = new RestCompanySiteGateway(this.auth.getRestClientProvider())
+    const gateway: RestCompanySiteGateway = new RestCompanySiteGateway(this.auth.getRestClientProvider())
     this.router.getRouter().register(
       new Route({
         name: "User",
@@ -44,7 +44,7 @@ export default class CompanySiteUsersModule implements Module {
   }
 
   public async loadSecondPhase(): Promise<void> {
-
+    //
   }
 
 }
