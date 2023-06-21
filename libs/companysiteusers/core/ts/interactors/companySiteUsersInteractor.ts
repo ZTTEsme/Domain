@@ -1,31 +1,31 @@
-import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
-import CompanySiteUsersPresenter from "./companySiteUsersPresenter";
-import CompanySiteUsersAssembler from "../assemblers/companySiteUsersAssembler";
 import Router from "cloos-vue-router/lib/core/router";
-import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
+import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
 import RestCompanySiteGateway from "qnect-sdk-web/lib/company-site/rest/ts/gateways/restCompanySiteGateway";
-import CompanySiteUsersModel from "../models/companySiteUsersModel";
-import CompanySiteUsersState from "./companySiteUsersState";
+import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
+import CompanySiteUsersAssembler from "../assemblers/companySiteUsersAssembler";
+import CompanySiteUsersModel from "../models/companySiteUsersModel";
+import CompanySiteUsersPresenter from "./companySiteUsersPresenter";
+import CompanySiteUsersState from "./companySiteUsersState";
 
 export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySiteUsersPresenter> {
 
   public rulesForAddCompanySiteUser:Record<string, ValidationRule[]> = {
     alias: [
       {
-        validator: (value: any) => value.length > 0,
+        validator: (value: string):boolean => value.length > 0,
         message: this.i18nGateway.get("companySiteUser.valid.alias")
       },
     ],
     email: [
       {
-        validator: (value: any) => value.length > 0,
+        validator: (value: string):boolean => value.length > 0,
         message: this.i18nGateway.get("companySiteUser.valid.email")
       },
     ],
     role: [
       {
-        validator: (value: any) => value.length > 0,
+        validator: (value: string):boolean => value.length > 0,
         message: this.i18nGateway.get("companySiteUser.valid.role")
       },
     ]
