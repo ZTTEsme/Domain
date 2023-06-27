@@ -17,7 +17,8 @@ do
   --data "{
             \"token\": \"${APP_TOKEN}\",
             \"backendUrl\": \"\",
-            \"frontendUrl\": \"${APP_FRONTEND_URL}\"
+            \"frontendUrl\": \"${APP_FRONTEND_URL}\",
+            \"options\": [{\"id\":\"USAGE\",\"alias\":\"Usage of Customer Management app\"}]
           }"
 
   if [[ "$?" -eq 0 ]]; then
