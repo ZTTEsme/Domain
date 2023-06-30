@@ -1,13 +1,15 @@
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
-import LabelInfo from "../entities/labelInfo";
-import SearchForm from "../../../../company/core/ts/entities/searchForm";
-import PageInfo from "../../../../common/entities/ts/pageInfo";
-import UserTableColName from "../entities/userTableColName";
-import Dialog from "../entities/dialog";
-import FormErrors from "../../../../common/entities/ts/formError";
-import AddUserFormData from "../entities/addUserFormData";
-import CompanySiteWithUsers from "qnect-sdk-web/lib/company-site/core/ts/entities/companySiteWithUsers";
+import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/companySite";
 import CompanySiteUser from "qnect-sdk-web/lib/company-site/core/ts/entities/companySiteUser";
+import CompanySiteWithUsers from "qnect-sdk-web/lib/company-site/core/ts/entities/companySiteWithUsers";
+import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
+import FormErrors from "../../../../common/entities/ts/formError";
+import PageInfo from "../../../../common/entities/ts/pageInfo";
+import SearchForm from "../../../../company/core/ts/entities/searchForm";
+import AddUserFormData from "../entities/addUserFormData";
+import Dialog from "../entities/dialog";
+import LabelInfo from "../entities/labelInfo";
+import UserTableColName from "../entities/userTableColName";
 
 export default class CompanySiteUsersModel{
 
@@ -41,5 +43,12 @@ export default class CompanySiteUsersModel{
   public companySiteWithUsers: CompanySiteWithUsers = new CompanySiteWithUsers();
 
   public companySiteUsers:CompanySiteUser[] = [];
+
+  public companies:Company[] = [];
+
+  public companySites:CompanySite[] = [];
+
+  public selectedCompanyId:number|null = null;
+  public selectedCompanySiteId:number|null = null;
 
 }

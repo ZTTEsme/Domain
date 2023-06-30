@@ -1,13 +1,13 @@
-import { Component, Prop, Vue } from "vue-facing-decorator";
-import CompanySiteInteractor from "../../core/ts/interactors/companySiteInteractor";
-import PaginationComponent from "qnect-sdk-web/lib/common/vue/ts/paginationComponent";
-import ModalComponent from "qnect-sdk-web/lib/common/vue/ts/modalComponent";
-import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
 import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbComponent";
+import ModalComponent from "qnect-sdk-web/lib/common/vue/ts/modalComponent";
+import PaginationComponent from "qnect-sdk-web/lib/common/vue/ts/paginationComponent";
+import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
+import { Component, Prop, Vue } from "vue-facing-decorator";
+import ButtonComponent from "../../../common/component/ButtonComponent";
+import NoDataComponent from "../../../common/component/noDataComponent";
+import CompanySiteInteractor from "../../core/ts/interactors/companySiteInteractor";
 import CompanySitePresenter from "../../core/ts/interactors/companySitePresenter";
 import CompanySiteModel from "../../core/ts/models/companySiteModel";
-import NoDataComponent from "../../../common/component/noDataComponent";
-import ButtonComponent from "../../../common/component/ButtonComponent";
 
 @Component({
   name: "CompanySiteComponent",
@@ -31,10 +31,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
               <div class="mt-3">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item">
-                      <i class="fa-solid fa-house fa-2xl"></i>
-                    </li>
-                    <li class="ps-1 ms-2">
+                    <li>
                       <breadcrumb :items="model.breadcrumb" />
                     </li>
                   </ol>
@@ -51,8 +48,9 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                       <form class="row g-3">
                         <div class="col-md-3 ">
                           <label for="companyId" class="form-label">{{ model.labelInfo.companyId }}</label>
-                          <select class="form-select" id="companyId" v-model="model.searchForm.companyId">
-                            <option
+                          <select class="form-select" id="companyId" v-model="model.searchForm.companyId" @change="interactor.changeCompany(model.searchForm.companyId)">
+                          <option value=null disabled selected>{{model.labelInfo.selectTip}}</option>
+                          <option
                               v-for="company in model.companiesForSelect"
                               :key="company.id"
                               :label="company.alias"
@@ -61,15 +59,6 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                           </select>
                         </div>
                       </form>
-                    </div>
-                    <div class="row row-cols-auto g-2" style="float:right;">
-                      <div class="col">
-                        <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" @click="interactor.getCompanySites(model.searchForm.companyId)"></ButtonComponent>
-                      </div>
-                      <div class="col">
-                        <ButtonComponent btn-style="width:30px" icon="fa-solid fa-arrows-rotate" shape="btn-outline-info" @click="interactor.resetSearchForm(model)"></ButtonComponent>
-                      </div>
-
                     </div>
                     <!--end row-->
                   </div>
@@ -104,7 +93,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                     <div class="card-title">
                       <div class="row row-cols-auto g-2">
                         <div class="col">
-                          <ButtonComponent icon="a-solid fa-plus" btn-style="width:30px" @click="() => interactor.openAddCompanySiteDialog()"></ButtonComponent>
+                          <ButtonComponent icon="a-solid fa-plus" btn-style="width:30px" :disabled="model.selectedCompany === null" @click="() => interactor.openAddCompanySiteDialog()"></ButtonComponent>
                         </div>
                       </div>
                     </div>

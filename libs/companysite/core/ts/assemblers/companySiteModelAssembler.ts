@@ -1,9 +1,9 @@
-import CompanySiteModel from "../models/companySiteModel";
-import CompanySiteState from "../interactors/companySiteState";
 import Router from "cloos-vue-router/lib/core/router";
-import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
+import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
+import CompanySiteState from "../interactors/companySiteState";
+import CompanySiteModel from "../models/companySiteModel";
 
 export default class CompanySiteModelAssembler {
   public static fromState(
@@ -32,6 +32,7 @@ export default class CompanySiteModelAssembler {
 
     model.showSearch = state.showSearch;
 
+    model.labelInfo.selectTip = i18nGateway.get("model.labelInfo.selectTip")
     model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
     model.labelInfo.serverErrorInfo = i18nGateway.get("companySite.label.serverErrorInfo");
     model.labelInfo.companyId = i18nGateway.get("companySite.label.companyId");
