@@ -2,6 +2,62 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US">
   <file id="qnect">
 
+    <unit id="state.labels.homePageTitle">
+      <segment>
+        <source>Customer Manager</source>
+      </segment>
+    </unit>
+    <unit id="model.labelInfo.selectTip">
+      <segment>
+        <source>Please select</source>
+      </segment>
+    </unit>
+    <unit id="model.labelInfo.companyLabel">
+      <segment>
+        <source>Company</source>
+      </segment>
+    </unit>
+    <unit id="model.labelInfo.companySiteLabel">
+      <segment>
+        <source>Company Site</source>
+      </segment>
+    </unit>
+    <unit id="state.labels.company">
+      <segment>
+        <source>Company Manage</source>
+      </segment>
+    </unit>
+    <unit id="state.labels.companyTip">
+      <segment>
+        <source>Manage all companies</source>
+      </segment>
+    </unit>
+    <unit id="state.labels.site">
+      <segment>
+        <source>Company Site Manage</source>
+      </segment>
+    </unit>
+    <unit id="state.labels.siteTip">
+      <segment>
+        <source>Manage all Company Sites</source>
+      </segment>
+    </unit>
+    <unit id="state.labels.user">
+      <segment>
+        <source>User Manage</source>
+      </segment>
+    </unit>
+    <unit id="state.labels.userTip">
+      <segment>
+        <source>Manage all user</source>
+      </segment>
+    </unit>
+    <unit id="state.labels.edit">
+      <segment>
+        <source>Edit</source>
+      </segment>
+    </unit>
+
     <unit id="home.editingFavorites">
       <segment>
         <source>Editing favorites</source>

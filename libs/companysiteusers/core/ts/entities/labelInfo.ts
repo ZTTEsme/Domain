@@ -7,6 +7,12 @@ export default class LabelInfo {
 
   public noDataLabel:string="";
 
+  public companyLabel:string = "";
+
+  public companySiteLabel:string = "";
+
+  public selectTip:string = "";
+
   public ADMINISTRATOR:string="";
 
   public USER:string = "";

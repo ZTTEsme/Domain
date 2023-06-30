@@ -1,14 +1,14 @@
-import { Component, Prop, Vue, Watch } from "vue-facing-decorator";
+import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbComponent";
 import ModalComponent from "qnect-sdk-web/lib/common/vue/ts/modalComponent";
 import PaginationComponent from "qnect-sdk-web/lib/common/vue/ts/paginationComponent";
 import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
-import CompanyInteractor from "../../core/ts/interactors/companyInteractor";
-import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbComponent";
-import CompanyModel from "../../core/ts/models/companyModel";
-import CompanyPresenter from "../../core/ts/interactors/companyPresenter";
-import NoDataComponent from "../../../common/component/noDataComponent";
+import { Component, Prop, Vue, Watch } from "vue-facing-decorator";
 import ButtonComponent from "../../../common/component/ButtonComponent";
+import NoDataComponent from "../../../common/component/noDataComponent";
 import TimePickerComponent from "../../../common/component/timePicker/TimePickerComponent";
+import CompanyInteractor from "../../core/ts/interactors/companyInteractor";
+import CompanyPresenter from "../../core/ts/interactors/companyPresenter";
+import CompanyModel from "../../core/ts/models/companyModel";
 
 @Component({
   name: "CompanyComponent",
@@ -33,10 +33,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                        <div class="mt-3">
                          <nav aria-label="breadcrumb">
                            <ol class="breadcrumb mb-0 p-0">
-                             <li class="breadcrumb-item">
-                               <i class="fa-solid fa-house fa-2xl"></i>
-                             </li>
-                             <li class="ps-1 ms-2">
+                             <li>
                                <breadcrumb :items="model.breadcrumb" />
                              </li>
                            </ol>
@@ -53,7 +50,7 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                                <form class="row g-3">
                                  <div class="col-md-3">
                                    <label for="agentCompanyId" class="form-label">{{ model.labelInfo.agentCompanyLabel }}</label>
-                                   <select class="form-select" id="agentCompanyId" v-model.number="model.searchForm.companyId">
+                                   <select class="form-select" id="agentCompanyId" v-model.number="model.searchForm.companyId" @change="interactor.changeCompany(model.searchForm.companyId)">
                                      <option selected value=undefined>{{ model.labelInfo.chooseAllLabel }}</option>
                                      <option
                                        v-for="company in model.allCompanies"
@@ -64,14 +61,6 @@ import TimePickerComponent from "../../../common/component/timePicker/TimePicker
                                    </select>
                                  </div>
                                </form>
-                             </div>
-                             <div class="row row-cols-auto g-2" style="float:right;">
-                               <div class="col">
-                                 <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" @click="interactor.getCompanies(model.searchForm.companyId)"></ButtonComponent>
-                               </div>
-                               <div class="col">
-                                 <ButtonComponent btn-style="width:30px" shape="btn-outline-info" icon="fa-solid fa-arrows-rotate" @click="interactor.resetSearchForm(model)"></ButtonComponent>
-                               </div>
                              </div>
                              <!--end row-->
                            </div>

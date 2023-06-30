@@ -1,6 +1,7 @@
 import Router from "cloos-vue-router/lib/core/router";
 import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
 import RestCompanySiteGateway from "qnect-sdk-web/lib/company-site/rest/ts/gateways/restCompanySiteGateway";
+import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restCompanyGateway";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 import CompanySiteUsersAssembler from "../assemblers/companySiteUsersAssembler";
@@ -37,6 +38,7 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
   public constructor(
     router: Router,
     private readonly i18nGateway: I18nGateway,
+    private readonly companyGateWay: RestCompanyGateway,
     private readonly gateWay: RestCompanySiteGateway,
   ) {
     super(router);
@@ -48,9 +50,20 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
   }
 
   public async onLoad(): Promise<void> {
-    this.state.companySiteWithUsers = await this.gateWay.getCompanySite(parseInt(this.router.getPathParams().get("companySiteId")!));
-    this.state.companySiteUsers = this.state.companySiteWithUsers.users;
-    return Promise.resolve(undefined);
+    this.state.companies = await this.companyGateWay.getCompanies();
+    const companySiteId:number = parseInt(String(this.router.getPathParams().get("companySiteId")));
+
+    if(isNaN(companySiteId)) {
+      //
+    }else {
+      this.state.companySiteWithUsers = await this.gateWay.getCompanySite(parseInt(String(this.router.getPathParams().get("companySiteId"))));
+      this.state.selectedCompanySiteId = parseInt(String(this.router.getPathParams().get("companySiteId")));
+      this.state.selectedCompanyId = this.state.companySiteWithUsers.companyId
+      this.state.companySites = await this.gateWay.getCompanySites(this.state.selectedCompanyId);
+      this.state.companySiteUsers = this.state.companySiteWithUsers.users;
+    }
+
+    this.updateView();
   }
 
   public onUnload(): Promise<void> {
@@ -59,6 +72,20 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
 
   public updateView():void {
     this.presenter?.updateView(CompanySiteUsersAssembler.fromState(this.state,this.router,this.i18nGateway));
+  }
+
+  public async changeCompany(companyId:number):Promise<void>{
+    this.state.selectedCompanyId = companyId;
+    this.state.selectedCompanySiteId = null
+    this.state.companySites = await this.gateWay.getCompanySites(companyId);
+    this.updateView();
+  }
+
+  public async changeCompanySite(companySiteId:number):Promise<void>{
+    this.state.selectedCompanySiteId = companySiteId;
+    this.state.companySiteWithUsers = await this.gateWay.getCompanySite(companySiteId);
+    this.state.companySiteUsers = this.state.companySiteWithUsers.users;
+    this.updateView();
   }
 
 

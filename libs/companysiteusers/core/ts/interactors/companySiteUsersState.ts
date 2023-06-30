@@ -1,13 +1,21 @@
-import Dialog from "../entities/dialog";
-import AddUserFormData from "../entities/addUserFormData";
-import ValidationError from "../../../../common/entities/ts/validationError";
-import FormErrors from "../../../../common/entities/ts/formError";
-import CompanySiteWithUsers from "qnect-sdk-web/lib/company-site/core/ts/entities/companySiteWithUsers";
+import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/companySite";
 import CompanySiteUser from "qnect-sdk-web/lib/company-site/core/ts/entities/companySiteUser";
-import UserTableColName from "../entities/userTableColName";
+import CompanySiteWithUsers from "qnect-sdk-web/lib/company-site/core/ts/entities/companySiteWithUsers";
+import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
+import FormErrors from "../../../../common/entities/ts/formError";
 import PageInfo from "../../../../common/entities/ts/pageInfo";
+import ValidationError from "../../../../common/entities/ts/validationError";
+import AddUserFormData from "../entities/addUserFormData";
+import Dialog from "../entities/dialog";
+import UserTableColName from "../entities/userTableColName";
 
 export default class CompanySiteUsersState{
+
+  public selectedCompanyId:number|null = null;
+  public selectedCompanySiteId:number|null = null;
+
+  public companySites:CompanySite[] = [];
+  public companies:Company[] = [];
 
   public pageResultForUsers:PageResult = {
     data: [],

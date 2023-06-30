@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
-import CompanyPresenter from "./companyPresenter";
-import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
-import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restCompanyGateway";
 import Router from "cloos-vue-router/lib/core/router";
-import CompanyModelAssembler from "../assemblers/companyModelAssembler";
+import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
-import CompanyModel from "../models/companyModel";
-import CompanyState from "./companyState";
-import OperateType from "../enums/operateType";
+import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restCompanyGateway";
+import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
-import SelectItem from "../../../../common/component/select/selectItem";
+import CompanyModelAssembler from "../assemblers/companyModelAssembler";
+import OperateType from "../enums/operateType";
+import CompanyModel from "../models/companyModel";
+import CompanyPresenter from "./companyPresenter";
+import CompanyState from "./companyState";
 
 export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
 
@@ -65,6 +64,10 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter>{
 
   public async getAllCompaniesForSelect():Promise<void>{
     this.state.allCompanies = await this.gateWay.getCompanies();
+  }
+
+  public async changeCompany(companyId:number):Promise<void> {
+    await this.getCompanies(companyId);
   }
 
   public async getCompanies(agentId: number|undefined):Promise<void> {

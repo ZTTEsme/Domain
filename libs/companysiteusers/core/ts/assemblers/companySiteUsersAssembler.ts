@@ -1,9 +1,9 @@
 import Router from "cloos-vue-router/lib/core/router";
+import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
+import CommonUtils from "../../../../common/utils/ts/commonUtils";
 import CompanySiteUsersState from "../interactors/companySiteUsersState";
 import CompanySiteUsersModel from "../models/companySiteUsersModel";
-import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
-import CommonUtils from "../../../../common/utils/ts/commonUtils";
 
 export default class CompanySiteUsersAssembler {
   public static fromState(
@@ -21,7 +21,14 @@ export default class CompanySiteUsersAssembler {
   private static updateCompanySiteUserModel(model:CompanySiteUsersModel,state:CompanySiteUsersState, i18nGateway: I18nGateway):void{
     model.isLoading = state.isLoading;
 
+    model.companies = state.companies;
+    model.companySites = state.companySites;
+    model.selectedCompanyId = state.selectedCompanyId;
+    model.selectedCompanySiteId = state.selectedCompanySiteId;
     // label
+    model.labelInfo.companyLabel = i18nGateway.get("model.labelInfo.companyLabel");
+    model.labelInfo.companySiteLabel = i18nGateway.get("model.labelInfo.companySiteLabel");
+    model.labelInfo.selectTip = i18nGateway.get("model.labelInfo.selectTip");
     model.labelInfo.emailLabel = i18nGateway.get("companySiteUser.label.email");
     model.labelInfo.roleLabel = i18nGateway.get("companySiteUser.label.role");
     model.labelInfo.ADMINISTRATOR = i18nGateway.get("companySiteUser.label.ADMINISTRATOR");

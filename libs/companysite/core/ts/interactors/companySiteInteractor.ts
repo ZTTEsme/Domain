@@ -1,22 +1,21 @@
-import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import Router from "cloos-vue-router/lib/core/router";
-import CompanySitePresenter from "./companySitePresenter";
-import RestCompanySiteGateway from "qnect-sdk-web/lib/company-site/rest/ts/gateways/restCompanySiteGateway";
 import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
-import CompanySiteModelAssembler from "../assemblers/companySiteModelAssembler";
-import CompanySiteState from "./companySiteState";
 import CompanySite from "qnect-sdk-web/lib/company-site/core/ts/entities/companySite";
-import CompanySiteModel from "../models/companySiteModel";
+import RestCompanySiteGateway from "qnect-sdk-web/lib/company-site/rest/ts/gateways/restCompanySiteGateway";
 import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restCompanyGateway";
+import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
+import CompanySiteModelAssembler from "../assemblers/companySiteModelAssembler";
+import CompanySiteModel from "../models/companySiteModel";
+import CompanySitePresenter from "./companySitePresenter";
+import CompanySiteState from "./companySiteState";
 
 export default class CompanySiteInteractor extends ViewInteractor<CompanySitePresenter> {
 
   public rulesForAddCompanySite:Record<string, ValidationRule[]> = {
     alias: [
       {
-        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-        validator: (value: string) => value.length > 0,
+        validator: (value: string):boolean => value.length > 0,
         message: this.i18nGateway.get("companySite.add.valid.alias"),
       },
     ]
@@ -25,15 +24,13 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   public rulesForModifyCompanySite:Record<string, ValidationRule[]> = {
     alias: [
       {
-        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-        validator: (value: string) => value.length > 0,
+        validator: (value: string):boolean => value.length > 0,
         message: this.i18nGateway.get("companySite.modify.valid.alias"),
       },
     ],
     companyId: [
       {
-        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-        validator: (value: string) => value.length > 0,
+        validator: (value: string):boolean => value.length > 0,
         message: this.i18nGateway.get("companySite.modify.valid.companyId"),
       },
     ]
@@ -58,14 +55,12 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
   public async onLoad(): Promise<void> {
     this.state.companyId = parseInt(this.router.getPathParams().get("id")!);
 
-    this.state.selectedCompany = await this.restCompanyGateway.getCompany(this.state.companyId);
-
+    if(!isNaN(this.state.companyId)) {
+      await this.getCompanySites(this.state.companyId);
+      this.state.selectedCompany = await this.restCompanyGateway.getCompany(this.state.companyId);
+      this.state.firstSelectedCompany = this.state.selectedCompany;
+    }
     this.state.companiesForSelect = await this.restCompanyGateway.getCompanies();
-
-    this.state.firstSelectedCompany = this.state.selectedCompany;
-
-    await this.getCompanySites(this.state.companyId);
-
     return Promise.resolve(undefined);
   }
 
@@ -93,6 +88,13 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
       model.searchForm.companyId = this.state.firstSelectedCompany.id;
       void this.getCompanySites(model.searchForm.companyId!);
     }
+  }
+
+  public async changeCompany(companyId:number):Promise<void> {
+    this.state.selectedCompany = await this.restCompanyGateway.getCompany(companyId);
+    this.state.companyId = this.state.selectedCompany.id;
+    await this.getCompanySites(Number(this.state.companyId));
+    this.updateView();
   }
 
   // addCompanySite dialog

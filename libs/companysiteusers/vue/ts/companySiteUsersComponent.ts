@@ -1,13 +1,13 @@
-import {Component, Prop, Vue} from "vue-facing-decorator";
+import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbComponent";
+import ModalComponent from "qnect-sdk-web/lib/common/vue/ts/modalComponent";
+import PaginationComponent from "qnect-sdk-web/lib/common/vue/ts/paginationComponent";
+import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
+import { Component, Prop, Vue } from "vue-facing-decorator";
+import ButtonComponent from "../../../common/component/ButtonComponent";
+import NoDataComponent from "../../../common/component/noDataComponent";
+import CompanySiteUsersInteractor from "../../core/ts/interactors/companySiteUsersInteractor";
 import CompanySiteUsersPresenter from "../../core/ts/interactors/companySiteUsersPresenter";
 import CompanySiteUsersModel from "../../core/ts/models/companySiteUsersModel";
-import CompanySiteUsersInteractor from "../../core/ts/interactors/companySiteUsersInteractor";
-import PaginationComponent from "qnect-sdk-web/lib/common/vue/ts/paginationComponent";
-import ModalComponent from "qnect-sdk-web/lib/common/vue/ts/modalComponent";
-import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
-import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbComponent";
-import NoDataComponent from "../../../common/component/noDataComponent";
-import ButtonComponent from "../../../common/component/ButtonComponent";
 
 
 @Component({
@@ -34,10 +34,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
               <div class="mt-3">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item">
-                      <i class="fa-solid fa-house fa-2xl"></i>
-                    </li>
-                    <li class="ps-1 ms-2">
+                    <li>
                       <breadcrumb :items="model.breadcrumb" />
                     </li>
                   </ol>
@@ -47,26 +44,37 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
 
             <div class="main row gy-2">
               <!--search-->
-              <div class="col-sm-12 col-md-12 col-lg-12 mx-auto" v-show="model.showSearch">
+              <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
                 <div class="card">
                   <div class="card-body">
                     <div class="card-title">
                       <form class="row g-3">
-                        <div class="col-md-3 ">
-                          <!--searchForm-->
+                      <div class="col-md-3 ">
+                          <label for="companyId" class="form-label">{{ model.labelInfo.companyLabel }}</label>
+                          <select class="form-select" id="companyId" v-model="model.selectedCompanyId" @change="interactor.changeCompany(model.selectedCompanyId)">
+                          <option value=null disabled selected>{{model.labelInfo.selectTip}}</option>
+                          <option
+                              v-for="company in model.companies"
+                              :key="company.id"
+                              :label="company.alias"
+                              :value="company.id"
+                            />
+                          </select>
+                        </div>
+                      <div class="col-md-3 ">
+                          <label for="companySiteId" class="form-label">{{ model.labelInfo.companySiteLabel }}</label>
+                          <select class="form-select" id="companySiteId" v-model="model.selectedCompanySiteId" @change="interactor.changeCompanySite(model.selectedCompanySiteId)" >
+                          <option value=null disabled selected>{{model.labelInfo.selectTip}}</option>
+                          <option
+                              v-for="site in model.companySites"
+                              :key="site.id"
+                              :label="site.alias"
+                              :value="site.id"
+                            />
+                          </select>
                         </div>
                       </form>
                     </div>
-                    <hr/>
-                    <div class="row row-cols-auto g-2" style="float:right;">
-                      <div class="col">
-                        <ButtonComponent btn-style="width:30px" icon="fa-solid fa-magnifying-glass" ></ButtonComponent>
-                      </div>
-                      <div class="col">
-                        <ButtonComponent btn-style="width:30px" icon="fa-solid fa-arrows-rotate" shape="btn-outline-info"></ButtonComponent>
-                      </div>
-                    </div>
-                    <!--end row-->
                   </div>
                 </div>
               </div>
@@ -99,7 +107,7 @@ import ButtonComponent from "../../../common/component/ButtonComponent";
                     <div class="card-title">
                       <div class="row row-cols-auto g-2">
                         <div class="col">
-                          <ButtonComponent icon="a-solid fa-plus" btn-style="width:30px" @click="() => interactor.openAddUserDialog()"></ButtonComponent>
+                          <ButtonComponent icon="a-solid fa-plus" :disabled="model.selectedCompanyId ===null || model.selectedCompanySiteId === null" btn-style="width:30px" @click="() => interactor.openAddUserDialog()"></ButtonComponent>
                         </div>
                       </div>
                     </div>

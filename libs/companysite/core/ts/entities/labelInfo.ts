@@ -16,4 +16,6 @@ export default class LabelInfo{
 
   public serverErrorInfo:string = "";
 
+  public selectTip:string = ""
+
 }
