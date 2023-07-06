@@ -29,6 +29,6 @@
     "uglify-js": "^3.17.4"
   },
   "dependencies": {
-    "qnect-sdk-web": "^3.3.3"
+    "qnect-sdk-web": "^3.4.7"
   }
 }
