@@ -1,10 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US">
   <file id="qnect">
-
     <unit id="app.title">
       <segment>
         <source>Customer Management</source>
+      </segment>
+    </unit>
+    <unit id="common.home">
+      <segment>
+        <source>Home</source>
       </segment>
     </unit>
     <unit id="model.labelInfo.selectTip">
@@ -57,544 +61,439 @@
         <source>Edit</source>
       </segment>
     </unit>
-
     <!--router-->
     <unit id="company.router.name">
       <segment>
-        <source>Company Manage</source>
+        <source>Companies</source>
       </segment>
     </unit>
-
     <unit id="companySite.router.name">
       <segment>
-        <source>Company Site Manage</source>
+        <source>Company Sites</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.router.name">
       <segment>
-        <source>User Manage</source>
+        <source>Users</source>
       </segment>
     </unit>
-
     <!--company module-->
     <unit id="company.add.valid.alias">
       <segment>
         <source>Alias is required</source>
       </segment>
     </unit>
-
     <unit id="company.add.valid.type">
       <segment>
         <source>Type is required</source>
       </segment>
     </unit>
-
     <unit id="company.add.valid.customerId">
       <segment>
         <source>Customer ID is required</source>
       </segment>
     </unit>
-
     <unit id="company.label.serverErrorInfo">
       <segment>
         <source>Server Internal Error</source>
       </segment>
     </unit>
-
     <unit id="company.label.agentCompanyName">
       <segment>
-        <source>Agent Company Name</source>
+        <source>Agent Company</source>
       </segment>
     </unit>
-
     <unit id="company.label.type">
       <segment>
-        <source>Type</source>
+        <source>Copmany type</source>
       </segment>
     </unit>
-
     <unit id="company.label.agentCompanyName">
       <segment>
-        <source>Agent Company Name</source>
+        <source>Agent Company</source>
       </segment>
     </unit>
-
     <unit id="company.label.customerId">
       <segment>
         <source>Customer ID</source>
       </segment>
     </unit>
-
     <unit id="company.label.alias">
       <segment>
         <source>Alias</source>
       </segment>
     </unit>
-
     <unit id="company.label.chooseAllLabel">
       <segment>
-        <source>Choose All</source>
+        <source>All companies</source>
       </segment>
     </unit>
-
     <unit id="company.label.CUSTOMER">
       <segment>
-        <source>CUSTOMER</source>
+        <source>Customer</source>
       </segment>
     </unit>
-
     <unit id="company.label.TRADER">
       <segment>
-        <source>TRADER</source>
+        <source>Trader</source>
       </segment>
     </unit>
-
     <unit id="company.label.MANUFACTURER">
       <segment>
-        <source>MANUFACTURER</source>
+        <source>Manufacturer</source>
       </segment>
     </unit>
-
     <unit id="company.action.add">
       <segment>
-        <source>add</source>
+        <source>Add</source>
       </segment>
     </unit>
-
     <unit id="company.action.delete">
       <segment>
-        <source>delete</source>
+        <source>Delete</source>
       </segment>
     </unit>
-
     <unit id="company.action.modify">
       <segment>
-        <source>modify</source>
+        <source>Modify</source>
       </segment>
     </unit>
-
-
     <unit id="company.dialog.addCompany">
       <segment>
         <source>Add Company</source>
       </segment>
     </unit>
-
     <unit id="company.dialog.close">
       <segment>
         <source>Close</source>
       </segment>
     </unit>
-
     <unit id="company.dialog.submit">
       <segment>
         <source>Submit</source>
       </segment>
     </unit>
-
      <unit id="company.dialog.msgAddCompanyWithSuccess">
       <segment>
         <source>Success to add company</source>
       </segment>
     </unit>
-
      <unit id="company.dialog.msgAddCompanyWithFailure">
       <segment>
         <source>Failed to add company</source>
       </segment>
     </unit>
-
     <unit id="company.dialog.msgDeleteCompanyWithFailure">
       <segment>
         <source>Failed to delete company</source>
       </segment>
     </unit>
-
     <unit id="company.dialog.msgDeleteCompanyWithSuccess">
       <segment>
         <source>Success to delete company</source>
       </segment>
     </unit>
-
      <unit id="company.dialog.deleteCompany">
       <segment>
         <source>Delete Company</source>
       </segment>
     </unit>
-
      <unit id="company.dialog.deleteTipInfo">
       <segment>
-        <source>Sure to delete this company?</source>
+        <source>Are you sute you want to delete this company?</source>
       </segment>
     </unit>
-
     <unit id="company.dialog.msgModifyCompanyWithFailure">
       <segment>
-        <source>Failed  to modify company</source>
+        <source>Failed in changing the company.</source>
       </segment>
     </unit>
-
      <unit id="company.dialog.msgModifyCompanyWithSuccess">
       <segment>
-        <source>Success to modify company</source>
+        <source>Success in changing the company.</source>
       </segment>
     </unit>
-
     <unit id="company.dialog.modifyCompanyTitle">
       <segment>
         <source>Modify company</source>
       </segment>
     </unit>
-
     <unit id="company.tableName.agentCompanyId">
       <segment>
-        <source>Agent Company Alias Name</source>
+        <source>Agent Company</source>
       </segment>
     </unit>
-
     <unit id="company.tableName.alias">
       <segment>
-        <source>Company Alias Name</source>
+        <source>Company Name</source>
       </segment>
     </unit>
-
     <unit id="company.tableName.type">
       <segment>
         <source>Company Type</source>
       </segment>
     </unit>
-
     <unit id="company.tableName.customerId">
       <segment>
-        <source>Customer Id</source>
+        <source>Customer ID</source>
       </segment>
     </unit>
-
     <unit id="company.tableName.operate">
       <segment>
-        <source>Operate</source>
+        <source>Actions</source>
       </segment>
     </unit>
-
-
     <!--Company Site Module-->
-
     <unit id="companySite.companyName">
       <segment>
         <source>Company Name</source>
       </segment>
     </unit>
-
-
     <unit id="companySite.action.add">
       <segment>
-        <source>add</source>
+        <source>Add</source>
       </segment>
     </unit>
-
     <unit id="companySite.action.delete">
       <segment>
-        <source>delete</source>
+        <source>Delete</source>
       </segment>
     </unit>
-
     <unit id="companySite.action.modify">
       <segment>
-        <source>modify</source>
+        <source>Modify</source>
       </segment>
     </unit>
-
-
     <unit id="companySite.tableName.id">
       <segment>
         <source>ID</source>
       </segment>
     </unit>
-
     <unit id="companySite.tableName.alias">
       <segment>
-        <source>CompanySite Name</source>
+        <source>Company site name</source>
       </segment>
     </unit>
-
     <unit id="companySite.tableName.companyName">
       <segment>
-        <source>Company Name</source>
+        <source>Company name</source>
       </segment>
     </unit>
-
     <unit id="companySite.tableName.operate">
       <segment>
         <source>Operate</source>
       </segment>
     </unit>
-
     <unit id="companySite.dialog.submit">
       <segment>
-        <source>submit</source>
+        <source>Submit</source>
       </segment>
     </unit>
-
     <unit id="companySite.dialog.addCompanySite">
       <segment>
         <source>Add Company Site</source>
       </segment>
     </unit>
-
     <unit id="companySite.dialog.msgAddCompanySiteWithSuccess">
       <segment>
-        <source>Success to add companySite</source>
+        <source>Success in adding the company site</source>
       </segment>
     </unit>
-
     <unit id="companySite.dialog.msgAddCompanySiteWithFailure">
       <segment>
-        <source>Failed to add companySite</source>
+        <source>Failed in adding the company site</source>
       </segment>
     </unit>
-
-
     <unit id="companySite.dialog.modifyCompanySiteTitle">
       <segment>
-        <source>Modify CompanySite</source>
+        <source>Modify company site</source>
       </segment>
     </unit>
-
     <unit id="companySite.dialog.msgModifyCompanySiteWithSuccess">
       <segment>
-        <source>Success Modify CompanySite</source>
+        <source>Success in modifying the company site.</source>
       </segment>
     </unit>
-
     <unit id="companySite.dialog.msgModifyCompanySiteWithFailure">
       <segment>
-        <source>Failed Modify CompanySite</source>
+        <source>Failed in modifying the company site.</source>
       </segment>
     </unit>
-
-
     <unit id="companySite.dialog.deleteCompanySiteTitle">
       <segment>
-        <source>Delete companySite</source>
+        <source>Delete company site</source>
       </segment>
     </unit>
-
-
     <unit id="companySite.dialog.deleteTipInfo">
       <segment>
-        <source>Sure to delete</source>
+        <source>Are you sure you want to delete the compnay site.</source>
       </segment>
     </unit>
-
     <unit id="companySite.dialog.msgDeleteCompanySiteWithSuccess">
       <segment>
-        <source>Success to delete companySite</source>
+        <source>Success in deleting the company site.</source>
       </segment>
     </unit>
-
     <unit id="companySite.dialog.msgDeleteCompanySiteWithFailure">
       <segment>
-        <source>Failed to delete CompanySite</source>
+        <source>Failed in deleting the company site.</source>
       </segment>
     </unit>
-
     <unit id="companySite.label.serverErrorInfo">
       <segment>
         <source>Server Internal Error</source>
       </segment>
     </unit>
-
     <unit id="companySite.label.companyId">
       <segment>
         <source>Company Name</source>
       </segment>
     </unit>
-
     <unit id="companySite.label.aliasLabel">
       <segment>
         <source>Alias</source>
       </segment>
     </unit>
-
     <unit id="companySite.label.companyNameLabel">
       <segment>
-        <source>Company Name</source>
+        <source>Company name</source>
       </segment>
     </unit>
-
     <unit id="companySite.label.companySiteNameLabel">
       <segment>
-        <source>CompanySite Name</source>
+        <source>Company site name</source>
       </segment>
     </unit>
-
     <unit id="companySite.label.companyAliasNameLabel">
       <segment>
-        <source>Company Alias Name</source>
+        <source>Company name</source>
       </segment>
     </unit>
-
     <unit id="companySite.label.companySiteAliasNameLabel">
       <segment>
-        <source>CompanySite Alias Name</source>
+        <source>Company site name</source>
       </segment>
     </unit>
-
     <unit id="companySite.add.valid.alias">
       <segment>
         <source>Alias is required</source>
       </segment>
     </unit>
-
     <unit id="companySite.modify.valid.alias">
       <segment>
         <source>Alias is required</source>
       </segment>
     </unit>
-
     <unit id="companySite.modify.valid.companyId">
       <segment>
         <source>Company ID is required</source>
       </segment>
     </unit>
-
-
-
     <!--CompanySite User-->
     <unit id="companySiteUser.table.alias">
       <segment>
         <source>Alias</source>
       </segment>
     </unit>
-
      <unit id="companySiteUser.table.email">
       <segment>
         <source>Email</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.table.role">
       <segment>
         <source>Role</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.table.operate">
       <segment>
-        <source>Operate</source>
+        <source>Actions</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.dialog.msgAddUserWithSuccess">
       <segment>
-        <source>Success to add user</source>
+        <source>Success in adding the user.</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.dialog.msgAddUserWithFailure">
       <segment>
-        <source>Failed to add user</source>
+        <source>Failed in adding the user.</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.dialog.addUserDialogTitle">
       <segment>
         <source>Add CompanySite User</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.dialog.submit">
       <segment>
-        <source>submit</source>
+        <source>Submit</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.dialog.deleteUserDialogTitle">
       <segment>
         <source>Delete User</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.dialog.deleteUserTipInfo">
       <segment>
-        <source>Sure to delete user</source>
+        <source>Are you sure you want to remove the user from this company site?</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.dialog.msgDeleteUserWithFailure">
       <segment>
-        <source>Failed to delete user</source>
+        <source>Failed in deleting the user.</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.dialog.msgDeleteUserWithSuccess">
       <segment>
-        <source>Success to delete user</source>
+        <source>Success in deleting the user.</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.label.email">
       <segment>
         <source>Email</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.label.role">
       <segment>
         <source>Role</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.label.ADMINISTRATOR">
       <segment>
-        <source>ADMINISTRATOR</source>
+        <source>Administrator</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.label.USER">
       <segment>
-        <source>USER</source>
+        <source>User</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.label.serverErrorInfo">
       <segment>
-        <source>Server Internal Error!!!</source>
+        <source>Server Internal Error</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.valid.alias">
       <segment>
         <source>User alias is required</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.valid.email">
       <segment>
-        <source>email is required</source>
+        <source>Email is required</source>
       </segment>
     </unit>
-
     <unit id="companySiteUser.valid.role">
       <segment>
-        <source>role is required</source>
+        <source>Role is required</source>
       </segment>
     </unit>
-
-
      <unit id="noDataLabel">
       <segment>
-        <source>No Data Available</source>
+        <source>No data available</source>
       </segment>
     </unit>
-
-
-
-
-
-
-
-
   </file>
 </xliff>
