@@ -28,7 +28,7 @@ export default class CompanySiteUsersModule implements Module {
         name: "users",
         title: this.i18nModule.getI18nGateway().get("companySiteUser.router.name"),
         urlPattern: "users",
-        parent: this.router.getRouter().getRouteByName("sites"),
+        parent: this.router.getRouter().getRouteByName("home"),
       }),
       new VueRouteHandler({
         controller: CompanySiteUsersComponent,

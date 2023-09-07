@@ -33,7 +33,7 @@ export default class CompanySiteModule implements Module {
     const restCompanyGateway: RestCompanyGateway = new RestCompanyGateway(this.authModule.getRestClientProvider());
     this.routerModule.getRouter().register(
       new Route({
-        name: "CompanySite",
+        name: "sites",
         title: this.i18nModule.getI18nGateway().get("companySite.router.name"),
         urlPattern: "sites",
         parent: this.routerModule.getRouter().getRouteByName("home"),
