@@ -9,30 +9,26 @@ import CompanySiteUsersComponent from "../../../libs/companysiteusers/vue/ts/com
 import I18nModule from "./i18nModule";
 import RouterModule from "./routerModule";
 
-
 export default class CompanySiteUsersModule implements Module {
-
   public constructor(
     private readonly auth: AuthModule,
     private readonly router: RouterModule,
     private readonly i18nModule: I18nModule
-  ) {
-  }
+  ) {}
 
   public getName(): string {
     return CompanySiteUsersModule.name;
   }
 
   public async load(): Promise<void> {
-
-    const gateway: RestCompanySiteGateway = new RestCompanySiteGateway(this.auth.getRestClientProvider())
+    const gateway: RestCompanySiteGateway = new RestCompanySiteGateway(this.auth.getRestClientProvider());
     const companyGateway: RestCompanyGateway = new RestCompanyGateway(this.auth.getRestClientProvider());
     this.router.getRouter().register(
       new Route({
-        name: "User",
+        name: "users",
         title: this.i18nModule.getI18nGateway().get("companySiteUser.router.name"),
-        urlPattern: ":companySiteId/users",
-        parent:this.router.getRouter().getRouteByName("CompanySite")
+        urlPattern: "users",
+        parent: this.router.getRouter().getRouteByName("sites"),
       }),
       new VueRouteHandler({
         controller: CompanySiteUsersComponent,
@@ -40,7 +36,8 @@ export default class CompanySiteUsersModule implements Module {
           this.router.getRouter(),
           this.i18nModule.getI18nGateway(),
           companyGateway,
-          gateway),
+          gateway
+        ),
       })
     );
   }
@@ -48,5 +45,4 @@ export default class CompanySiteUsersModule implements Module {
   public async loadSecondPhase(): Promise<void> {
     //
   }
-
 }

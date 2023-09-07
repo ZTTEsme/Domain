@@ -14,7 +14,6 @@ export default class CompanySiteModule implements Module {
   private readonly i18nModule: I18nModule;
   private readonly routerModule: RouterModule;
 
-
   public constructor(
     private readonly auth: AuthModule,
     private readonly router: RouterModule,
@@ -30,15 +29,14 @@ export default class CompanySiteModule implements Module {
   }
 
   public async load(): Promise<void> {
-
     const gateway: RestCompanySiteGateway = new RestCompanySiteGateway(this.authModule.getRestClientProvider());
     const restCompanyGateway: RestCompanyGateway = new RestCompanyGateway(this.authModule.getRestClientProvider());
     this.routerModule.getRouter().register(
       new Route({
         name: "CompanySite",
         title: this.i18nModule.getI18nGateway().get("companySite.router.name"),
-        urlPattern: ":id/sites",
-        parent:this.routerModule.getRouter().getRouteByName("home")
+        urlPattern: "sites",
+        parent: this.routerModule.getRouter().getRouteByName("home"),
       }),
       new VueRouteHandler({
         controller: CompanySiteComponent,
@@ -46,7 +44,8 @@ export default class CompanySiteModule implements Module {
           this.routerModule.getRouter(),
           this.i18nModule.getI18nGateway(),
           gateway,
-          restCompanyGateway),
+          restCompanyGateway
+        ),
       })
     );
   }

@@ -13,7 +13,6 @@ export default class HomePageModule implements Module {
   private readonly i18nModule: I18nModule;
   private readonly routerModule: RouterModule;
 
-
   public constructor(
     private readonly auth: AuthModule,
     private readonly router: RouterModule,
@@ -29,14 +28,13 @@ export default class HomePageModule implements Module {
   }
 
   public async load(): Promise<void> {
-
     const homePageGateway: HomePageGateway = new HomePageGateway(this.authModule.getRestClientProvider());
 
     this.routerModule.getRouter().register(
       new Route({
         name: "home",
-        title: "Customer Manager",
-        urlPattern: "/"
+        title: this.i18n.getI18nGateway().get("app.title"),
+        urlPattern: "/",
       }),
       new VueRouteHandler({
         controller: HomePageComponent,
@@ -44,7 +42,7 @@ export default class HomePageModule implements Module {
           this.routerModule.getRouter(),
           this.i18nModule.getI18nGateway(),
           homePageGateway
-          )
+        ),
       })
     );
   }

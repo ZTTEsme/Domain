@@ -1,6 +1,5 @@
 import LanguageLoader from "qnect-sdk-web/lib/i18n/browser/ts/languageLoader";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
-import Language from "qnect-sdk-web/lib/i18n/core/ts/language";
 import LanguagesProvider from "qnect-sdk-web/lib/i18n/core/ts/languagesProvider";
 import XliffI18nGateway from "qnect-sdk-web/lib/i18n/xliff/ts/gateways/xliffI18nGateway";
 import Module from "qnect-sdk-web/lib/modules/core/ts/module";
@@ -34,11 +33,7 @@ export default class I18nModule implements Module {
       this.i18ngateway,
       this.authModule.getAuthUserDataProvider().getAuthUserData().locale
     );
-    this.languagesProvider = new LanguagesProvider([
-      new Language({ key: "de-DE", label: "Deutsch", machineTranslated: true }),
-      new Language({ key: "en-US", label: "English" }),
-      new Language({ key: "zh-CN", label: "中文", machineTranslated: true }),
-    ]);
+    this.languagesProvider = new LanguagesProvider();
   }
 
   public async loadSecondPhase(): Promise<void> {

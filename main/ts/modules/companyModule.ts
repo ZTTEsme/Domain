@@ -13,7 +13,6 @@ export default class CompanyModule implements Module {
   private readonly i18nModule: I18nModule;
   private readonly routerModule: RouterModule;
 
-
   public constructor(
     private readonly auth: AuthModule,
     private readonly router: RouterModule,
@@ -29,13 +28,12 @@ export default class CompanyModule implements Module {
   }
 
   public async load(): Promise<void> {
-
     const companyGateway: RestCompanyGateway = new RestCompanyGateway(this.authModule.getRestClientProvider());
     this.routerModule.getRouter().register(
       new Route({
-        name: "company",
+        name: "companies",
         title: this.i18nModule.getI18nGateway().get("company.router.name"),
-        urlPattern: "/companies",
+        urlPattern: "companies",
         parent: this.routerModule.getRouter().getRouteByName("home"),
       }),
       new VueRouteHandler({
@@ -43,7 +41,8 @@ export default class CompanyModule implements Module {
         interactor: new CompanyInteractor(
           this.routerModule.getRouter(),
           this.i18nModule.getI18nGateway(),
-          companyGateway),
+          companyGateway
+        ),
       })
     );
   }

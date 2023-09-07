@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US">
   <file id="qnect">
 
-    <unit id="state.labels.homePageTitle">
+    <unit id="app.title">
       <segment>
-        <source>Customer Manager</source>
+        <source>Customer Management</source>
       </segment>
     </unit>
     <unit id="model.labelInfo.selectTip">
@@ -24,85 +24,37 @@
     </unit>
     <unit id="state.labels.company">
       <segment>
-        <source>Company Manage</source>
+        <source>Companies</source>
       </segment>
     </unit>
     <unit id="state.labels.companyTip">
       <segment>
-        <source>Manage all companies</source>
+        <source>Manage companies</source>
       </segment>
     </unit>
     <unit id="state.labels.site">
       <segment>
-        <source>Company Site Manage</source>
+        <source>Company sites</source>
       </segment>
     </unit>
     <unit id="state.labels.siteTip">
       <segment>
-        <source>Manage all Company Sites</source>
+        <source>Manage company sites</source>
       </segment>
     </unit>
     <unit id="state.labels.user">
       <segment>
-        <source>User Manage</source>
+        <source>Users</source>
       </segment>
     </unit>
     <unit id="state.labels.userTip">
       <segment>
-        <source>Manage all user</source>
+        <source>Manage all users</source>
       </segment>
     </unit>
     <unit id="state.labels.edit">
       <segment>
         <source>Edit</source>
-      </segment>
-    </unit>
-
-    <unit id="home.editingFavorites">
-      <segment>
-        <source>Editing favorites</source>
-      </segment>
-    </unit>
-
-    <unit id="home.favorites">
-      <segment>
-        <source>Favorites</source>
-      </segment>
-    </unit>
-
-    <unit id="home.editFavorites">
-      <segment>
-        <source>Edit favorites</source>
-      </segment>
-    </unit>
-
-    <unit id="home.feedback">
-      <segment>
-        <source>Feedback</source>
-      </segment>
-    </unit>
-
-    <unit id="home.typeYourFeedbackHere">
-      <segment>
-        <source>Give us feedback about our platform:</source>
-      </segment>
-    </unit>
-
-    <unit id="home.submitYourFeedback">
-      <segment>
-        <source>Absenden</source>
-      </segment>
-    </unit>
-
-    <unit id="home.sentFeedback">
-      <segment>
-        <source>Thank you for your feedback!</source>
-      </segment>
-    </unit>
-
-    <unit id="home.failedToSendFeedback">
-      <segment>
-        <source>Failed to submit feedback, please try again later.</source>
       </segment>
     </unit>
 
@@ -231,13 +183,13 @@
 
     <unit id="company.dialog.close">
       <segment>
-        <source>close</source>
+        <source>Close</source>
       </segment>
     </unit>
 
     <unit id="company.dialog.submit">
       <segment>
-        <source>submit</source>
+        <source>Submit</source>
       </segment>
     </unit>
 
