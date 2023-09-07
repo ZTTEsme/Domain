@@ -1,5 +1,8 @@
 import Route from "cloos-vue-router/lib/core/route";
 import VueRouteHandler from "cloos-vue-router/lib/vue/vueRouteHandler";
+import ProjectUtil from "qnect-sdk-web/lib/common/browser/ts/projectUtil";
+import CompanyGateway from "qnect-sdk-web/lib/company/core/ts/gateways/companyGateway";
+import CompanyGatewayMock from "qnect-sdk-web/lib/company/core/ts/gateways/companyGatewayMock";
 import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restCompanyGateway";
 import Module from "qnect-sdk-web/lib/modules/core/ts/module";
 import AuthModule from "qnect-sdk-web/lib/modules/main/ts/authModule";
@@ -28,7 +31,13 @@ export default class CompanyModule implements Module {
   }
 
   public async load(): Promise<void> {
-    const companyGateway: RestCompanyGateway = new RestCompanyGateway(this.authModule.getRestClientProvider());
+    let companyGateway: CompanyGateway;
+    if (ProjectUtil.isMock()) {
+      companyGateway = new CompanyGatewayMock();
+    } else {
+      companyGateway = new RestCompanyGateway(this.authModule.getRestClientProvider());
+    }
+
     this.routerModule.getRouter().register(
       new Route({
         name: "companies",
