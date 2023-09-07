@@ -269,7 +269,7 @@ export default class CompanySiteInteractor extends ViewInteractor<CompanySitePre
 
   public goCompanySiteUsers(companySiteId: number, companyId: number): void {
     void this.router.loadRoute(
-      this.router.getRouteByName("User"),
+      this.router.getRouteByName("users"),
       new Map([
         ["companySiteId", companySiteId.toString()],
         ["id", companyId.toString()],
