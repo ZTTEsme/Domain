@@ -35,11 +35,7 @@ import HomePageModel from "../core/ts/models/homePageModel";
                     <p class="card-text">
                       {{ model.labels.companyTip }}
                     </p>
-<<<<<<< HEAD
-                    <a :href="interactor.router.getFullUriOfRouteByName('company')" class="btn btn-primary w-100">{{
-=======
                     <a :href="interactor.router.getFullUriOfRouteByName('companies')" class="btn btn-primary w-100">{{
->>>>>>> 7cc8bace5a70174a544830794f18833cc98bb42e
                       model.labels.edit
                     }}</a>
                   </div>
@@ -50,11 +46,7 @@ import HomePageModel from "../core/ts/models/homePageModel";
                     <p class="card-text">
                       {{ model.labels.siteTip }}
                     </p>
-<<<<<<< HEAD
-                    <a :href="interactor.router.getFullUriOfRouteByName('CompanySite')" class="btn btn-primary w-100">{{
-=======
                     <a :href="interactor.router.getFullUriOfRouteByName('sites')" class="btn btn-primary w-100">{{
->>>>>>> 7cc8bace5a70174a544830794f18833cc98bb42e
                       model.labels.edit
                     }}</a>
                   </div>
@@ -65,11 +57,7 @@ import HomePageModel from "../core/ts/models/homePageModel";
                     <p class="card-text">
                       {{ model.labels.userTip }}
                     </p>
-<<<<<<< HEAD
-                    <a :href="interactor.router.getFullUriOfRouteByName('User')" class="btn btn-primary w-100">{{
-=======
                     <a :href="interactor.router.getFullUriOfRouteByName('users')" class="btn btn-primary w-100">{{
->>>>>>> 7cc8bace5a70174a544830794f18833cc98bb42e
                       model.labels.edit
                     }}</a>
                   </div>

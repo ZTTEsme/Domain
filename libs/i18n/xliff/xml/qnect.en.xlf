@@ -8,6 +8,12 @@
       </segment>
     </unit>
 
+    <unit id="app.title">
+      <segment>
+        <source>Customer Manager</source>
+      </segment>
+    </unit>
+
     <unit id="state.labels.homePageTitle">
       <segment>
         <source>Customer Management</source>

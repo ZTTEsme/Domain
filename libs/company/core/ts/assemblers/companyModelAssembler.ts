@@ -16,7 +16,7 @@ export default class CompanyModelAssembler {
   }
 
   public static fromStateWithOutValidationFeedBack(
-    state:  CompanyState,
+    state: CompanyState,
     router: Router,
     i18nGateway: I18nGateway
   ): CompanyModel {
@@ -68,8 +68,8 @@ export default class CompanyModelAssembler {
     model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
 
     // searchForm
-    model.labelInfo.agentCompanyLabel = i18nGateway.get("company.label.agentCompanyName");;
-    if  (!CommonUtils.isNullOrUndefined(state.searchForm.companyId))  {
+    model.labelInfo.agentCompanyLabel = i18nGateway.get("company.label.agentCompanyName");
+    if (!CommonUtils.isNullOrUndefined(state.searchForm.companyId)) {
       model.searchForm = CommonUtils.deepCopy(state.searchForm);
     }
 
@@ -86,7 +86,7 @@ export default class CompanyModelAssembler {
 
     // add company dialog msgAddCompanyWithSuccess
     model.dialog.addCompany = i18nGateway.get("company.dialog.addCompany");
-    model.dialog.close =  i18nGateway.get("company.dialog.close");
+    model.dialog.close = i18nGateway.get("company.dialog.close");
     model.dialog.submit = i18nGateway.get("company.dialog.submit");
     model.dialog.msgAddCompanyWithSuccess = i18nGateway.get("company.dialog.msgAddCompanyWithSuccess");
     model.dialog.msgAddCompanyWithFailure = i18nGateway.get("company.dialog.msgAddCompanyWithFailure");
@@ -128,14 +128,14 @@ export default class CompanyModelAssembler {
 
     // CompanyTableColName
     model.companyTableColName.agentCompanyId = i18nGateway.get("company.tableName.agentCompanyId");
-    model.companyTableColName.alias =  i18nGateway.get("company.tableName.alias");
+    model.companyTableColName.alias = i18nGateway.get("company.tableName.alias");
     model.companyTableColName.type = i18nGateway.get("company.tableName.type");
     model.companyTableColName.customerId = i18nGateway.get("company.tableName.customerId");
-    model.companyTableColName.operate =  i18nGateway.get("company.tableName.operate");
+    model.companyTableColName.operate = i18nGateway.get("company.tableName.operate");
 
     // pagination by front
     model.pageInfo = state.pageInfo;
-    this.updateCompanies(model,  model.pageInfo,  state);
+    this.updateCompanies(model, model.pageInfo, state);
     model.formErrors = state.formErrors;
   }
 
@@ -164,6 +164,6 @@ export default class CompanyModelAssembler {
       }
       ele.agentCompanyName = agentCompanyName;
     });
-    model.pageResultForCompany = CommonUtils.getPageData(model.company,  pageInfo.pageNo,  pageInfo.pageSize);
+    model.pageResultForCompany = CommonUtils.getPageData(model.company, pageInfo.pageNo, pageInfo.pageSize);
   }
 }

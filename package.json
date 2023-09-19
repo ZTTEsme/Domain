@@ -29,11 +29,7 @@
     "uglify-js": "^3.17.4"
   },
   "dependencies": {
-<<<<<<< HEAD
     "bootstrap": "^5.3.2",
     "qnect-sdk-web": "^3.6.0"
-=======
-    "qnect-sdk-web": "^3.5.8"
->>>>>>> 7cc8bace5a70174a544830794f18833cc98bb42e
   }
 }
