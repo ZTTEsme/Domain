@@ -1,4 +1,5 @@
 import Router from "cloos-vue-router/lib/core/router";
+import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
 import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
@@ -10,15 +11,23 @@ export default class CompanySiteUsersAssembler {
     state: CompanySiteUsersState,
     router: Router,
     i18nGateway: I18nGateway
-  ):CompanySiteUsersModel{
-    const model:CompanySiteUsersModel = new CompanySiteUsersModel();
-    model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(router);
-    this.updateCompanySiteUserModel(model,state,i18nGateway);
+  ): CompanySiteUsersModel {
+    const model: CompanySiteUsersModel = new CompanySiteUsersModel();
+    model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(
+      router,
+      undefined,
+      new Breadcrumb({ name: i18nGateway.get("common.home"), link: "/" })
+    );
+    this.updateCompanySiteUserModel(model, state, i18nGateway);
 
     return model;
   }
 
-  private static updateCompanySiteUserModel(model:CompanySiteUsersModel,state:CompanySiteUsersState, i18nGateway: I18nGateway):void{
+  private static updateCompanySiteUserModel(
+    model: CompanySiteUsersModel,
+    state: CompanySiteUsersState,
+    i18nGateway: I18nGateway
+  ): void {
     model.isLoading = state.isLoading;
 
     model.companies = state.companies;
@@ -63,7 +72,11 @@ export default class CompanySiteUsersAssembler {
     this.updateCompanySiteUserInfos(model);
   }
 
-  private static updateCompanySiteUserInfos(model:CompanySiteUsersModel):void{
-    model.pageResultForUsers = CommonUtils.getPageData(model.companySiteUsers,model.pageInfo.pageNo,model.pageInfo.pageSize);
+  private static updateCompanySiteUserInfos(model: CompanySiteUsersModel): void {
+    model.pageResultForUsers = CommonUtils.getPageData(
+      model.companySiteUsers,
+      model.pageInfo.pageNo,
+      model.pageInfo.pageSize
+    );
   }
 }

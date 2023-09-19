@@ -6,11 +6,10 @@ import HomePageGateway from "../gateway/homePageGateway";
 import HomePagePresenter from "./homePagePresenter";
 import HomePageState from "./homePageState";
 
-export default class HomePageInteractor extends ViewInteractor<HomePagePresenter>{
-
+export default class HomePageInteractor extends ViewInteractor<HomePagePresenter> {
   public presenter: HomePagePresenter | null = null;
 
-  public readonly state: HomePageState =new HomePageState();
+  public readonly state: HomePageState = new HomePageState();
 
   public constructor(
     router: Router,
@@ -35,8 +34,7 @@ export default class HomePageInteractor extends ViewInteractor<HomePagePresenter
     this.updateView();
   }
 
-  private updateView():void {
-    this.presenter?.updateView(HomePageAssemblers.fromState(this.state,this.router,this.i18nGateway));
+  private updateView(): void {
+    this.presenter?.updateView(HomePageAssemblers.fromState(this.state, this.router, this.i18nGateway));
   }
-
 }

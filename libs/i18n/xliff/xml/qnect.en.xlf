@@ -2,6 +2,12 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US">
   <file id="qnect">
 
+    <unit id="common.home">
+      <segment>
+        <source>Home</source>
+      </segment>
+    </unit>
+
     <unit id="state.labels.homePageTitle">
       <segment>
         <source>Customer Manager</source>
@@ -125,7 +131,8 @@
       </segment>
     </unit>
 
-    <!--company module-->
+    <!--company
+    module-->
     <unit id="company.add.valid.alias">
       <segment>
         <source>Alias is required</source>
@@ -241,13 +248,13 @@
       </segment>
     </unit>
 
-     <unit id="company.dialog.msgAddCompanyWithSuccess">
+    <unit id="company.dialog.msgAddCompanyWithSuccess">
       <segment>
         <source>Success to add company</source>
       </segment>
     </unit>
 
-     <unit id="company.dialog.msgAddCompanyWithFailure">
+    <unit id="company.dialog.msgAddCompanyWithFailure">
       <segment>
         <source>Failed to add company</source>
       </segment>
@@ -265,13 +272,13 @@
       </segment>
     </unit>
 
-     <unit id="company.dialog.deleteCompany">
+    <unit id="company.dialog.deleteCompany">
       <segment>
         <source>Delete Company</source>
       </segment>
     </unit>
 
-     <unit id="company.dialog.deleteTipInfo">
+    <unit id="company.dialog.deleteTipInfo">
       <segment>
         <source>Sure to delete this company?</source>
       </segment>
@@ -279,11 +286,11 @@
 
     <unit id="company.dialog.msgModifyCompanyWithFailure">
       <segment>
-        <source>Failed  to modify company</source>
+        <source>Failed to modify company</source>
       </segment>
     </unit>
 
-     <unit id="company.dialog.msgModifyCompanyWithSuccess">
+    <unit id="company.dialog.msgModifyCompanyWithSuccess">
       <segment>
         <source>Success to modify company</source>
       </segment>
@@ -326,7 +333,8 @@
     </unit>
 
 
-    <!--Company Site Module-->
+    <!--Company
+    Site Module-->
 
     <unit id="companySite.companyName">
       <segment>
@@ -508,15 +516,15 @@
     </unit>
 
 
-
-    <!--CompanySite User-->
+    <!--CompanySite
+    User-->
     <unit id="companySiteUser.table.alias">
       <segment>
         <source>Alias</source>
       </segment>
     </unit>
 
-     <unit id="companySiteUser.table.email">
+    <unit id="companySiteUser.table.email">
       <segment>
         <source>Email</source>
       </segment>
@@ -631,17 +639,11 @@
     </unit>
 
 
-     <unit id="noDataLabel">
+    <unit id="noDataLabel">
       <segment>
         <source>No Data Available</source>
       </segment>
     </unit>
-
-
-
-
-
-
 
 
   </file>

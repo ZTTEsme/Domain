@@ -1,4 +1,5 @@
 import Router from "cloos-vue-router/lib/core/router";
+import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
 import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
@@ -6,33 +7,37 @@ import CompanySiteState from "../interactors/companySiteState";
 import CompanySiteModel from "../models/companySiteModel";
 
 export default class CompanySiteModelAssembler {
-  public static fromState(
-    state: CompanySiteState,
-    router: Router,
-    i18nGateway: I18nGateway
-  ):CompanySiteModel{
-    const model:CompanySiteModel = new CompanySiteModel();
-    this.updateCompanySiteModel(state,model,router,i18nGateway);
+  public static fromState(state: CompanySiteState, router: Router, i18nGateway: I18nGateway): CompanySiteModel {
+    const model: CompanySiteModel = new CompanySiteModel();
+    this.updateCompanySiteModel(state, model, router, i18nGateway);
     return model;
   }
 
-  private static updateCompanySiteModel(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway: I18nGateway):void{
-
+  private static updateCompanySiteModel(
+    state: CompanySiteState,
+    model: CompanySiteModel,
+    router: Router,
+    i18nGateway: I18nGateway
+  ): void {
     model.selectedCompany = state.selectedCompany;
 
     model.companiesForSelect = state.companiesForSelect;
 
-    if( model.selectedCompany !== null ) {
+    if (model.selectedCompany !== null) {
       model.searchForm.companyId = model.selectedCompany.id;
     }
 
-    model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(router);
+    model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(
+      router,
+      undefined,
+      new Breadcrumb({ name: i18nGateway.get("common.home"), link: "/" })
+    );
 
-    model.moduleName = router.getCurrentRoute().name
+    model.moduleName = router.getCurrentRoute().name;
 
     model.showSearch = state.showSearch;
 
-    model.labelInfo.selectTip = i18nGateway.get("model.labelInfo.selectTip")
+    model.labelInfo.selectTip = i18nGateway.get("model.labelInfo.selectTip");
     model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
     model.labelInfo.serverErrorInfo = i18nGateway.get("companySite.label.serverErrorInfo");
     model.labelInfo.companyId = i18nGateway.get("companySite.label.companyId");
@@ -55,22 +60,25 @@ export default class CompanySiteModelAssembler {
     model.searchCompanySiteWasFailed = state.searchCompanySiteWasFailed;
     model.showSearch = state.showSearch;
 
-    this.renderModelForAddCompanySiteDialog(state,model,router,i18nGateway);
+    this.renderModelForAddCompanySiteDialog(state, model, router, i18nGateway);
 
-    this.renderModelForModifyCompanySiteDialog(state,model,router,i18nGateway);
+    this.renderModelForModifyCompanySiteDialog(state, model, router, i18nGateway);
 
-    this.renderModelForDeleteCompanySiteDialog(state,model,router,i18nGateway);
+    this.renderModelForDeleteCompanySiteDialog(state, model, router, i18nGateway);
 
     // pagination by front
     model.pageInfo = state.pageInfo;
     model.companySite = state.companySite;
     this.updateCompanySiteInfos(model);
-
-
   }
 
   // add dialog
-  private static renderModelForAddCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway):void{
+  private static renderModelForAddCompanySiteDialog(
+    state: CompanySiteState,
+    model: CompanySiteModel,
+    router: Router,
+    i18nGateway: I18nGateway
+  ): void {
     model.dialog.submit = i18nGateway.get("companySite.dialog.submit");
     model.dialog.addCompanySite = i18nGateway.get("companySite.dialog.addCompanySite");
     model.dialog.msgAddCompanySiteWithSuccess = i18nGateway.get("companySite.dialog.msgAddCompanySiteWithSuccess");
@@ -80,14 +88,22 @@ export default class CompanySiteModelAssembler {
     model.dialog.showAddCompanySiteSuccessMessage = state.showAddCompanySiteSuccessMessage;
     model.dialog.openAddCompanySiteDialog = state.openAddCompanySiteDialog;
     model.validAddCompanySiteFormErrors = state.validAddCompanySiteFormErrors;
-
   }
 
   // modify dialog
-  private static renderModelForModifyCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway):void{
+  private static renderModelForModifyCompanySiteDialog(
+    state: CompanySiteState,
+    model: CompanySiteModel,
+    router: Router,
+    i18nGateway: I18nGateway
+  ): void {
     model.dialog.modifyCompanySiteTitle = i18nGateway.get("companySite.dialog.modifyCompanySiteTitle");
-    model.dialog.msgModifyCompanySiteWithSuccess = i18nGateway.get("companySite.dialog.msgModifyCompanySiteWithSuccess");
-    model.dialog.msgModifyCompanySiteWithFailure = i18nGateway.get("companySite.dialog.msgModifyCompanySiteWithFailure");
+    model.dialog.msgModifyCompanySiteWithSuccess = i18nGateway.get(
+      "companySite.dialog.msgModifyCompanySiteWithSuccess"
+    );
+    model.dialog.msgModifyCompanySiteWithFailure = i18nGateway.get(
+      "companySite.dialog.msgModifyCompanySiteWithFailure"
+    );
     model.dialog.showModifyCompanySiteFailureMessage = state.showModifyCompanySiteFailureMessage;
     model.dialog.showModifyCompanySiteSuccessMessage = state.showModifyCompanySiteSuccessMessage;
     model.modifyCompanySiteFormData = state.modifyCompanySiteFormData;
@@ -95,22 +111,32 @@ export default class CompanySiteModelAssembler {
     model.validModifyCompanySiteFormErrors = state.validModifyCompanySiteFormErrors;
   }
 
-
   // delete dialog
-  private static renderModelForDeleteCompanySiteDialog(state:CompanySiteState,model:CompanySiteModel,router: Router,i18nGateway:I18nGateway):void{
+  private static renderModelForDeleteCompanySiteDialog(
+    state: CompanySiteState,
+    model: CompanySiteModel,
+    router: Router,
+    i18nGateway: I18nGateway
+  ): void {
     model.dialog.deleteCompanySiteTitle = i18nGateway.get("companySite.dialog.deleteCompanySiteTitle");
     model.dialog.deleteTipInfo = i18nGateway.get("companySite.dialog.deleteTipInfo");
-    model.dialog.msgDeleteCompanySiteWithSuccess = i18nGateway.get("companySite.dialog.msgDeleteCompanySiteWithSuccess");
-    model.dialog.msgDeleteCompanySiteWithFailure = i18nGateway.get("companySite.dialog.msgDeleteCompanySiteWithFailure");
-    model.dialog.openDeleteDialog= state.openDeleteDialog;
+    model.dialog.msgDeleteCompanySiteWithSuccess = i18nGateway.get(
+      "companySite.dialog.msgDeleteCompanySiteWithSuccess"
+    );
+    model.dialog.msgDeleteCompanySiteWithFailure = i18nGateway.get(
+      "companySite.dialog.msgDeleteCompanySiteWithFailure"
+    );
+    model.dialog.openDeleteDialog = state.openDeleteDialog;
     model.dialog.currentDeleteCompanySiteId = state.currentDeleteCompanySiteId;
     model.dialog.showDeleteCompanySiteSuccessMessage = state.showDeleteCompanySiteSuccessMessage;
     model.dialog.showDeleteCompanySiteFailureMessage = state.showDeleteCompanySiteFailureMessage;
   }
 
-
-  private static updateCompanySiteInfos(model:CompanySiteModel):void{
-    model.pageResultForCompanySite = CommonUtils.getPageData(model.companySite,model.pageInfo.pageNo,model.pageInfo.pageSize);
-
+  private static updateCompanySiteInfos(model: CompanySiteModel): void {
+    model.pageResultForCompanySite = CommonUtils.getPageData(
+      model.companySite,
+      model.pageInfo.pageNo,
+      model.pageInfo.pageSize
+    );
   }
 }
