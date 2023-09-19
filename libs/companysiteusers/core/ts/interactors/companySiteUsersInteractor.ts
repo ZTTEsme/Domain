@@ -37,13 +37,8 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
   public constructor(
     router: Router,
     private readonly i18nGateway: I18nGateway,
-<<<<<<< HEAD
-    private readonly companyGateWay: RestCompanyGateway,
-    private readonly gateWay: RestCompanySiteGateway
-=======
     private readonly companyGateWay: CompanyGateway,
     private readonly gateWay: CompanySiteGateway
->>>>>>> 7cc8bace5a70174a544830794f18833cc98bb42e
   ) {
     super(router);
   }
@@ -195,13 +190,6 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
     }
   }
 
-<<<<<<< HEAD
-=======
-  public getSelectedItems(items: Item[]): void {
-    console.log(JSON.parse(JSON.stringify(items)));
-  }
-
->>>>>>> 7cc8bace5a70174a544830794f18833cc98bb42e
   public changePageForTable(pageNo: number, pageSize: number): void {
     console.log(pageNo);
     console.log(pageSize);
