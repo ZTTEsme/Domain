@@ -33,7 +33,7 @@ export default class HomePageModule implements Module {
     this.routerModule.getRouter().register(
       new Route({
         name: "home",
-        title: "Customer Manager",
+        title: this.i18n.getI18nGateway().get("app.title"),
         urlPattern: "/",
       }),
       new VueRouteHandler({

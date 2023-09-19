@@ -16,7 +16,7 @@ export default class CompanyModelAssembler {
   }
 
   public static fromStateWithOutValidationFeedBack(
-    state: CompanyState,
+    state:  CompanyState,
     router: Router,
     i18nGateway: I18nGateway
   ): CompanyModel {
@@ -56,11 +56,20 @@ export default class CompanyModelAssembler {
     model.labelInfo.CUSTOMER = i18nGateway.get("company.label.CUSTOMER");
     model.labelInfo.MANUFACTURER = i18nGateway.get("company.label.MANUFACTURER");
     model.labelInfo.TRADER = i18nGateway.get("company.label.TRADER");
+    model.labelInfo.serverErrorInfo = i18nGateway.get("company.label.serverErrorInfo");
+    model.labelInfo.typeLabel = i18nGateway.get("company.label.type");
+    model.labelInfo.agentCompanyNameLabel = i18nGateway.get("company.label.agentCompanyName");
+    model.labelInfo.aliasLabel = i18nGateway.get("company.label.alias");
+    model.labelInfo.customerIdLabel = i18nGateway.get("company.label.customerId");
+    model.labelInfo.chooseAllLabel = i18nGateway.get("company.label.chooseAllLabel");
+    model.labelInfo.CUSTOMER = i18nGateway.get("company.label.CUSTOMER");
+    model.labelInfo.MANUFACTURER = i18nGateway.get("company.label.MANUFACTURER");
+    model.labelInfo.TRADER = i18nGateway.get("company.label.TRADER");
     model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
 
     // searchForm
-    model.labelInfo.agentCompanyLabel = i18nGateway.get("company.label.agentCompanyName");
-    if (!CommonUtils.isNullOrUndefined(state.searchForm.companyId)) {
+    model.labelInfo.agentCompanyLabel = i18nGateway.get("company.label.agentCompanyName");;
+    if  (!CommonUtils.isNullOrUndefined(state.searchForm.companyId))  {
       model.searchForm = CommonUtils.deepCopy(state.searchForm);
     }
 
@@ -77,8 +86,10 @@ export default class CompanyModelAssembler {
 
     // add company dialog msgAddCompanyWithSuccess
     model.dialog.addCompany = i18nGateway.get("company.dialog.addCompany");
-    model.dialog.close = i18nGateway.get("company.dialog.close");
+    model.dialog.close =  i18nGateway.get("company.dialog.close");
     model.dialog.submit = i18nGateway.get("company.dialog.submit");
+    model.dialog.msgAddCompanyWithSuccess = i18nGateway.get("company.dialog.msgAddCompanyWithSuccess");
+    model.dialog.msgAddCompanyWithFailure = i18nGateway.get("company.dialog.msgAddCompanyWithFailure");
     model.dialog.msgAddCompanyWithSuccess = i18nGateway.get("company.dialog.msgAddCompanyWithSuccess");
     model.dialog.msgAddCompanyWithFailure = i18nGateway.get("company.dialog.msgAddCompanyWithFailure");
     model.dialog.showAddCompanyFailureMessage = state.dialog.showAddCompanyFailureMessage;
@@ -87,6 +98,10 @@ export default class CompanyModelAssembler {
 
     // delete company dialog
     model.dialog.openDeleteDialog = state.dialog.openDeleteDialog;
+    model.dialog.msgDeleteCompanyWithFailure = i18nGateway.get("company.dialog.msgDeleteCompanyWithFailure");
+    model.dialog.msgDeleteCompanyWithSuccess = i18nGateway.get("company.dialog.msgDeleteCompanyWithSuccess");
+    model.dialog.deleteCompany = i18nGateway.get("company.dialog.deleteCompany");
+    model.dialog.deleteTipInfo = i18nGateway.get("company.dialog.deleteTipInfo");
     model.dialog.msgDeleteCompanyWithFailure = i18nGateway.get("company.dialog.msgDeleteCompanyWithFailure");
     model.dialog.msgDeleteCompanyWithSuccess = i18nGateway.get("company.dialog.msgDeleteCompanyWithSuccess");
     model.dialog.deleteCompany = i18nGateway.get("company.dialog.deleteCompany");
@@ -100,6 +115,10 @@ export default class CompanyModelAssembler {
     model.dialog.msgModifyCompanyWithFailure = i18nGateway.get("company.dialog.msgModifyCompanyWithFailure");
     model.dialog.msgModifyCompanyWithSuccess = i18nGateway.get("company.dialog.msgModifyCompanyWithSuccess");
     model.dialog.modifyCompanyTitle = i18nGateway.get("company.dialog.modifyCompanyTitle");
+    model.dialog.openModifyCompanyDialog = state.dialog.openModifyCompanyDialog;
+    model.dialog.msgModifyCompanyWithFailure = i18nGateway.get("company.dialog.msgModifyCompanyWithFailure");
+    model.dialog.msgModifyCompanyWithSuccess = i18nGateway.get("company.dialog.msgModifyCompanyWithSuccess");
+    model.dialog.modifyCompanyTitle = i18nGateway.get("company.dialog.modifyCompanyTitle");
     model.dialog.showModifyCompanySuccessMessage = state.dialog.showModifyCompanySuccessMessage;
     model.dialog.showModifyCompanyFailureMessage = state.dialog.showModifyCompanyFailureMessage;
 
@@ -109,14 +128,14 @@ export default class CompanyModelAssembler {
 
     // CompanyTableColName
     model.companyTableColName.agentCompanyId = i18nGateway.get("company.tableName.agentCompanyId");
-    model.companyTableColName.alias = i18nGateway.get("company.tableName.alias");
+    model.companyTableColName.alias =  i18nGateway.get("company.tableName.alias");
     model.companyTableColName.type = i18nGateway.get("company.tableName.type");
     model.companyTableColName.customerId = i18nGateway.get("company.tableName.customerId");
-    model.companyTableColName.operate = i18nGateway.get("company.tableName.operate");
+    model.companyTableColName.operate =  i18nGateway.get("company.tableName.operate");
 
     // pagination by front
     model.pageInfo = state.pageInfo;
-    this.updateCompanies(model, model.pageInfo, state);
+    this.updateCompanies(model,  model.pageInfo,  state);
     model.formErrors = state.formErrors;
   }
 
@@ -145,6 +164,6 @@ export default class CompanyModelAssembler {
       }
       ele.agentCompanyName = agentCompanyName;
     });
-    model.pageResultForCompany = CommonUtils.getPageData(model.company, pageInfo.pageNo, pageInfo.pageSize);
+    model.pageResultForCompany = CommonUtils.getPageData(model.company,  pageInfo.pageNo,  pageInfo.pageSize);
   }
 }

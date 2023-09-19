@@ -18,6 +18,7 @@ do
             \"token\": \"${APP_TOKEN}\",
             \"backendUrl\": \"\",
             \"frontendUrl\": \"${APP_FRONTEND_URL}\",
+            \"entryPoint\": \"#!/\",
             \"options\": [{\"id\":\"USAGE\",\"alias\":\"Usage of Customer Management app\"}]
           }"
 

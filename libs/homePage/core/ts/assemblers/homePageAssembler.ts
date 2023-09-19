@@ -15,7 +15,7 @@ export default class HomePageAssemblers {
       new Breadcrumb({ name: i18nGateway.get("common.home"), link: "/" })
     );
 
-    state.labels.homePageTitle = i18nGateway.get("state.labels.homePageTitle");
+    state.labels.homePageTitle = i18nGateway.get("app.title");
     // company
     state.labels.company = i18nGateway.get("state.labels.company");
     state.labels.companyTip = i18nGateway.get("state.labels.companyTip");
