@@ -80,7 +80,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
         this.state.isLoading = false;
         this.updateView();
       } else {
-        this.state.resCompanies = await this.gateWay.getCompanies(agentId);
+        this.state.resCompanies = await this.gateWay.getCompaniesByAgent(agentId);
         this.state.searchCompaniesWasFailed = false;
         this.state.searchForm.agentCompanyId = agentId;
         this.state.searchForm.companyId = agentId;
@@ -146,6 +146,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
   public async saveCompany(model: CompanyModel, operateType: string): Promise<void> {
     this.state.companyAddState.type = model.formData.type;
     this.state.companyAddState.agentCompanyId = model.formData.agentCompanyId;
+    this.state.companyAddState.parentCompanyId = model.formData.parentCompanyId;
     this.state.companyAddState.alias = model.formData.alias;
     this.state.companyAddState.customerId = model.formData.customerId;
 
@@ -164,6 +165,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
             new Company({
               type: CommonUtils.getCustomerEnumValue(this.state.companyAddState.type),
               alias: this.state.companyAddState.alias,
+              parentCompanyId: this.state.companyAddState.parentCompanyId,
               agentCompanyId: this.state.companyAddState.agentCompanyId,
               customerId: this.state.companyAddState.customerId,
             })
@@ -179,6 +181,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
               id: this.state.companyAddState.id,
               type: CommonUtils.getCustomerEnumValue(this.state.companyAddState.type),
               alias: this.state.companyAddState.alias,
+              parentCompanyId: this.state.companyAddState.parentCompanyId,
               agentCompanyId: this.state.companyAddState.agentCompanyId,
               customerId: this.state.companyAddState.customerId,
             })
@@ -262,8 +265,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
     this.updateViewWithOutValidationFeedBack();
   }
 
-  public async goCompanySite(id: number): Promise<void> {
-    await this.router.loadRoute(this.router.getRouteByName("sites"), new Map([["id", id.toString()]]));
+  public async goCompany(id: number): Promise<void> {
+    await this.router.loadRoute(this.router.getRouteByName("users"), new Map([["id", id.toString()]]));
   }
 
   private updateView() {
