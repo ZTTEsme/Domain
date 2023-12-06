@@ -2,6 +2,8 @@ export default class LabelInfo{
 
   public agentCompanyLabel: string = "";
 
+  public parentCompanyLabel: string = "";
+
   public typeLabel:string = "";
 
   public agentCompanyNameLabel:string = "";

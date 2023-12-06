@@ -5,13 +5,13 @@ import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
 import { Component, Prop, Vue } from "vue-facing-decorator";
 import ButtonComponent from "../../../common/component/ButtonComponent";
 import NoDataComponent from "../../../common/component/noDataComponent";
-import CompanySiteUsersInteractor from "../../core/ts/interactors/companySiteUsersInteractor";
-import CompanySiteUsersPresenter from "../../core/ts/interactors/companySiteUsersPresenter";
-import CompanySiteUsersModel from "../../core/ts/models/companySiteUsersModel";
+import CompanyUsersInteractor from "../../core/ts/interactors/companyUsersInteractor";
+import CompanyUsersPresenter from "../../core/ts/interactors/companyUsersPresenter";
+import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
 
 
 @Component({
-  name: "CompanySiteUserComponent",
+  name: "CompanyUserComponent",
   components: {
     pagination: PaginationComponent,
     modal: ModalComponent,
@@ -58,18 +58,6 @@ import CompanySiteUsersModel from "../../core/ts/models/companySiteUsersModel";
                               :key="company.id"
                               :label="company.alias"
                               :value="company.id"
-                            />
-                          </select>
-                        </div>
-                      <div class="col-md-3 ">
-                          <label for="companySiteId" class="form-label">{{ model.labelInfo.companySiteLabel }}</label>
-                          <select class="form-select" id="companySiteId" v-model="model.selectedCompanySiteId" @change="interactor.changeCompanySite(model.selectedCompanySiteId)" >
-                          <option value=null disabled selected>{{model.labelInfo.selectTip}}</option>
-                          <option
-                              v-for="site in model.companySites"
-                              :key="site.id"
-                              :label="site.alias"
-                              :value="site.id"
                             />
                           </select>
                         </div>
@@ -272,18 +260,18 @@ import CompanySiteUsersModel from "../../core/ts/models/companySiteUsersModel";
     </div>
   `
 })
-export default class CompanySiteUsersComponent extends Vue implements CompanySiteUsersPresenter {
+export default class CompanySiteUsersComponent extends Vue implements CompanyUsersPresenter {
 
   @Prop
-  private readonly interactor!: CompanySiteUsersInteractor;
+  private readonly interactor!: CompanyUsersInteractor;
 
-  private model: CompanySiteUsersModel = new CompanySiteUsersModel();
+  private model: CompanyUsersModel = new CompanyUsersModel();
 
   public mounted(): void {
     this.interactor.startPresenting(this);
   }
 
-  public updateView(model: CompanySiteUsersModel): void {
+  public updateView(model: CompanyUsersModel): void {
     this.model = model;
   }
 }

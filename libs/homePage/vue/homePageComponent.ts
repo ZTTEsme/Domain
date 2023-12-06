@@ -42,17 +42,6 @@ import HomePageModel from "../core/ts/models/homePageModel";
                 </div>
                 <div class="card me-3">
                   <div class="card-body">
-                    <h5 class="card-title">{{ model.labels.site }}</h5>
-                    <p class="card-text">
-                      {{ model.labels.siteTip }}
-                    </p>
-                    <a :href="interactor.router.getFullUriOfRouteByName('sites')" class="btn btn-primary w-100">{{
-                      model.labels.edit
-                    }}</a>
-                  </div>
-                </div>
-                <div class="card me-3">
-                  <div class="card-body">
                     <h5 class="card-title">{{ model.labels.user }}</h5>
                     <p class="card-text">
                       {{ model.labels.userTip }}

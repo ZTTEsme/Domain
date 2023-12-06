@@ -8,5 +8,7 @@ export default class CompanyTableColName {
 
   public customerId:string = "";
 
+  public parentCompanyId:string = ""
+
   public operate:string = "";
 }

@@ -1,15 +1,14 @@
 import Router from "cloos-vue-router/lib/core/router";
 import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
-import CompanySiteGateway from "qnect-sdk-web/lib/company-site/core/ts/gateways/companySiteGateway";
 import CompanyGateway from "qnect-sdk-web/lib/company/core/ts/gateways/companyGateway";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
-import CompanySiteUsersAssembler from "../assemblers/companySiteUsersAssembler";
-import CompanySiteUsersModel from "../models/companySiteUsersModel";
-import CompanySiteUsersPresenter from "./companySiteUsersPresenter";
-import CompanySiteUsersState from "./companySiteUsersState";
+import CompanyUsersAssembler from "../assemblers/companyUsersAssembler";
+import CompanyUsersModel from "../models/companyUsersModel";
+import CompanyUsersPresenter from "./companyUsersPresenter";
+import CompanyUsersState from "./companyUsersState";
 
-export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySiteUsersPresenter> {
+export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersPresenter> {
   public rulesForAddCompanySiteUser: Record<string, ValidationRule[]> = {
     alias: [
       {
@@ -31,37 +30,31 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
     ],
   };
 
-  private presenter: CompanySiteUsersPresenter | null = null;
-  private readonly state: CompanySiteUsersState = new CompanySiteUsersState();
+  private presenter: CompanyUsersPresenter | null = null;
+  private readonly state: CompanyUsersState = new CompanyUsersState();
 
   public constructor(
     router: Router,
     private readonly i18nGateway: I18nGateway,
     private readonly companyGateWay: CompanyGateway,
-    private readonly gateWay: CompanySiteGateway
   ) {
     super(router);
   }
 
-  public startPresenting(presenter: CompanySiteUsersPresenter): void {
+  public startPresenting(presenter: CompanyUsersPresenter): void {
     this.presenter = presenter;
     this.updateView();
   }
 
   public async onLoad(): Promise<void> {
     this.state.companies = await this.companyGateWay.getCompanies();
-    const companySiteId: number = parseInt(String(this.router.getPathParams().get("companySiteId")));
-
-    if (isNaN(companySiteId)) {
-      //
+    const companyId: number = parseInt(String(this.router.getPathParams().get("id")));
+    if (isNaN(companyId)) {
+      this.state.selectedCompanyId = null;
     } else {
-      this.state.companySiteWithUsers = await this.gateWay.getCompanySite(
-        parseInt(String(this.router.getPathParams().get("companySiteId")))
-      );
-      this.state.selectedCompanySiteId = parseInt(String(this.router.getPathParams().get("companySiteId")));
-      this.state.selectedCompanyId = this.state.companySiteWithUsers.companyId;
-      this.state.companySites = await this.gateWay.getCompanySites(this.state.selectedCompanyId);
-      this.state.companySiteUsers = this.state.companySiteWithUsers.users;
+      this.state.companyWithUsers = await this.companyGateWay.getCompany(companyId);
+      this.state.selectedCompanyId = this.state.companyWithUsers.id;
+      this.state.users = this.state.companyWithUsers.users;
     }
 
     this.updateView();
@@ -72,24 +65,18 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
   }
 
   public updateView(): void {
-    this.presenter?.updateView(CompanySiteUsersAssembler.fromState(this.state, this.router, this.i18nGateway));
+    this.presenter?.updateView(CompanyUsersAssembler.fromState(this.state, this.router, this.i18nGateway));
   }
 
   public async changeCompany(companyId: number): Promise<void> {
     this.state.selectedCompanyId = companyId;
-    this.state.selectedCompanySiteId = null;
-    this.state.companySites = await this.gateWay.getCompanySites(companyId);
+    this.state.companyWithUsers = await this.companyGateWay.getCompany(companyId);
+    this.state.users = this.state.companyWithUsers.users;
     this.updateView();
   }
 
-  public async changeCompanySite(companySiteId: number): Promise<void> {
-    this.state.selectedCompanySiteId = companySiteId;
-    this.state.companySiteWithUsers = await this.gateWay.getCompanySite(companySiteId);
-    this.state.companySiteUsers = this.state.companySiteWithUsers.users;
-    this.updateView();
-  }
 
-  public changePageSize(model: CompanySiteUsersModel): void {
+  public changePageSize(model: CompanyUsersModel): void {
     if (this.state.pageInfo.pageSize !== this.state.pageInfo.currentPageSize) {
       this.state.pageInfo.pageNo = 1;
       this.state.pageInfo.pageSize = model.pageInfo.pageSize;
@@ -122,7 +109,7 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
     this.updateView();
   }
 
-  public async addCompanySiteUser(model: CompanySiteUsersModel): Promise<void> {
+  public async addCompanySiteUser(model: CompanyUsersModel): Promise<void> {
     this.state.addUserFormData = model.addUserFormData;
 
     this.state.validAddCompanySiteUserFormErrors = CommonUtils.validateForm(
@@ -134,17 +121,17 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
 
     if (CommonUtils.isObjectEmpty(this.state.validAddCompanySiteUserFormErrors)) {
       try {
-        await this.gateWay.inviteUserToCompanySite(
-          parseInt(this.router.getPathParams().get("companySiteId")!),
+        await this.companyGateWay.inviteUserToCompany(
+          Number(this.state.selectedCompanyId),
           model.addUserFormData.email,
           model.addUserFormData.role
         );
         this.state.dialog.showAddUserFailureMessage = false;
         this.state.dialog.showAddUserSuccessMessage = true;
-        this.state.companySiteWithUsers = await this.gateWay.getCompanySite(
-          parseInt(this.router.getPathParams().get("companySiteId")!)
+        this.state.companyWithUsers = await this.companyGateWay.getCompany(
+          Number(this.state.selectedCompanyId),
         );
-        this.state.companySiteUsers = this.state.companySiteWithUsers.users;
+        this.state.users = this.state.companyWithUsers.users;
       } catch (error) {
         this.state.dialog.showAddUserFailureMessage = true;
         this.state.dialog.showAddUserSuccessMessage = false;
@@ -171,16 +158,16 @@ export default class CompanySiteUsersInteractor extends ViewInteractor<CompanySi
         this.state.dialog.showDeleteUserSuccessMessage = false;
         this.updateView();
       } else {
-        await this.gateWay.removeUserFromCompanySite(
-          parseInt(this.router.getPathParams().get("companySiteId")!),
+        await this.companyGateWay.removeUserFromCompany(
+          Number(this.state.selectedCompanyId),
           userId
         );
         this.state.dialog.showDeleteUserFailureMessage = false;
         this.state.dialog.showDeleteUserSuccessMessage = true;
-        this.state.companySiteWithUsers = await this.gateWay.getCompanySite(
-          parseInt(this.router.getPathParams().get("companySiteId")!)
+        this.state.companyWithUsers = await this.companyGateWay.getCompany(
+          Number(this.state.selectedCompanyId),
         );
-        this.state.companySiteUsers = this.state.companySiteWithUsers.users;
+        this.state.users = this.state.companyWithUsers.users;
         this.updateView();
       }
     } catch (error) {

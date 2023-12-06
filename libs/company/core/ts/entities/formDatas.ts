@@ -5,6 +5,8 @@ export default class FormDatas{
 
   public agentCompanyId:number|null = null;
 
+  public parentCompanyId:number|null = null;
+
   public customerId:string = "";
 
 }

@@ -1,14 +1,14 @@
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
-import FormErrors from "../../../../common/entities/ts/formError";
-import SelfCompany from "../entities/selfCompany";
-import PageInfo from "../../../../common/entities/ts/pageInfo";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
-import LabelInfo from "../entities/labelInfo";
-import SearchForm from "../entities/searchForm";
-import TableAction from "../entities/tableAction";
+import FormErrors from "../../../../common/entities/ts/formError";
+import PageInfo from "../../../../common/entities/ts/pageInfo";
+import CompanyTableColName from "../entities/companyTableColName";
 import Dialog from "../entities/dialog";
 import FormDatas from "../entities/formDatas";
-import CompanyTableColName from "../entities/companyTableColName";
+import LabelInfo from "../entities/labelInfo";
+import SearchForm from "../entities/searchForm";
+import SelfCompany from "../entities/selfCompany";
+import TableAction from "../entities/tableAction";
 
 export default class CompanyModel {
 

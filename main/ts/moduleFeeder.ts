@@ -1,8 +1,7 @@
 import ModuleLoader from "qnect-sdk-web/lib/modules/core/ts/moduleLoader";
 import AuthModule from "qnect-sdk-web/lib/modules/main/ts/authModule";
 import CompanyModule from "./modules/companyModule";
-import CompanySiteModule from "./modules/companySiteModule";
-import CompanySiteUsersModule from "./modules/companySiteUsersModule";
+import CompanySiteUsersModule from "./modules/companyUsersModule";
 import FrameModule from "./modules/frameModule";
 import HomePageModule from "./modules/homePageModule";
 import I18nModule from "./modules/i18nModule";
@@ -27,9 +26,6 @@ export default class ModuleFeeder {
 
     const companyModule: CompanyModule = new CompanyModule(authModule, routerModule, i18nModule);
     moduleLoader.registerModule(companyModule);
-
-    const companySiteModule: CompanySiteModule = new CompanySiteModule(authModule, routerModule, i18nModule);
-    moduleLoader.registerModule(companySiteModule);
 
     const companySiteUsersModule: CompanySiteUsersModule = new CompanySiteUsersModule(
       authModule,

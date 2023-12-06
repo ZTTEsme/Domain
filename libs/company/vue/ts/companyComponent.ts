@@ -125,8 +125,9 @@ import CompanyModel from "../../core/ts/models/companyModel";
                               <tr>
                                 <th>{{ model.companyTableColName.alias }}</th>
                                 <th>{{ model.companyTableColName.type }}</th>
-                                <th>{{ model.companyTableColName.customerId }}</th>
+                                <th>{{ model.companyTableColName.parentCompanyId }}</th>
                                 <th>{{ model.companyTableColName.agentCompanyId }}</th>
+                                <th>{{ model.companyTableColName.customerId }}</th>
                                 <th style="width:200px">{{ model.companyTableColName.operate }}</th>
                               </tr>
                             </thead>
@@ -134,8 +135,9 @@ import CompanyModel from "../../core/ts/models/companyModel";
                               <tr v-for="ele in model.pageResultForCompany.data">
                                 <td>{{ ele.alias }}</td>
                                 <td>{{ ele.type }}</td>
-                                <td>{{ ele.customerId }}</td>
+                                <td>{{ ele.parentCompanyName }}</td>
                                 <td>{{ ele.agentCompanyName }}</td>
+                                <td>{{ ele.customerId }}</td>
                                 <td>
                                   <ButtonComponent
                                     icon="fa-solid fa-pen-to-square"
@@ -158,7 +160,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
                                     btn-style="width:30px;height:30px;margin-left:10px"
                                     shape="btn-outline-success"
                                     icon="fa-solid fa-right-to-bracket"
-                                    @click="()=>interactor.goCompanySite(ele.id)"
+                                    @click="()=>interactor.goCompany(ele.id)"
                                   >
                                   </ButtonComponent>
                                 </td>
@@ -230,6 +232,17 @@ import CompanyModel from "../../core/ts/models/companyModel";
             </alert>
             <div>
               <form class="row g-3">
+              <div class="col-md-12 position-relative">
+                  <label for="alias" class="form-label">{{ model.labelInfo.aliasLabel }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    :class="{'is-invalid':!!model.formErrors.alias}"
+                    id="alias"
+                    v-model="model.formData.alias"
+                  />
+                  <div class="invalid-feedback" v-show="!!model.formErrors.alias">{{ model.formErrors.alias }}</div>
+                </div>
                 <div class="col-md-12 position-relative">
                   <label for="type" class="form-label">{{ model.labelInfo.typeLabel }}</label>
                   <select
@@ -244,6 +257,27 @@ import CompanyModel from "../../core/ts/models/companyModel";
                   </select>
                   <div class="invalid-feedback" v-show="!!model.formErrors.type">{{ model.formErrors.type }}</div>
                 </div>
+
+                <div class="col-md-12 position-relative">
+                <label for="type" class="form-label">{{ model.labelInfo.parentCompanyLabel }}</label>
+                <select
+                  class="form-select"
+                  id="type"
+                  v-model.number="model.formData.parentCompanyId"
+                  :class="{'is-invalid':!!model.formErrors.parentCompanyId}"
+                >
+                  <option label="N/A" value="null"></option>
+                  <option
+                    v-for="company in model.allCompanies"
+                    :key="company.id"
+                    :label="company.alias"
+                    :value="company.id"
+                  />
+                </select>
+                <div class="invalid-feedback" v-show="!!model.formErrors.parentCompanyId">
+                  {{ model.formErrors.parentCompanyId }}
+                </div>
+              </div>
 
                 <div class="col-md-12 position-relative">
                   <label for="type" class="form-label">{{ model.labelInfo.agentCompanyNameLabel }}</label>
@@ -264,18 +298,6 @@ import CompanyModel from "../../core/ts/models/companyModel";
                   <div class="invalid-feedback" v-show="!!model.formErrors.agentCompanyId">
                     {{ model.formErrors.agentCompanyId }}
                   </div>
-                </div>
-
-                <div class="col-md-12 position-relative">
-                  <label for="alias" class="form-label">{{ model.labelInfo.aliasLabel }}</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    :class="{'is-invalid':!!model.formErrors.alias}"
-                    id="alias"
-                    v-model="model.formData.alias"
-                  />
-                  <div class="invalid-feedback" v-show="!!model.formErrors.alias">{{ model.formErrors.alias }}</div>
                 </div>
 
                 <div class="col-md-12 position-relative">
@@ -364,8 +386,21 @@ import CompanyModel from "../../core/ts/models/companyModel";
             </alert>
 
             <form class="row g-3">
+
+            <div class="col-md-12 position-relative">
+                <label for="alias" class="form-label">{{ model.labelInfo.aliasLabel }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="alias"
+                  :class="{'is-invalid':!!model.formErrors.alias}"
+                  v-model="model.formData.alias"
+                />
+                <div class="invalid-feedback" v-show="!!model.formErrors.alias">{{ model.formErrors.alias }}</div>
+              </div>
+
               <div class="col-md-12 position-relative">
-                <label for="type" class="form-label">Type</label>
+                <label for="type" class="form-label">{{ model.labelInfo.typeLabel }}</label>
                 <select
                   class="form-select"
                   id="type"
@@ -377,6 +412,27 @@ import CompanyModel from "../../core/ts/models/companyModel";
                   <option value="TRADER">{{ model.labelInfo.TRADER }}</option>
                 </select>
                 <div class="invalid-feedback" v-show="!!model.formErrors.type">{{ model.formErrors.type }}</div>
+              </div>
+
+              <div class="col-md-12 position-relative">
+                <label for="type" class="form-label">{{ model.labelInfo.parentCompanyLabel }}</label>
+                <select
+                  class="form-select"
+                  id="type"
+                  v-model.number="model.formData.parentCompanyId"
+                  :class="{'is-invalid':!!model.formErrors.parentCompanyId}"
+                >
+                  <option label="N/A" value="null"></option>
+                  <option
+                    v-for="company in model.allCompanies"
+                    :key="company.id"
+                    :label="company.alias"
+                    :value="company.id"
+                  />
+                </select>
+                <div class="invalid-feedback" v-show="!!model.formErrors.parentCompanyId">
+                  {{ model.formErrors.parentCompanyId }}
+                </div>
               </div>
 
               <div class="col-md-12 position-relative">
@@ -398,18 +454,6 @@ import CompanyModel from "../../core/ts/models/companyModel";
                 <div class="invalid-feedback" v-show="!!model.formErrors.agentCompanyId">
                   {{ model.formErrors.agentCompanyId }}
                 </div>
-              </div>
-
-              <div class="col-md-12 position-relative">
-                <label for="alias" class="form-label">Alias</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="alias"
-                  :class="{'is-invalid':!!model.formErrors.alias}"
-                  v-model="model.formData.alias"
-                />
-                <div class="invalid-feedback" v-show="!!model.formErrors.alias">{{ model.formErrors.alias }}</div>
               </div>
 
               <div class="col-md-12 position-relative">

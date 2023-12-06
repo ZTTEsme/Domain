@@ -4,11 +4,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/typedef */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import FormErrors from "../../entities/ts/formError";
-import ValidationError from "../../entities/ts/validationError";
 import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import Language from "qnect-sdk-web/lib/i18n/core/ts/language";
+import FormErrors from "../../entities/ts/formError";
 import SelfLanguage from "../../entities/ts/selfLanguage";
+import ValidationError from "../../entities/ts/validationError";
 
 export default class CommonUtils {
 
@@ -47,7 +47,6 @@ export default class CommonUtils {
     return formErrors;
   }
 
-  // 校验json对象是否为空
   public static isObjectEmpty(obj: object): boolean {
     return Object.keys(obj).length === 0;
   }
@@ -56,7 +55,6 @@ export default class CommonUtils {
     return obj === null || obj === undefined;
   }
 
-  // 客户类型 字符串转枚举
   public static getCustomerEnumValue(enumString: string): CompanyType {
     return CompanyType[enumString as keyof typeof CompanyType];
   }

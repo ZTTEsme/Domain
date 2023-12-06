@@ -50,6 +50,7 @@ export default class CompanyModelAssembler {
     model.labelInfo.serverErrorInfo = i18nGateway.get("company.label.serverErrorInfo");
     model.labelInfo.typeLabel = i18nGateway.get("company.label.type");
     model.labelInfo.agentCompanyNameLabel = i18nGateway.get("company.label.agentCompanyName");
+    model.labelInfo.parentCompanyLabel = i18nGateway.get("company.label.parentCompany");
     model.labelInfo.aliasLabel = i18nGateway.get("company.label.alias");
     model.labelInfo.customerIdLabel = i18nGateway.get("company.label.customerId");
     model.labelInfo.chooseAllLabel = i18nGateway.get("company.label.chooseAllLabel");
@@ -77,6 +78,7 @@ export default class CompanyModelAssembler {
     model.formData.type = state.companyAddState.type;
     model.formData.alias = state.companyAddState.alias;
     model.formData.agentCompanyId = state.companyAddState.agentCompanyId;
+    model.formData.parentCompanyId = state.companyAddState.parentCompanyId;
     model.formData.customerId = state.companyAddState.customerId;
 
     // tableAction
@@ -128,6 +130,7 @@ export default class CompanyModelAssembler {
 
     // CompanyTableColName
     model.companyTableColName.agentCompanyId = i18nGateway.get("company.tableName.agentCompanyId");
+    model.companyTableColName.parentCompanyId = i18nGateway.get("company.tableName.parentCompanyId");
     model.companyTableColName.alias = i18nGateway.get("company.tableName.alias");
     model.companyTableColName.type = i18nGateway.get("company.tableName.type");
     model.companyTableColName.customerId = i18nGateway.get("company.tableName.customerId");
@@ -150,6 +153,7 @@ export default class CompanyModelAssembler {
           type: company.type,
           customerId: company.customerId,
           agentCompanyId: company.agentCompanyId,
+          parentCompanyId: company.parentCompanyId
         })
       );
     }
@@ -163,6 +167,13 @@ export default class CompanyModelAssembler {
         agentCompanyName = "N/A";
       }
       ele.agentCompanyName = agentCompanyName;
+
+
+      let parentCompanyName: string | undefined = map.get(ele.parentCompanyId);
+      if (CommonUtils.isNullOrUndefined(parentCompanyName)) {
+        parentCompanyName = "N/A";
+      }
+      ele.parentCompanyName = parentCompanyName;
     });
     model.pageResultForCompany = CommonUtils.getPageData(model.company, pageInfo.pageNo, pageInfo.pageSize);
   }
