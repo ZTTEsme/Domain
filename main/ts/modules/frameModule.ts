@@ -7,8 +7,6 @@ import AuthModule from "qnect-sdk-web/lib/modules/main/ts/authModule";
 declare global {
   interface Window {
     initQnectFrame: (options: {
-      brandingText: string | undefined;
-      brandingLogo: string | undefined;
       authUserDataProvider: AuthUserDataProvider;
       authGateway: AuthGateway;
       axiosRestClientProvider: AxiosRestClientProvider;
@@ -28,8 +26,6 @@ export default class FrameModule implements Module {
   public async load(): Promise<void> {
     try {
       await window.initQnectFrame({
-        brandingLogo: "",
-        brandingText: "QNECT",
         authUserDataProvider: this.authModule.getAuthUserDataProvider(),
         authGateway: this.authModule.getAuthGateway(),
         axiosRestClientProvider: this.authModule.getRestClientProvider(),
