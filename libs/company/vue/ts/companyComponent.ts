@@ -232,7 +232,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
             </alert>
             <div>
               <form class="row g-3">
-              <div class="col-md-12 position-relative">
+                <div class="col-md-12 position-relative">
                   <label for="alias" class="form-label">{{ model.labelInfo.aliasLabel }}</label>
                   <input
                     type="text"
@@ -259,25 +259,25 @@ import CompanyModel from "../../core/ts/models/companyModel";
                 </div>
 
                 <div class="col-md-12 position-relative">
-                <label for="type" class="form-label">{{ model.labelInfo.parentCompanyLabel }}</label>
-                <select
-                  class="form-select"
-                  id="type"
-                  v-model.number="model.formData.parentCompanyId"
-                  :class="{'is-invalid':!!model.formErrors.parentCompanyId}"
-                >
-                  <option label="N/A" value="null"></option>
-                  <option
-                    v-for="company in model.allCompanies"
-                    :key="company.id"
-                    :label="company.alias"
-                    :value="company.id"
-                  />
-                </select>
-                <div class="invalid-feedback" v-show="!!model.formErrors.parentCompanyId">
-                  {{ model.formErrors.parentCompanyId }}
+                  <label for="type" class="form-label">{{ model.labelInfo.parentCompanyLabel }}</label>
+                  <select
+                    class="form-select"
+                    id="type"
+                    v-model.number="model.formData.parentCompanyId"
+                    :class="{'is-invalid':!!model.formErrors.parentCompanyId}"
+                  >
+                    <option label="N/A" :value="null"></option>
+                    <option
+                      v-for="company in model.allCompanies"
+                      :key="company.id"
+                      :label="company.alias"
+                      :value="company.id"
+                    />
+                  </select>
+                  <div class="invalid-feedback" v-show="!!model.formErrors.parentCompanyId">
+                    {{ model.formErrors.parentCompanyId }}
+                  </div>
                 </div>
-              </div>
 
                 <div class="col-md-12 position-relative">
                   <label for="type" class="form-label">{{ model.labelInfo.agentCompanyNameLabel }}</label>
@@ -287,7 +287,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
                     v-model.number="model.formData.agentCompanyId"
                     :class="{'is-invalid':!!model.formErrors.agentCompanyId}"
                   >
-                    <option label="N/A" value="null"></option>
+                    <option label="N/A" :value="null"></option>
                     <option
                       v-for="company in model.allCompanies"
                       :key="company.id"
@@ -386,8 +386,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
             </alert>
 
             <form class="row g-3">
-
-            <div class="col-md-12 position-relative">
+              <div class="col-md-12 position-relative">
                 <label for="alias" class="form-label">{{ model.labelInfo.aliasLabel }}</label>
                 <input
                   type="text"
@@ -422,7 +421,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
                   v-model.number="model.formData.parentCompanyId"
                   :class="{'is-invalid':!!model.formErrors.parentCompanyId}"
                 >
-                  <option label="N/A" value="null"></option>
+                  <option label="N/A" :value="null"></option>
                   <option
                     v-for="company in model.allCompanies"
                     :key="company.id"
@@ -443,7 +442,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
                   v-model.number="model.formData.agentCompanyId"
                   :class="{'is-invalid':!!model.formErrors.agentCompanyId}"
                 >
-                  <option label="N/A" value="null"></option>
+                  <option label="N/A" :value="null"></option>
                   <option
                     v-for="company in model.allCompanies"
                     :key="company.id"
