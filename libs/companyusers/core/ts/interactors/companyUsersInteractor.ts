@@ -4,18 +4,13 @@ import CompanyGateway from "qnect-sdk-web/lib/company/core/ts/gateways/companyGa
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 import CompanyUsersAssembler from "../assemblers/companyUsersAssembler";
+import AddUserFormData from "../entities/addUserFormData";
 import CompanyUsersModel from "../models/companyUsersModel";
 import CompanyUsersPresenter from "./companyUsersPresenter";
 import CompanyUsersState from "./companyUsersState";
 
 export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersPresenter> {
   public rulesForAddCompanySiteUser: Record<string, ValidationRule[]> = {
-    alias: [
-      {
-        validator: (value: string): boolean => value.length > 0,
-        message: this.i18nGateway.get("companySiteUser.valid.alias"),
-      },
-    ],
     email: [
       {
         validator: (value: string): boolean => value.length > 0,
@@ -36,7 +31,7 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
   public constructor(
     router: Router,
     private readonly i18nGateway: I18nGateway,
-    private readonly companyGateWay: CompanyGateway,
+    private readonly companyGateWay: CompanyGateway
   ) {
     super(router);
   }
@@ -75,7 +70,6 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
     this.updateView();
   }
 
-
   public changePageSize(model: CompanyUsersModel): void {
     if (this.state.pageInfo.pageSize !== this.state.pageInfo.currentPageSize) {
       this.state.pageInfo.pageNo = 1;
@@ -109,11 +103,11 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
     this.updateView();
   }
 
-  public async addCompanySiteUser(model: CompanyUsersModel): Promise<void> {
-    this.state.addUserFormData = model.addUserFormData;
+  public async addCompanySiteUser(addUserFormData: AddUserFormData): Promise<void> {
+    this.state.addUserFormData = addUserFormData;
 
     this.state.validAddCompanySiteUserFormErrors = CommonUtils.validateForm(
-      model.addUserFormData,
+      this.state.addUserFormData,
       this.rulesForAddCompanySiteUser,
       this.state.validAddCompanySiteUserErrors,
       this.state.validAddCompanySiteUserFormErrors
@@ -123,15 +117,15 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
       try {
         await this.companyGateWay.inviteUserToCompany(
           Number(this.state.selectedCompanyId),
-          model.addUserFormData.email,
-          model.addUserFormData.role
+          this.state.addUserFormData.email,
+          this.state.addUserFormData.role
         );
+
         this.state.dialog.showAddUserFailureMessage = false;
         this.state.dialog.showAddUserSuccessMessage = true;
-        this.state.companyWithUsers = await this.companyGateWay.getCompany(
-          Number(this.state.selectedCompanyId),
-        );
+        this.state.companyWithUsers = await this.companyGateWay.getCompany(Number(this.state.selectedCompanyId));
         this.state.users = this.state.companyWithUsers.users;
+        this.state.addUserFormData = new AddUserFormData();
       } catch (error) {
         this.state.dialog.showAddUserFailureMessage = true;
         this.state.dialog.showAddUserSuccessMessage = false;
@@ -158,15 +152,10 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
         this.state.dialog.showDeleteUserSuccessMessage = false;
         this.updateView();
       } else {
-        await this.companyGateWay.removeUserFromCompany(
-          Number(this.state.selectedCompanyId),
-          userId
-        );
+        await this.companyGateWay.removeUserFromCompany(Number(this.state.selectedCompanyId), userId);
         this.state.dialog.showDeleteUserFailureMessage = false;
         this.state.dialog.showDeleteUserSuccessMessage = true;
-        this.state.companyWithUsers = await this.companyGateWay.getCompany(
-          Number(this.state.selectedCompanyId),
-        );
+        this.state.companyWithUsers = await this.companyGateWay.getCompany(Number(this.state.selectedCompanyId));
         this.state.users = this.state.companyWithUsers.users;
         this.updateView();
       }

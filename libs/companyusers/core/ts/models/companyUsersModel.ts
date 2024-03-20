@@ -9,39 +9,37 @@ import Dialog from "../entities/dialog";
 import LabelInfo from "../entities/labelInfo";
 import UserTableColName from "../entities/userTableColName";
 
-export default class CompanyUsersModel{
-
-  public pageResultForUsers:PageResult = {
+export default class CompanyUsersModel {
+  public pageResultForUsers: PageResult = {
     data: [],
-    total: 0
+    total: 0,
   };
 
-  public users:CompanyUser[] = [];
+  public users: CompanyUser[] = [];
 
-  public pageInfo: PageInfo = new PageInfo(1,5,[5,10,20]);
+  public pageInfo: PageInfo = new PageInfo(1, 5, [5, 10, 20]);
 
   public breadcrumb: Breadcrumb[] = [];
 
-  public showSearch:boolean = false;
+  public showSearch: boolean = false;
 
-  public labelInfo:LabelInfo = new LabelInfo();
+  public labelInfo: LabelInfo = new LabelInfo();
 
-  public searchForm:SearchForm = new SearchForm();
+  public searchForm: SearchForm = new SearchForm();
 
-  public isLoading:boolean = false;
+  public isLoading: boolean = false;
 
-  public userTableColName:UserTableColName = new UserTableColName();
+  public userTableColName: UserTableColName = new UserTableColName();
 
-  public searchCompanySiteUsersWasFailed:boolean = false;
+  public searchCompanySiteUsersWasFailed: boolean = false;
 
-  public dialog:Dialog = new Dialog();
+  public dialog: Dialog = new Dialog();
 
   public validAddUserFormErrors: FormErrors = {};
 
-  public addUserFormData:AddUserFormData = new AddUserFormData();
+  public addUserFormData: AddUserFormData = new AddUserFormData();
 
-  public companies:Company[] = [];
+  public companies: Company[] = [];
 
-  public selectedCompanyId:number|null = null;
-
+  public selectedCompanyId: number | null = null;
 }

@@ -1,9 +1,4 @@
-export default class AddUserFormData{
-
-  public alias:string="";
-
-  public email:string="";
-
-  public role:string = "";
-
+export default class AddUserFormData {
+  public email: string = "";
+  public role: string = "";
 }

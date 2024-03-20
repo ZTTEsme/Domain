@@ -7,11 +7,7 @@ import CompanyUsersState from "../interactors/companyUsersState";
 import CompanyUsersModel from "../models/companyUsersModel";
 
 export default class CompanyUsersAssembler {
-  public static fromState(
-    state: CompanyUsersState,
-    router: Router,
-    i18nGateway: I18nGateway
-  ): CompanyUsersModel {
+  public static fromState(state: CompanyUsersState, router: Router, i18nGateway: I18nGateway): CompanyUsersModel {
     const model: CompanyUsersModel = new CompanyUsersModel();
     model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(
       router,
@@ -48,7 +44,6 @@ export default class CompanyUsersAssembler {
     model.pageInfo = state.pageInfo;
 
     // table colName
-    model.userTableColName.alias = i18nGateway.get("companyUser.table.alias");
     model.userTableColName.email = i18nGateway.get("companyUser.table.email");
     model.userTableColName.role = i18nGateway.get("companyUser.table.role");
     model.userTableColName.operate = i18nGateway.get("companyUser.table.operate");
@@ -59,6 +54,7 @@ export default class CompanyUsersAssembler {
     state.dialog.addUserDialogTitle = i18nGateway.get("companyUser.dialog.addUserDialogTitle");
     state.dialog.submit = i18nGateway.get("companyUser.dialog.submit");
     model.validAddUserFormErrors = state.validAddCompanySiteUserFormErrors;
+    model.addUserFormData = state.addUserFormData;
 
     // delete user
     state.dialog.deleteUserDialogTitle = i18nGateway.get("companyUser.dialog.deleteUserDialogTitle");
@@ -76,10 +72,6 @@ export default class CompanyUsersAssembler {
         user.alias = "N/A";
       }
     });
-    model.pageResultForUsers = CommonUtils.getPageData(
-      model.users,
-      model.pageInfo.pageNo,
-      model.pageInfo.pageSize
-    );
+    model.pageResultForUsers = CommonUtils.getPageData(model.users, model.pageInfo.pageNo, model.pageInfo.pageSize);
   }
 }
