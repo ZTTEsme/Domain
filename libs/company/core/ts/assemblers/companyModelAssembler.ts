@@ -54,18 +54,16 @@ export default class CompanyModelAssembler {
     model.labelInfo.aliasLabel = i18nGateway.get("company.label.alias");
     model.labelInfo.customerIdLabel = i18nGateway.get("company.label.customerId");
     model.labelInfo.chooseAllLabel = i18nGateway.get("company.label.chooseAllLabel");
-    model.labelInfo.CUSTOMER = i18nGateway.get("company.label.CUSTOMER");
-    model.labelInfo.MANUFACTURER = i18nGateway.get("company.label.MANUFACTURER");
-    model.labelInfo.TRADER = i18nGateway.get("company.label.TRADER");
     model.labelInfo.serverErrorInfo = i18nGateway.get("company.label.serverErrorInfo");
     model.labelInfo.typeLabel = i18nGateway.get("company.label.type");
     model.labelInfo.agentCompanyNameLabel = i18nGateway.get("company.label.agentCompanyName");
     model.labelInfo.aliasLabel = i18nGateway.get("company.label.alias");
     model.labelInfo.customerIdLabel = i18nGateway.get("company.label.customerId");
     model.labelInfo.chooseAllLabel = i18nGateway.get("company.label.chooseAllLabel");
-    model.labelInfo.CUSTOMER = i18nGateway.get("company.label.CUSTOMER");
-    model.labelInfo.MANUFACTURER = i18nGateway.get("company.label.MANUFACTURER");
-    model.labelInfo.TRADER = i18nGateway.get("company.label.TRADER");
+    model.labelInfo.customer = i18nGateway.get("company.label.customer");
+    model.labelInfo.manufacturer = i18nGateway.get("company.label.manufacturer");
+    model.labelInfo.trader = i18nGateway.get("company.label.trader");
+    model.labelInfo.subsidiary = i18nGateway.get("company.label.subsidiary");
     model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
 
     // searchForm
@@ -153,7 +151,7 @@ export default class CompanyModelAssembler {
           type: company.type,
           customerId: company.customerId,
           agentCompanyId: company.agentCompanyId,
-          parentCompanyId: company.parentCompanyId
+          parentCompanyId: company.parentCompanyId,
         })
       );
     }
@@ -167,7 +165,6 @@ export default class CompanyModelAssembler {
         agentCompanyName = "N/A";
       }
       ele.agentCompanyName = agentCompanyName;
-
 
       let parentCompanyName: string | undefined = map.get(ele.parentCompanyId);
       if (CommonUtils.isNullOrUndefined(parentCompanyName)) {

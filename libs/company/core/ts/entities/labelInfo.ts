@@ -1,27 +1,24 @@
-export default class LabelInfo{
-
+export default class LabelInfo {
   public agentCompanyLabel: string = "";
 
   public parentCompanyLabel: string = "";
 
-  public typeLabel:string = "";
+  public typeLabel: string = "";
 
-  public agentCompanyNameLabel:string = "";
+  public agentCompanyNameLabel: string = "";
 
-  public aliasLabel:string = "";
+  public aliasLabel: string = "";
 
-  public customerIdLabel:string = "";
+  public customerIdLabel: string = "";
 
-  public chooseAllLabel:string = "";
+  public chooseAllLabel: string = "";
 
-  public CUSTOMER:string = "";
+  public customer: string = "";
+  public manufacturer: string = "";
+  public trader: string = "";
+  public subsidiary: string = "";
 
-  public MANUFACTURER:string = "";
+  public serverErrorInfo: string = "";
 
-  public TRADER:string = "";
-
-  public serverErrorInfo:string = "";
-
-  public noDataLabel:string = "";
-
+  public noDataLabel: string = "";
 }

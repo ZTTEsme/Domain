@@ -122,17 +122,22 @@
         <source>All companies</source>
       </segment>
     </unit>
-    <unit id="company.label.CUSTOMER">
+    <unit id="company.label.customer">
       <segment>
         <source>Customer</source>
       </segment>
     </unit>
-    <unit id="company.label.TRADER">
+    <unit id="company.label.trader">
       <segment>
         <source>Trader</source>
       </segment>
     </unit>
-    <unit id="company.label.MANUFACTURER">
+    <unit id="company.label.subsidiary">
+      <segment>
+        <source>Subsidiary</source>
+      </segment>
+    </unit>
+    <unit id="company.label.manufacturer">
       <segment>
         <source>Manufacturer</source>
       </segment>

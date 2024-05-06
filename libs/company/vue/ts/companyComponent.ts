@@ -251,9 +251,10 @@ import CompanyModel from "../../core/ts/models/companyModel";
                     v-model="model.formData.type"
                     :class="{'is-invalid':!!model.formErrors.type}"
                   >
-                    <option value="CUSTOMER">{{ model.labelInfo.CUSTOMER }}</option>
-                    <option value="MANUFACTURER">{{ model.labelInfo.MANUFACTURER }}</option>
-                    <option value="TRADER">{{ model.labelInfo.TRADER }}</option>
+                    <option value="CUSTOMER">{{ model.labelInfo.customer }}</option>
+                    <option value="MANUFACTURER">{{ model.labelInfo.manufacturer }}</option>
+                    <option value="TRADER">{{ model.labelInfo.trader }}</option>
+                    <option value="SUBSIDIARY">{{ model.labelInfo.subsidiary }}</option>
                   </select>
                   <div class="invalid-feedback" v-show="!!model.formErrors.type">{{ model.formErrors.type }}</div>
                 </div>
@@ -406,9 +407,10 @@ import CompanyModel from "../../core/ts/models/companyModel";
                   v-model="model.formData.type"
                   :class="{'is-invalid':!!model.formErrors.type}"
                 >
-                  <option value="CUSTOMER">{{ model.labelInfo.CUSTOMER }}</option>
-                  <option value="MANUFACTURER">{{ model.labelInfo.MANUFACTURER }}</option>
-                  <option value="TRADER">{{ model.labelInfo.TRADER }}</option>
+                  <option value="CUSTOMER">{{ model.labelInfo.customer }}</option>
+                  <option value="MANUFACTURER">{{ model.labelInfo.manufacturer }}</option>
+                  <option value="TRADER">{{ model.labelInfo.trader }}</option>
+                  <option value="SUBSIDIARY">{{ model.labelInfo.subsidiary }}</option>
                 </select>
                 <div class="invalid-feedback" v-show="!!model.formErrors.type">{{ model.formErrors.type }}</div>
               </div>
