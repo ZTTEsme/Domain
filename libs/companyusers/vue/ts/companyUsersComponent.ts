@@ -100,7 +100,7 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
                           <div class="col">
                             <ButtonComponent
                               icon="a-solid fa-plus"
-                              :disabled="model.selectedCompanyId ===null || model.selectedCompanySiteId === null"
+                              :disabled="model.selectedCompanyId ===null || model.selectedCompanyId === null"
                               btn-style="width:30px"
                               @click="() => interactor.openAddUserDialog()"
                             ></ButtonComponent>
@@ -123,7 +123,7 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
                               <tr>
                                 <th>{{ model.userTableColName.alias }}</th>
                                 <th>{{ model.userTableColName.email }}</th>
-                                <th>{{ model.userTableColName.role }}</th>
+                                <th>{{ model.userTableColName.isAdmin }}</th>
                                 <th style="width:200px">{{ model.userTableColName.operate }}</th>
                               </tr>
                             </thead>
@@ -131,7 +131,10 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
                               <tr v-for="ele in model.pageResultForUsers.data">
                                 <td>{{ ele.alias }}</td>
                                 <td>{{ ele.email }}</td>
-                                <td>{{ ele.role }}</td>
+                                <td>
+                                  <i class="fa-solid fa-check" v-show="ele.admin"></i>
+                                  <i class="fa-solid fa-xmark" v-show="!ele.admin"></i>
+                                </td>
                                 <td>
                                   <ButtonComponent
                                     shape="btn-outline-danger"
@@ -180,7 +183,7 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
 
         <section>
           <!--tip-->
-          <toast :show="model.searchCompanySiteUsersWasFailed">
+          <toast :show="model.searchCompanyUsersWasFailed">
             <div class="toast-body">
               <div class="d-flex align-items-center">
                 <div class="font-35 text-danger"><i class="bx bxs-message-square-x"></i></div>
@@ -191,13 +194,13 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
             </div>
           </toast>
 
-          <!--add companySiteUser modal-->
+          <!--add companyUser modal-->
           <modal
-            name="add companySiteUser"
+            name="add companyUser"
             :show="model.dialog.openAddUserDialog"
             :title="model.dialog.addUserDialogTitle"
             :labelClose="true"
-            :abortFunction="()=>interactor.closeAddCompanySiteUserDialog()"
+            :abortFunction="()=>interactor.closeAddCompanyUserDialog()"
           >
             <alert :show="model.dialog.showAddUserSuccessMessage" color="success" icon="fas fa-gift">
               {{ model.dialog.msgAddUserWithSuccess }}
@@ -222,18 +225,10 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
                 </div>
 
                 <div class="col-md-12 position-relative">
-                  <label for="role" class="form-label">{{ model.labelInfo.roleLabel }}</label>
-                  <select
-                    class="form-select"
-                    id="type"
-                    v-model="model.addUserFormData.role"
-                    :class="{'is-invalid':!!model.validAddUserFormErrors.role}"
-                  >
-                    <option value="ADMINISTRATOR">{{ model.labelInfo.ADMINISTRATOR }}</option>
-                    <option value="USER">{{ model.labelInfo.USER }}</option>
-                  </select>
-                  <div class="invalid-feedback" v-show="!!model.validAddUserFormErrors.role">
-                    {{ model.validAddUserFormErrors.role }}
+                  <label for="role" class="form-label">{{ model.labelInfo.userTypeAdmin }}</label>
+                  <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="admin" v-model="model.addUserFormData.admin" />
+                    <label class="form-check-label" for="admin">{{ model.labelInfo.userTypeAdminExplanation }}</label>
                   </div>
                 </div>
               </form>
@@ -242,7 +237,7 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
               <button
                 type="button"
                 class="btn btn-primary"
-                @click="()=>interactor.addCompanySiteUser(model.addUserFormData)"
+                @click="()=>interactor.addUserToCompany(model.addUserFormData)"
               >
                 {{ model.dialog.submit }}
               </button>
@@ -251,7 +246,7 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
 
           <!--delete company modal-->
           <modal
-            name="delete companySite"
+            name="delete company"
             :show="model.dialog.openDeleteUserDialog"
             :title="model.dialog.deleteUserDialogTitle"
             :labelClose="true"
@@ -275,7 +270,7 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
             <template #footer>
               <button
                 class="btn btn-primary"
-                @click="() => interactor.deleteCompanySiteUser(model.dialog.currentDeleteCompanySiteUserId)"
+                @click="() => interactor.deleteCompanyUser(model.dialog.currentDeleteCompanyUserId)"
               >
                 {{ model.dialog.submit }}
               </button>
@@ -286,7 +281,7 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
     </div>
   `,
 })
-export default class CompanySiteUsersComponent extends Vue implements CompanyUsersPresenter {
+export default class CompanyUsersComponent extends Vue implements CompanyUsersPresenter {
   @Prop
   private readonly interactor!: CompanyUsersInteractor;
 

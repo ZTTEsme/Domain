@@ -29,11 +29,6 @@
         <source>Company</source>
       </segment>
     </unit>
-    <unit id="model.labelInfo.companySiteLabel">
-      <segment>
-        <source>Company Site</source>
-      </segment>
-    </unit>
     <unit id="state.labels.company">
       <segment>
         <source>Companies</source>
@@ -264,9 +259,9 @@
         <source>Email</source>
       </segment>
     </unit>
-    <unit id="companyUser.table.role">
+    <unit id="companyUser.table.isAdmin">
       <segment>
-        <source>Role</source>
+        <source>Administrator</source>
       </segment>
     </unit>
     <unit id="companyUser.table.operate">
@@ -301,7 +296,7 @@
     </unit>
     <unit id="companyUser.dialog.deleteUserTipInfo">
       <segment>
-        <source>Are you sure you want to remove the user from this company site?</source>
+        <source>Are you sure you want to remove the user from this company?</source>
       </segment>
     </unit>
     <unit id="companyUser.dialog.msgDeleteUserWithFailure">
@@ -319,19 +314,14 @@
         <source>Email</source>
       </segment>
     </unit>
-    <unit id="companyUser.label.role">
-      <segment>
-        <source>Role</source>
-      </segment>
-    </unit>
-    <unit id="companyUser.label.ADMINISTRATOR">
+    <unit id="companyUser.label.userTypeAdmin">
       <segment>
         <source>Administrator</source>
       </segment>
     </unit>
-    <unit id="companyUser.label.USER">
+    <unit id="companyUser.label.userTypeAdminExplanation">
       <segment>
-        <source>User</source>
+        <source>Add as user with administrator permissions</source>
       </segment>
     </unit>
     <unit id="companyUser.label.serverErrorInfo">

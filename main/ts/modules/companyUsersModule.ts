@@ -11,7 +11,7 @@ import CompanyUsersComponent from "../../../libs/companyusers/vue/ts/companyUser
 import I18nModule from "./i18nModule";
 import RouterModule from "./routerModule";
 
-export default class CompanySiteUsersModule implements Module {
+export default class CompanyUsersModule implements Module {
   public constructor(
     private readonly authModule: AuthModule,
     private readonly router: RouterModule,
@@ -19,7 +19,7 @@ export default class CompanySiteUsersModule implements Module {
   ) {}
 
   public getName(): string {
-    return CompanySiteUsersModule.name;
+    return CompanyUsersModule.name;
   }
 
   public async load(): Promise<void> {

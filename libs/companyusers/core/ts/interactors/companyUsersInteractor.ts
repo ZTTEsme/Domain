@@ -10,17 +10,11 @@ import CompanyUsersPresenter from "./companyUsersPresenter";
 import CompanyUsersState from "./companyUsersState";
 
 export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersPresenter> {
-  public rulesForAddCompanySiteUser: Record<string, ValidationRule[]> = {
+  public validationRules: Record<string, ValidationRule[]> = {
     email: [
       {
         validator: (value: string): boolean => value.length > 0,
-        message: this.i18nGateway.get("companySiteUser.valid.email"),
-      },
-    ],
-    role: [
-      {
-        validator: (value: string): boolean => value.length > 0,
-        message: this.i18nGateway.get("companySiteUser.valid.role"),
+        message: this.i18nGateway.get("companyUser.valid.email"),
       },
     ],
   };
@@ -31,7 +25,7 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
   public constructor(
     router: Router,
     private readonly i18nGateway: I18nGateway,
-    private readonly companyGateWay: CompanyGateway
+    private readonly companyGateway: CompanyGateway
   ) {
     super(router);
   }
@@ -42,12 +36,12 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
   }
 
   public async onLoad(): Promise<void> {
-    this.state.companies = await this.companyGateWay.getCompanies();
+    this.state.companies = await this.companyGateway.getCompanies();
     const companyId: number = parseInt(String(this.router.getPathParams().get("id")));
     if (isNaN(companyId)) {
       this.state.selectedCompanyId = null;
     } else {
-      this.state.companyWithUsers = await this.companyGateWay.getCompany(companyId);
+      this.state.companyWithUsers = await this.companyGateway.getCompany(companyId);
       this.state.selectedCompanyId = this.state.companyWithUsers.id;
       this.state.users = this.state.companyWithUsers.users;
     }
@@ -65,7 +59,7 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
 
   public async changeCompany(companyId: number): Promise<void> {
     this.state.selectedCompanyId = companyId;
-    this.state.companyWithUsers = await this.companyGateWay.getCompany(companyId);
+    this.state.companyWithUsers = await this.companyGateway.getCompany(companyId);
     this.state.users = this.state.companyWithUsers.users;
     this.updateView();
   }
@@ -86,44 +80,44 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
 
   public openDeleteUserDialog(userId: string): void {
     this.state.dialog.openDeleteUserDialog = true;
-    this.state.dialog.currentDeleteCompanySiteUserId = userId;
+    this.state.dialog.currentDeleteCompanyUserId = userId;
     this.updateView();
   }
 
   public openAddUserDialog(): void {
-    this.state.validAddCompanySiteUserFormErrors = {};
+    this.state.validAddCompanyUserFormErrors = {};
     this.state.dialog.showAddUserSuccessMessage = false;
     this.state.dialog.showAddUserFailureMessage = false;
     this.state.dialog.openAddUserDialog = true;
     this.updateView();
   }
 
-  public closeAddCompanySiteUserDialog(): void {
+  public closeAddCompanyUserDialog(): void {
     this.state.dialog.openAddUserDialog = false;
     this.updateView();
   }
 
-  public async addCompanySiteUser(addUserFormData: AddUserFormData): Promise<void> {
+  public async addUserToCompany(addUserFormData: AddUserFormData): Promise<void> {
     this.state.addUserFormData = addUserFormData;
 
-    this.state.validAddCompanySiteUserFormErrors = CommonUtils.validateForm(
+    this.state.validAddCompanyUserFormErrors = CommonUtils.validateForm(
       this.state.addUserFormData,
-      this.rulesForAddCompanySiteUser,
-      this.state.validAddCompanySiteUserErrors,
-      this.state.validAddCompanySiteUserFormErrors
+      this.validationRules,
+      this.state.validAddCompanyUserErrors,
+      this.state.validAddCompanyUserFormErrors
     );
 
-    if (CommonUtils.isObjectEmpty(this.state.validAddCompanySiteUserFormErrors)) {
+    if (CommonUtils.isObjectEmpty(this.state.validAddCompanyUserFormErrors)) {
       try {
-        await this.companyGateWay.inviteUserToCompany(
+        await this.companyGateway.inviteUserToCompany(
           Number(this.state.selectedCompanyId),
           this.state.addUserFormData.email,
-          this.state.addUserFormData.role
+          this.state.addUserFormData.admin
         );
 
         this.state.dialog.showAddUserFailureMessage = false;
         this.state.dialog.showAddUserSuccessMessage = true;
-        this.state.companyWithUsers = await this.companyGateWay.getCompany(Number(this.state.selectedCompanyId));
+        this.state.companyWithUsers = await this.companyGateway.getCompany(Number(this.state.selectedCompanyId));
         this.state.users = this.state.companyWithUsers.users;
         this.state.addUserFormData = new AddUserFormData();
       } catch (error) {
@@ -144,7 +138,7 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
     this.updateView();
   }
 
-  public async deleteCompanySiteUser(userId: string): Promise<void> {
+  public async deleteCompanyUser(userId: string): Promise<void> {
     try {
       this.updateView();
       if (userId === undefined) {
@@ -152,10 +146,10 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
         this.state.dialog.showDeleteUserSuccessMessage = false;
         this.updateView();
       } else {
-        await this.companyGateWay.removeUserFromCompany(Number(this.state.selectedCompanyId), userId);
+        await this.companyGateway.removeUserFromCompany(Number(this.state.selectedCompanyId), userId);
         this.state.dialog.showDeleteUserFailureMessage = false;
         this.state.dialog.showDeleteUserSuccessMessage = true;
-        this.state.companyWithUsers = await this.companyGateWay.getCompany(Number(this.state.selectedCompanyId));
+        this.state.companyWithUsers = await this.companyGateway.getCompany(Number(this.state.selectedCompanyId));
         this.state.users = this.state.companyWithUsers.users;
         this.updateView();
       }

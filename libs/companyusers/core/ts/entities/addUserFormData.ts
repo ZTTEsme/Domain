@@ -1,4 +1,4 @@
 export default class AddUserFormData {
   public email: string = "";
-  public role: string = "";
+  public admin: boolean = false;
 }

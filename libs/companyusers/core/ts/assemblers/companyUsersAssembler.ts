@@ -14,12 +14,12 @@ export default class CompanyUsersAssembler {
       undefined,
       new Breadcrumb({ name: i18nGateway.get("common.home"), link: "/" })
     );
-    this.updateCompanySiteUserModel(model, state, i18nGateway);
+    this.updateCompanyUserModel(model, state, i18nGateway);
 
     return model;
   }
 
-  private static updateCompanySiteUserModel(
+  private static updateCompanyUserModel(
     model: CompanyUsersModel,
     state: CompanyUsersState,
     i18nGateway: I18nGateway
@@ -30,12 +30,10 @@ export default class CompanyUsersAssembler {
     model.selectedCompanyId = state.selectedCompanyId;
     // label
     model.labelInfo.companyLabel = i18nGateway.get("model.labelInfo.companyLabel");
-    model.labelInfo.companySiteLabel = i18nGateway.get("model.labelInfo.companySiteLabel");
     model.labelInfo.selectTip = i18nGateway.get("model.labelInfo.selectTip");
     model.labelInfo.emailLabel = i18nGateway.get("companyUser.label.email");
-    model.labelInfo.roleLabel = i18nGateway.get("companyUser.label.role");
-    model.labelInfo.ADMINISTRATOR = i18nGateway.get("companyUser.label.ADMINISTRATOR");
-    model.labelInfo.USER = i18nGateway.get("companyUser.label.USER");
+    model.labelInfo.userTypeAdmin = i18nGateway.get("companyUser.label.userTypeAdmin");
+    model.labelInfo.userTypeAdminExplanation = i18nGateway.get("companyUser.label.userTypeAdminExplanation");
     model.labelInfo.serverErrorInfo = i18nGateway.get("companyUser.label.serverErrorInfo");
     model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
 
@@ -44,8 +42,9 @@ export default class CompanyUsersAssembler {
     model.pageInfo = state.pageInfo;
 
     // table colName
+    model.userTableColName.alias = i18nGateway.get("companyUser.table.alias");
     model.userTableColName.email = i18nGateway.get("companyUser.table.email");
-    model.userTableColName.role = i18nGateway.get("companyUser.table.role");
+    model.userTableColName.isAdmin = i18nGateway.get("companyUser.table.isAdmin");
     model.userTableColName.operate = i18nGateway.get("companyUser.table.operate");
 
     // add User
@@ -53,7 +52,7 @@ export default class CompanyUsersAssembler {
     state.dialog.msgAddUserWithFailure = i18nGateway.get("companyUser.dialog.msgAddUserWithFailure");
     state.dialog.addUserDialogTitle = i18nGateway.get("companyUser.dialog.addUserDialogTitle");
     state.dialog.submit = i18nGateway.get("companyUser.dialog.submit");
-    model.validAddUserFormErrors = state.validAddCompanySiteUserFormErrors;
+    model.validAddUserFormErrors = state.validAddCompanyUserFormErrors;
     model.addUserFormData = state.addUserFormData;
 
     // delete user
@@ -63,10 +62,10 @@ export default class CompanyUsersAssembler {
     state.dialog.msgDeleteUserWithSuccess = i18nGateway.get("companyUser.dialog.msgDeleteUserWithSuccess");
 
     model.dialog = state.dialog;
-    this.updateCompanySiteUserInfos(model);
+    this.updateCompanyUserInfos(model);
   }
 
-  private static updateCompanySiteUserInfos(model: CompanyUsersModel): void {
+  private static updateCompanyUserInfos(model: CompanyUsersModel): void {
     model.users.forEach((user) => {
       if (user.alias === null) {
         user.alias = "N/A";

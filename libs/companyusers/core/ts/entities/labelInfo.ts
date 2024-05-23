@@ -1,19 +1,15 @@
 export default class LabelInfo {
-  public emailLabel:string = "";
+  public emailLabel: string = "";
 
-  public roleLabel:string = "";
+  public serverErrorInfo: string = "";
 
-  public serverErrorInfo:string="";
+  public noDataLabel: string = "";
 
-  public noDataLabel:string="";
+  public companyLabel: string = "";
 
-  public companyLabel:string = "";
+  public selectTip: string = "";
 
-  public companySiteLabel:string = "";
+  public userTypeAdmin: string = "";
 
-  public selectTip:string = "";
-
-  public ADMINISTRATOR:string="";
-
-  public USER:string = "";
+  public userTypeAdminExplanation: string = "";
 }

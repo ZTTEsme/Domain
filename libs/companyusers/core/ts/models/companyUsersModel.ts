@@ -31,7 +31,7 @@ export default class CompanyUsersModel {
 
   public userTableColName: UserTableColName = new UserTableColName();
 
-  public searchCompanySiteUsersWasFailed: boolean = false;
+  public searchCompanyUsersWasFailed: boolean = false;
 
   public dialog: Dialog = new Dialog();
 

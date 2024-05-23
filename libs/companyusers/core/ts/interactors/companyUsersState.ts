@@ -10,7 +10,6 @@ import UserTableColName from "../entities/userTableColName";
 
 export default class CompanyUsersState {
   public selectedCompanyId: number | null = null;
-  public selectedCompanySiteId: number | null = null;
 
   public companies: Company[] = [];
 
@@ -23,7 +22,7 @@ export default class CompanyUsersState {
     total: 0,
   };
 
-  public currentDeleteCompanySiteUserId: string = "";
+  public currentDeleteCompanyUserId: string = "";
 
   public pageInfo: PageInfo = new PageInfo(1, 5, [5, 10, 20], 1);
 
@@ -35,6 +34,6 @@ export default class CompanyUsersState {
 
   // add user
   public addUserFormData: AddUserFormData = new AddUserFormData();
-  public validAddCompanySiteUserErrors: ValidationError[] = [];
-  public validAddCompanySiteUserFormErrors: FormErrors = {};
+  public validAddCompanyUserErrors: ValidationError[] = [];
+  public validAddCompanyUserFormErrors: FormErrors = {};
 }

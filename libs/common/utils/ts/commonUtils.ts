@@ -11,23 +11,27 @@ import SelfLanguage from "../../entities/ts/selfLanguage";
 import ValidationError from "../../entities/ts/validationError";
 
 export default class CommonUtils {
-
   // pagination
   public static getPageData(data: any[], pageNo: number, pageSize: number): PageResult {
-    const startIndex:number = (pageNo - 1) * pageSize;
-    const endIndex:number = startIndex + pageSize;
-    let slicedData:any[] = data.slice(startIndex, endIndex);
-    if(slicedData.length === 0) {
-       slicedData = data.slice(0,pageSize);
+    const startIndex: number = (pageNo - 1) * pageSize;
+    const endIndex: number = startIndex + pageSize;
+    let slicedData: any[] = data.slice(startIndex, endIndex);
+    if (slicedData.length === 0) {
+      slicedData = data.slice(0, pageSize);
     }
     return {
       data: slicedData,
-      total: data.length
+      total: data.length,
     };
   }
 
   // validateForm
-  public static validateForm(formData: Record<string, any>, rules: Record<string, ValidationRule[]>,validationErrors:ValidationError[],formErrors:FormErrors): FormErrors {
+  public static validateForm(
+    formData: Record<string, any>,
+    rules: Record<string, ValidationRule[]>,
+    validationErrors: ValidationError[],
+    formErrors: FormErrors
+  ): FormErrors {
     validationErrors = [];
     for (const field in rules) {
       for (const rule of rules[field]) {
@@ -51,7 +55,7 @@ export default class CommonUtils {
     return Object.keys(obj).length === 0;
   }
 
-  public static  isNullOrUndefined(obj: any): boolean {
+  public static isNullOrUndefined(obj: any): boolean {
     return obj === null || obj === undefined;
   }
 
@@ -60,7 +64,7 @@ export default class CommonUtils {
   }
 
   public static deepCopy<T>(obj: T): T {
-    if (typeof obj !== 'object' || obj === null) {
+    if (typeof obj !== "object" || obj === null) {
       return obj;
     }
 
@@ -68,7 +72,7 @@ export default class CommonUtils {
       return obj.map(this.deepCopy) as unknown as T;
     }
 
-    const copiedObj:any = {} as T;
+    const copiedObj: any = {} as T;
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         copiedObj[key] = this.deepCopy(obj[key]);
@@ -79,22 +83,19 @@ export default class CommonUtils {
   }
 
   public static checkDuplicate(arr: any[], prop: string): boolean {
-    const values = arr.map(obj => obj[prop]);
+    const values = arr.map((obj) => obj[prop]);
     return new Set(values).size !== values.length;
   }
 
-  public static dealLanguages(languages:Language[]):SelfLanguage[] {
-    const selfLanguages:SelfLanguage[] = [];
-    languages.forEach(ele=>{
-      if(ele.getKey().includes("-")){
-        selfLanguages.push(new SelfLanguage(ele.getKey().split("-")[0],ele.getLabel()))
-      }
-      else {
-        selfLanguages.push(new SelfLanguage(ele.getKey(),ele.getLabel()))
+  public static dealLanguages(languages: Language[]): SelfLanguage[] {
+    const selfLanguages: SelfLanguage[] = [];
+    languages.forEach((ele) => {
+      if (ele.getKey().includes("-")) {
+        selfLanguages.push(new SelfLanguage(ele.getKey().split("-")[0], ele.getLabel()));
+      } else {
+        selfLanguages.push(new SelfLanguage(ele.getKey(), ele.getLabel()));
       }
     });
     return selfLanguages;
   }
 }
-
-
