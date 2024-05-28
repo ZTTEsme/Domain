@@ -67,7 +67,6 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
   }
 
   public async setCompanyFilter(companyId: number | undefined): Promise<void> {
-    console.log("companyId", companyId, companyId === undefined);
     this.state.filterAgentId = companyId;
     await this.getCompaniesFiltered();
     this.updateView();
@@ -221,19 +220,21 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
   }
 
   // modify company dialog
-  public openModifyDialog(
-    companyId: number | null,
-    agent: number | null,
-    alias: string,
-    type: string,
-    customerId: string
-  ): void {
-    this.state.companyAddState.id = companyId;
-    this.state.companyAddState.agentCompanyId = agent;
-    this.state.companyAddState.alias = alias;
-    this.state.companyAddState.type = type;
-    this.state.companyAddState.customerId = customerId;
-    this.state.dialog.openModifyCompanyDialog = true;
+  public openModifyDialog(companyId: number | null): void {
+    if (companyId !== null) {
+      for (const company of this.state.companies) {
+        if (company.id === companyId) {
+          this.state.companyAddState.id = company.id;
+          this.state.companyAddState.agentCompanyId = company.parentCompanyId;
+          this.state.companyAddState.agentCompanyId = company.agentCompanyId;
+          this.state.companyAddState.alias = company.alias;
+          this.state.companyAddState.type = company.type;
+          this.state.companyAddState.customerId = company.customerId;
+          this.state.dialog.openModifyCompanyDialog = true;
+        }
+      }
+    }
+
     this.updateViewWithOutValidationFeedBack();
   }
 

@@ -15,21 +15,20 @@ export default class HomePageAssemblers {
       new Breadcrumb({ name: i18nGateway.get("common.home"), link: "/" })
     );
 
-    state.labels.homePageTitle = i18nGateway.get("app.title");
+    model.labels.homePageTitle = i18nGateway.get("app.title");
     // company
-    state.labels.company = i18nGateway.get("state.labels.company");
-    state.labels.companyTip = i18nGateway.get("state.labels.companyTip");
-    state.labels.edit = i18nGateway.get("state.labels.edit");
-
-    // site
-    state.labels.site = i18nGateway.get("state.labels.site");
-    state.labels.siteTip = i18nGateway.get("state.labels.siteTip");
+    model.labels.company = i18nGateway.get("state.labels.company");
+    model.labels.companyTip = i18nGateway.get("state.labels.companyTip");
+    model.labels.edit = i18nGateway.get("state.labels.edit");
+    model.showCompaniesMenue = state.showCompaniesMenue;
 
     // user
-    state.labels.user = i18nGateway.get("state.labels.user");
-    state.labels.userTip = i18nGateway.get("state.labels.userTip");
+    model.labels.user = i18nGateway.get("state.labels.user");
+    model.labels.userTip = i18nGateway.get("state.labels.userTip");
 
-    model.labels = state.labels;
+    // roles
+    model.labels.roles = i18nGateway.get("state.labels.roles");
+    model.labels.rolesTip = i18nGateway.get("state.labels.rolesTip");
 
     return model;
   }

@@ -11,11 +11,6 @@ export default class CompanyModel {
   public username: string = "";
   public password: string = "";
 
-  public pageResultForCompany: PageResult = {
-    data: [],
-    total: 0,
-  };
-
   public breadcrumb: Breadcrumb[] = [];
 
   public moduleName: string = "";

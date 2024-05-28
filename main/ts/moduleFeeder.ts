@@ -5,6 +5,7 @@ import CompanyUsersModule from "./modules/companyUsersModule";
 import FrameModule from "./modules/frameModule";
 import HomePageModule from "./modules/homePageModule";
 import I18nModule from "./modules/i18nModule";
+import RolesModule from "./modules/rolesModule";
 import RouterModule from "./modules/routerModule";
 
 export default class ModuleFeeder {
@@ -29,5 +30,8 @@ export default class ModuleFeeder {
 
     const companyUsersModule: CompanyUsersModule = new CompanyUsersModule(authModule, routerModule, i18nModule);
     moduleLoader.registerModule(companyUsersModule);
+
+    const rolesModule: RolesModule = new RolesModule(authModule, routerModule, i18nModule);
+    moduleLoader.registerModule(rolesModule);
   }
 }

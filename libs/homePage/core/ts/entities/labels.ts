@@ -1,19 +1,21 @@
-export default class Labels{
+export default class Labels {
+  public homePageTitle: string = "";
 
-  public homePageTitle:string = "";
+  public company: string = "";
 
-  public company:string = "";
+  public companyTip: string = "";
 
-  public companyTip:string = "";
+  public edit: string = "";
 
-  public edit:string = ""
+  public site: string = "";
 
-  public site:string = "";
+  public siteTip: string = "";
 
-  public siteTip:string = "";
+  public user: string = "";
 
-  public user:string = "";
+  public userTip: string = "";
 
-  public userTip:string = "";
+  public roles: string = "";
 
+  public rolesTip: string = "";
 }

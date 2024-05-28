@@ -13,6 +13,7 @@
     "qnect-build-script": "^1.0.4"
   },
   "dependencies": {
-    "qnect-sdk-web": "^3.9.4"
+    "qnect-sdk-web": "^3.9.8",
+    "luxon": "^3.4.4"
   }
 }

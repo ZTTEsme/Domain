@@ -22,11 +22,10 @@ export default class LabelInfo {
 
   public noDataLabel: string = "";
 
-  public addLabel:string = "";
+  public addLabel: string = "";
+  public editLabel: string = "";
+  public deleteLabel: string = "";
+  public detailsLabel: string = "";
 
-  public editLabel:string = "";
-
-  public deleteLabel:string="";
-
-  public detailsLabel:string = "";
+  public title: string = "";
 }

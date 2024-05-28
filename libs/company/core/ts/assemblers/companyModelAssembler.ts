@@ -2,6 +2,7 @@ import Router from "cloos-vue-router/lib/core/router";
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
 import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
+import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CompanyState from "../interactors/companyState";
 import CompanyListModel from "../models/companyListModel";
@@ -46,6 +47,7 @@ export default class CompanyModelAssembler {
     model.showSearch = state.showSearch;
 
     // label info
+    model.labelInfo.title = i18nGateway.get("company.title");
     model.labelInfo.serverErrorInfo = i18nGateway.get("company.label.serverErrorInfo");
     model.labelInfo.typeLabel = i18nGateway.get("company.label.type");
     model.labelInfo.agentCompanyNameLabel = i18nGateway.get("company.label.agentCompanyName");
@@ -136,25 +138,26 @@ export default class CompanyModelAssembler {
     model.companyTableColName.customerId = i18nGateway.get("company.tableName.customerId");
     model.companyTableColName.operate = i18nGateway.get("company.tableName.operate");
 
-    model.companiesNotFiltered = this.toListModel(state.companies, state.companies);
-    model.companiesFiltered = this.toListModel(state.companiesFiltered, state.companies);
+    model.companiesNotFiltered = this.toListModel(state.companies, state.companies, i18nGateway);
+    model.companiesFiltered = this.toListModel(state.companiesFiltered, state.companies, i18nGateway);
 
     model.filterAgentId = state.filterAgentId;
-    console.log(model.companiesNotFiltered);
-    console.log(model.companiesFiltered);
-    console.log(model.filterAgentId);
 
     model.formErrors = state.formErrors;
   }
 
   // update companies
-  private static toListModel(companies: Company[], allCompanies: Company[]): CompanyListModel[] {
+  private static toListModel(
+    companies: Company[],
+    allCompanies: Company[],
+    i18nGateway: I18nGateway
+  ): CompanyListModel[] {
     return companies.map(
       (c) =>
         new CompanyListModel({
           id: c.id,
           alias: c.alias,
-          type: c.type,
+          type: this.getCompanyTypeTranslated(c.type, i18nGateway),
           parentCompanyId: c.parentCompanyId,
           parentCompanyName: this.getNameOfCompany(c.parentCompanyId, allCompanies, "N/A"),
           agentCompanyId: c.agentCompanyId,
@@ -171,5 +174,20 @@ export default class CompanyModelAssembler {
       }
     }
     return fallback;
+  }
+
+  private static getCompanyTypeTranslated(type: string, i18nGateway: I18nGateway): string {
+    switch (type) {
+      case CompanyType.CUSTOMER:
+        return i18nGateway.get("company.label.customer");
+      case CompanyType.MANUFACTURER:
+        return i18nGateway.get("company.label.manufacturer");
+      case CompanyType.TRADER:
+        return i18nGateway.get("company.label.trader");
+      case CompanyType.SUBSIDIARY:
+        return i18nGateway.get("company.label.subsidiary");
+      default:
+        return type;
+    }
   }
 }

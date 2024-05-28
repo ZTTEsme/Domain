@@ -1,0 +1,67 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Add translation",
+      "type": "shell",
+      "windows": {
+        "command": "xliff.ps1 -a libs/i18n/xliff/xml/qnect.en.xlf ${input:unitId} \\\"${input:source}\\\""
+      },
+      "linux": {
+        "command": "xliff -a libs/i18n/xliff/xml/qnect.en.xlf ${input:unitId} \"${input:source}\""
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Add context to translation",
+      "type": "shell",
+      "windows": {
+        "command": "xliff.ps1 -c libs/i18n/xliff/xml/qnect.en.xlf ${input:unitId} \\\"${input:comment}\\\""
+      },
+      "linux": {
+        "command": "xliff -c libs/i18n/xliff/xml/qnect.en.xlf ${input:unitId} \"${input:comment}\""
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Delete translation",
+      "type": "shell",
+      "windows": {
+        "command": "xliff.ps1 -d libs/i18n/xliff/xml/qnect.en.xlf ${input:unitId}"
+      },
+      "linux": {
+        "command": "xliff -d libs/i18n/xliff/xml/qnect.en.xlf ${input:unitId}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": [
+        "$eslint-compact"
+      ],
+      "label": "npm: lint",
+      "detail": "eslint -c .eslintrc.json --ext .ts src"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "unitId",
+      "description": "Translation unit id",
+      "default": "unit.id",
+      "type": "promptString"
+    },
+    {
+      "id": "comment",
+      "description": "Comment for context of a translation",
+      "default": "Comment text",
+      "type": "promptString"
+    },
+    {
+      "id": "source",
+      "description": "Translation source text",
+      "default": "Source text",
+      "type": "promptString"
+    }
+  ]
+}

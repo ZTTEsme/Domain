@@ -1,8 +1,11 @@
 import Route from "cloos-vue-router/lib/core/route";
 import VueRouteHandler from "cloos-vue-router/lib/vue/vueRouteHandler";
+import ProjectUtil from "qnect-sdk-web/lib/common/browser/ts/projectUtil";
+import CompanyGateway from "qnect-sdk-web/lib/company/core/ts/gateways/companyGateway";
+import CompanyGatewayMock from "qnect-sdk-web/lib/company/core/ts/gateways/companyGatewayMock";
+import RestCompanyGateway from "qnect-sdk-web/lib/company/rest/ts/gateways/restCompanyGateway";
 import Module from "qnect-sdk-web/lib/modules/core/ts/module";
 import AuthModule from "qnect-sdk-web/lib/modules/main/ts/authModule";
-import HomePageGateway from "../../../libs/homePage/core/ts/gateway/homePageGateway";
 import HomePageInteractor from "../../../libs/homePage/core/ts/interactors/homePageInteractor";
 import HomePageComponent from "../../../libs/homePage/vue/homePageComponent";
 import I18nModule from "./i18nModule";
@@ -28,7 +31,9 @@ export default class HomePageModule implements Module {
   }
 
   public async load(): Promise<void> {
-    const homePageGateway: HomePageGateway = new HomePageGateway(this.authModule.getRestClientProvider());
+    const companyGateway: CompanyGateway = ProjectUtil.isMock()
+      ? new CompanyGatewayMock()
+      : new RestCompanyGateway(this.authModule.getRestClientProvider());
 
     this.routerModule.getRouter().register(
       new Route({
@@ -41,7 +46,8 @@ export default class HomePageModule implements Module {
         interactor: new HomePageInteractor(
           this.routerModule.getRouter(),
           this.i18nModule.getI18nGateway(),
-          homePageGateway
+          companyGateway,
+          this.authModule.getUserEnvironmentGateway()
         ),
       })
     );
