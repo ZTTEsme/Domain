@@ -1,13 +1,11 @@
-export default class FormDatas{
-  public alias:string = "";
+export default class FormDatas {
+  public alias: string = "";
 
-  public type:string = "";
+  public type: string = "";
 
-  public agentCompanyId:number|null = null;
+  public agentCompanyId: number | null = null;
 
-  public parentCompanyId:number|null = null;
+  public parentCompanyId: number | null = null;
 
-  public customerId:string = "";
-
+  public customerId: string = "";
 }
-

@@ -7,8 +7,8 @@ import CompanyGateway from "qnect-sdk-web/lib/company/core/ts/gateways/companyGa
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 import CompanyModelAssembler from "../assemblers/companyModelAssembler";
+import FormDatas from "../entities/formDatas";
 import OperateType from "../enums/operateType";
-import CompanyModel from "../models/companyModel";
 import CompanyPresenter from "./companyPresenter";
 import CompanyState from "./companyState";
 
@@ -34,18 +34,18 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
     ],
   };
 
-  private readonly gateWay: CompanyGateway;
+  private readonly gateway: CompanyGateway;
   private presenter: CompanyPresenter | null = null;
   private readonly state: CompanyState = new CompanyState();
 
-  public constructor(router: Router, private readonly i18nGateway: I18nGateway, gateWay: CompanyGateway) {
+  public constructor(router: Router, private readonly i18nGateway: I18nGateway, gateway: CompanyGateway) {
     super(router);
     this.i18nGateway = i18nGateway;
-    this.gateWay = gateWay;
+    this.gateway = gateway;
   }
 
   public async onLoad(): Promise<void> {
-    await this.getCompanies(undefined);
+    await this.loadData();
   }
 
   public onUnload(): Promise<void> {
@@ -57,41 +57,42 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
     this.updateView();
   }
 
+  public async loadData(): Promise<void> {
+    await this.getAllCompaniesForSelect();
+    await this.getCompaniesFiltered();
+  }
+
   public async getAllCompaniesForSelect(): Promise<void> {
-    this.state.allCompanies = await this.gateWay.getCompanies();
+    this.state.companies = await this.gateway.getCompanies();
   }
 
-  public async changeCompany(companyId: number): Promise<void> {
-    await this.getCompanies(companyId);
+  public async setCompanyFilter(companyId: number | undefined): Promise<void> {
+    console.log("companyId", companyId, companyId === undefined);
+    this.state.filterAgentId = companyId;
+    await this.getCompaniesFiltered();
+    this.updateView();
   }
 
-  public async getCompanies(agentId: number | undefined): Promise<void> {
+  public async getCompaniesFiltered(): Promise<void> {
     try {
       this.state.searchCompaniesWasFailed = false;
       this.updateView();
-      if (agentId === undefined) {
+      if (this.state.filterAgentId === undefined) {
         this.state.isLoading = true;
         this.updateView();
-        this.state.resCompanies = await this.gateWay.getCompanies();
-        this.state.allCompanies = this.state.resCompanies;
+        this.state.companiesFiltered = await this.gateway.getCompanies();
         this.state.searchCompaniesWasFailed = false;
-        this.state.searchForm.agentCompanyId = agentId;
-        this.state.searchForm.companyId = agentId;
         this.state.isLoading = false;
         this.updateView();
       } else {
-        this.state.resCompanies = await this.gateWay.getCompaniesByAgent(agentId);
+        this.state.companiesFiltered = await this.gateway.getCompaniesByAgent(this.state.filterAgentId);
         this.state.searchCompaniesWasFailed = false;
-        this.state.searchForm.agentCompanyId = agentId;
-        this.state.searchForm.companyId = agentId;
         this.state.isLoading = false;
         this.updateView();
       }
     } catch (error) {
-      this.state.resCompanies = [];
+      this.state.companiesFiltered = [];
       this.state.searchCompaniesWasFailed = true;
-      this.state.searchForm.agentCompanyId = agentId;
-      this.state.searchForm.companyId = agentId;
       this.state.isLoading = false;
       this.updateView();
     }
@@ -104,10 +105,10 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
         this.state.dialog.showDeleteCompanySuccessMessage = false;
         this.updateView();
       } else {
-        await this.gateWay.deleteCompany(companyId);
+        await this.gateway.deleteCompany(companyId);
         this.state.dialog.showDeleteCompanyFailureMessage = false;
         this.state.dialog.showDeleteCompanySuccessMessage = true;
-        await this.getCompanies(this.state.searchForm.companyId);
+        await this.getCompaniesFiltered();
         await this.getAllCompaniesForSelect();
         this.updateView();
       }
@@ -118,40 +119,20 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
     }
   }
 
-  public showSearch(model: CompanyModel): void {
-    this.state.showSearch = !model.showSearch;
+  public showSearch(): void {
+    this.state.showSearch = !this.state.showSearch;
     this.updateView();
   }
 
-  public async resetSearchForm(model: CompanyModel): Promise<void> {
-    model.searchForm.agentCompanyId = undefined;
-    model.searchForm.companyId = undefined;
-    await this.getCompanies(model.searchForm.companyId);
-  }
-
-  public changePage(pageNo: number, model?: CompanyModel): void {
-    this.state.pageInfo.pageNo = pageNo;
-    this.updateView();
-  }
-
-  public changePageSize(model: CompanyModel): void {
-    if (this.state.pageInfo.pageSize !== this.state.pageInfo.currentPageSize) {
-      this.state.pageInfo.pageNo = 1;
-      this.state.pageInfo.pageSize = model.pageInfo.pageSize;
-      this.state.pageInfo.currentPageSize = model.pageInfo.pageSize;
-      this.updateView();
-    }
-  }
-
-  public async saveCompany(model: CompanyModel, operateType: string): Promise<void> {
-    this.state.companyAddState.type = model.formData.type;
-    this.state.companyAddState.agentCompanyId = model.formData.agentCompanyId;
-    this.state.companyAddState.parentCompanyId = model.formData.parentCompanyId;
-    this.state.companyAddState.alias = model.formData.alias;
-    this.state.companyAddState.customerId = model.formData.customerId;
+  public async saveCompany(formData: FormDatas, operateType: string): Promise<void> {
+    this.state.companyAddState.type = formData.type;
+    this.state.companyAddState.agentCompanyId = formData.agentCompanyId;
+    this.state.companyAddState.parentCompanyId = formData.parentCompanyId;
+    this.state.companyAddState.alias = formData.alias;
+    this.state.companyAddState.customerId = formData.customerId;
 
     this.state.formErrors = CommonUtils.validateForm(
-      model.formData,
+      formData,
       this.rules,
       this.state.validationErrors,
       this.state.formErrors
@@ -161,7 +142,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
       try {
         // add company
         if (operateType === OperateType.ADD_COMPANY) {
-          await this.gateWay.saveCompany(
+          await this.gateway.saveCompany(
             new Company({
               type: CommonUtils.getCustomerEnumValue(this.state.companyAddState.type),
               alias: this.state.companyAddState.alias,
@@ -176,7 +157,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
 
         // modify company
         if (operateType === OperateType.MODIFY_COMPANY) {
-          await this.gateWay.saveCompany(
+          await this.gateway.saveCompany(
             new Company({
               id: this.state.companyAddState.id,
               type: CommonUtils.getCustomerEnumValue(this.state.companyAddState.type),
@@ -204,8 +185,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
         this.state.isLoading = false;
       }
     }
-    await this.getCompanies(this.state.searchForm.companyId);
-    await this.getAllCompaniesForSelect();
+    await this.loadData();
     this.updateView();
   }
 

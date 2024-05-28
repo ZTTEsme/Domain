@@ -1,35 +1,31 @@
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
-import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import FormErrors from "../../../../common/entities/ts/formError";
-import PageInfo from "../../../../common/entities/ts/pageInfo";
 import CompanyTableColName from "../entities/companyTableColName";
 import Dialog from "../entities/dialog";
 import FormDatas from "../entities/formDatas";
 import LabelInfo from "../entities/labelInfo";
-import SearchForm from "../entities/searchForm";
-import SelfCompany from "../entities/selfCompany";
 import TableAction from "../entities/tableAction";
+import CompanyListModel from "./companyListModel";
 
 export default class CompanyModel {
+  public username: string = "";
+  public password: string = "";
 
-  public username:string="";
-  public password:string="";
-
-  public pageResultForCompany:PageResult = {
+  public pageResultForCompany: PageResult = {
     data: [],
-    total: 0
+    total: 0,
   };
-
-  public pageInfo: PageInfo = new PageInfo(1,5,[5,10,20]);
 
   public breadcrumb: Breadcrumb[] = [];
 
-  public moduleName: string ="";
+  public moduleName: string = "";
 
   public msg: string = "";
 
-  public company:SelfCompany[] = [];
-  public allCompanies:Company[] = [];
+  public companiesNotFiltered: CompanyListModel[] = [];
+  public companiesFiltered: CompanyListModel[] = [];
+
+  public filterAgentId: number | undefined = undefined;
 
   public formErrors: FormErrors = {};
 
@@ -39,22 +35,19 @@ export default class CompanyModel {
 
   public searchCompaniesWasFailed: boolean = false;
 
-  public isLoading:boolean = false
+  public isLoading: boolean = false;
 
   public labelInfo: LabelInfo = new LabelInfo();
 
-  public searchForm: SearchForm = new SearchForm();
+  public tableAction: TableAction = new TableAction();
 
-  public tableAction:TableAction = new TableAction();
+  public dialog: Dialog = new Dialog();
 
-  public dialog:Dialog = new Dialog();
+  public formData: FormDatas = new FormDatas();
 
-  public formData:FormDatas = new FormDatas();
-
-  public companyTableColName:CompanyTableColName = new CompanyTableColName();
+  public companyTableColName: CompanyTableColName = new CompanyTableColName();
 
   public constructor(init?: Partial<CompanyModel>) {
     Object.assign(this, init);
   }
-
 }

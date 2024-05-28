@@ -1,16 +1,15 @@
 import Router from "cloos-vue-router/lib/core/router";
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
 import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
+import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
-import PageInfo from "../../../../common/entities/ts/pageInfo";
-import CommonUtils from "../../../../common/utils/ts/commonUtils";
-import SelfCompany from "../entities/selfCompany";
 import CompanyState from "../interactors/companyState";
-import CompanyModel from "../models/companyModel";
+import CompanyListModel from "../models/companyListModel";
+import CompanyViewModel from "../models/companyViewModel";
 
 export default class CompanyModelAssembler {
-  public static fromState(state: CompanyState, router: Router, i18nGateway: I18nGateway): CompanyModel {
-    const model: CompanyModel = new CompanyModel();
+  public static fromState(state: CompanyState, router: Router, i18nGateway: I18nGateway): CompanyViewModel {
+    const model: CompanyViewModel = new CompanyViewModel();
     this.initPageParams(state, model, router, i18nGateway);
     return model;
   }
@@ -19,15 +18,15 @@ export default class CompanyModelAssembler {
     state: CompanyState,
     router: Router,
     i18nGateway: I18nGateway
-  ): CompanyModel {
-    const model: CompanyModel = new CompanyModel();
+  ): CompanyViewModel {
+    const model: CompanyViewModel = new CompanyViewModel();
     this.initPageParams(state, model, router, i18nGateway);
     return model;
   }
 
   private static initPageParams(
     state: CompanyState,
-    model: CompanyModel,
+    model: CompanyViewModel,
     router: Router,
     i18nGateway: I18nGateway
   ): void {
@@ -68,9 +67,6 @@ export default class CompanyModelAssembler {
 
     // searchForm
     model.labelInfo.agentCompanyLabel = i18nGateway.get("company.label.agentCompanyName");
-    if (!CommonUtils.isNullOrUndefined(state.searchForm.companyId)) {
-      model.searchForm = CommonUtils.deepCopy(state.searchForm);
-    }
 
     // formData(add company && modify company)
     model.formData.type = state.companyAddState.type;
@@ -134,44 +130,40 @@ export default class CompanyModelAssembler {
     model.companyTableColName.customerId = i18nGateway.get("company.tableName.customerId");
     model.companyTableColName.operate = i18nGateway.get("company.tableName.operate");
 
-    // pagination by front
-    model.pageInfo = state.pageInfo;
-    this.updateCompanies(model, model.pageInfo, state);
+    model.companiesNotFiltered = this.toListModel(state.companies, state.companies);
+    model.companiesFiltered = this.toListModel(state.companiesFiltered, state.companies);
+
+    model.filterAgentId = state.filterAgentId;
+    console.log(model.companiesNotFiltered);
+    console.log(model.companiesFiltered);
+    console.log(model.filterAgentId);
+
     model.formErrors = state.formErrors;
   }
 
   // update companies
-  private static updateCompanies(model: CompanyModel, pageInfo: PageInfo, state: CompanyState): void {
-    model.allCompanies = state.allCompanies;
-    for (const company of state.resCompanies) {
-      model.company.push(
-        new SelfCompany({
-          id: company.id,
-          alias: company.alias,
-          type: company.type,
-          customerId: company.customerId,
-          agentCompanyId: company.agentCompanyId,
-          parentCompanyId: company.parentCompanyId,
+  private static toListModel(companies: Company[], allCompanies: Company[]): CompanyListModel[] {
+    return companies.map(
+      (c) =>
+        new CompanyListModel({
+          id: c.id,
+          alias: c.alias,
+          type: c.type,
+          parentCompanyId: c.parentCompanyId,
+          parentCompanyName: this.getNameOfCompany(c.parentCompanyId, allCompanies, "N/A"),
+          agentCompanyId: c.agentCompanyId,
+          agentCompanyName: this.getNameOfCompany(c.agentCompanyId, allCompanies, "N/A"),
+          customerId: c.customerId,
         })
-      );
-    }
-    const map: Map<number | null, string | undefined> = new Map();
-    model.allCompanies.forEach((ele) => {
-      map.set(ele.id, ele.alias);
-    });
-    model.company.forEach((ele) => {
-      let agentCompanyName: string | undefined = map.get(ele.agentCompanyId);
-      if (CommonUtils.isNullOrUndefined(agentCompanyName)) {
-        agentCompanyName = "N/A";
-      }
-      ele.agentCompanyName = agentCompanyName;
+    );
+  }
 
-      let parentCompanyName: string | undefined = map.get(ele.parentCompanyId);
-      if (CommonUtils.isNullOrUndefined(parentCompanyName)) {
-        parentCompanyName = "N/A";
+  private static getNameOfCompany(id: number | null, companies: Company[], fallback: string): string {
+    for (const company of companies) {
+      if (company.id === id) {
+        return company.alias;
       }
-      ele.parentCompanyName = parentCompanyName;
-    });
-    model.pageResultForCompany = CommonUtils.getPageData(model.company, pageInfo.pageNo, pageInfo.pageSize);
+    }
+    return fallback;
   }
 }

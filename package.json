@@ -13,6 +13,6 @@
     "qnect-build-script": "^1.0.4"
   },
   "dependencies": {
-    "qnect-sdk-web": "^3.9.3"
+    "qnect-sdk-web": "^3.9.4"
   }
 }

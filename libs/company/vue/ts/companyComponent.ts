@@ -2,12 +2,12 @@ import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbC
 import ModalComponent from "qnect-sdk-web/lib/common/vue/ts/modalComponent";
 import PaginationComponent from "qnect-sdk-web/lib/common/vue/ts/paginationComponent";
 import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
-import { Component, Prop, Vue, Watch } from "vue-facing-decorator";
+import { Component, Prop, Vue } from "vue-facing-decorator";
 import ButtonComponent from "../../../common/component/ButtonComponent";
 import NoDataComponent from "../../../common/component/noDataComponent";
 import CompanyInteractor from "../../core/ts/interactors/companyInteractor";
 import CompanyPresenter from "../../core/ts/interactors/companyPresenter";
-import CompanyModel from "../../core/ts/models/companyModel";
+import CompanyViewModel from "../../core/ts/models/companyViewModel";
 
 @Component({
   name: "CompanyComponent",
@@ -53,12 +53,12 @@ import CompanyModel from "../../core/ts/models/companyModel";
                             <select
                               class="form-select"
                               id="agentCompanyId"
-                              v-model.number="model.searchForm.companyId"
-                              @change="interactor.changeCompany(model.searchForm.companyId)"
+                              v-model="model.filterAgentId"
+                              @change="interactor.setCompanyFilter(model.filterAgentId)"
                             >
-                              <option selected value="undefined">{{ model.labelInfo.chooseAllLabel }}</option>
+                              <option selected :value="undefined">{{ model.labelInfo.chooseAllLabel }}</option>
                               <option
-                                v-for="company in model.allCompanies"
+                                v-for="company in model.companiesNotFiltered"
                                 :key="company.id"
                                 :label="company.alias"
                                 :value="company.id"
@@ -110,14 +110,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
                         </div>
                       </div>
                       <hr />
-                      <NoDataComponent v-show="model.pageResultForCompany.total<=0" img="./img/no-data-available.gif">
-                        <span>{{ model.labelInfo.noDataLabel }}</span>
-                      </NoDataComponent>
-                      <div
-                        class="row row-cols-auto g-3"
-                        style="min-height:300px"
-                        v-show="model.pageResultForCompany.total>0"
-                      >
+                      <div class="row row-cols-auto g-3" style="min-height:300px">
                         <div class="table-responsive d-flex flex-column" style="width:100%;">
                           <!--table-->
                           <table id="example" class="table table-striped table-bordered text-center" style="width:100%">
@@ -132,65 +125,44 @@ import CompanyModel from "../../core/ts/models/companyModel";
                               </tr>
                             </thead>
                             <tbody>
-                              <tr v-for="ele in model.pageResultForCompany.data">
-                                <td>{{ ele.alias }}</td>
-                                <td>{{ ele.type }}</td>
-                                <td>{{ ele.parentCompanyName }}</td>
-                                <td>{{ ele.agentCompanyName }}</td>
-                                <td>{{ ele.customerId }}</td>
+                              <tr v-show="model.companiesFiltered.length === 0">
+                                <td colspan="6">{{ model.labelInfo.noDataLabel }}</td>
+                              </tr>
+                              <tr v-for="company in model.companiesFiltered">
+                                <td>{{ company.alias }}</td>
+                                <td>{{ company.type }}</td>
+                                <td>{{ company.parentCompanyName }}</td>
+                                <td>{{ company.agentCompanyName }}</td>
+                                <td>{{ company.customerId }}</td>
                                 <td>
                                   <ButtonComponent
                                     icon="fa-solid fa-pen-to-square"
                                     btn-style="width:30px"
                                     @click="() => interactor.openModifyDialog(
-                                             ele.id,
-                                             ele.agentCompanyId,
-                                             ele.alias,
-                                             ele.type,
-                                             ele.customerId)"
+                                             company.id,
+                                             company.agentCompanyId,
+                                             company.alias,
+                                             company.type,
+                                             company.customerId)"
                                   ></ButtonComponent>
                                   <ButtonComponent
                                     btn-style="margin-left:10px;width:30px"
                                     shape="btn-outline-danger"
                                     icon="fa-solid fa-trash-can"
-                                    @click="() => interactor.openDeleteDialog(ele.id)"
+                                    @click="() => interactor.openDeleteDialog(company.id)"
                                   ></ButtonComponent>
 
                                   <ButtonComponent
                                     btn-style="width:30px;height:30px;margin-left:10px"
                                     shape="btn-outline-success"
                                     icon="fa-solid fa-right-to-bracket"
-                                    @click="()=>interactor.goCompany(ele.id)"
+                                    @click="()=>interactor.goCompany(company.id)"
                                   >
                                   </ButtonComponent>
                                 </td>
                               </tr>
                             </tbody>
                           </table>
-
-                          <!--pagination-->
-                          <div class="mt-auto">
-                            <div class="row float-end me-1">
-                              <div class="col ps-0 pe-1">
-                                <select
-                                  class="form-select"
-                                  aria-label="Default select example"
-                                  v-model="model.pageInfo.pageSize"
-                                  @click="()=>interactor.changePageSize(model)"
-                                >
-                                  <option v-for="item in model.pageInfo.pageItems" :value="item">{{ item }}</option>
-                                </select>
-                              </div>
-                              <div class="col ps-0 pe-0">
-                                <pagination
-                                  :totalSize="model.pageResultForCompany.total"
-                                  :pageSize="model.pageInfo.pageSize"
-                                  v-model="model.pageInfo.pageNo"
-                                  @change="(pageNo)=>interactor.changePage(pageNo)"
-                                ></pagination>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                       <!--end row-->
@@ -321,7 +293,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
                 type="button"
                 class="btn btn-primary"
                 @click='()=>interactor.saveCompany(
-                                        model,
+                                        model.formData,
                                         "ADD_COMPANY"
                                         )'
               >
@@ -476,7 +448,7 @@ import CompanyModel from "../../core/ts/models/companyModel";
               <button
                 class="btn btn-primary"
                 @click='() => interactor.saveCompany(
-                          model,
+                          model.formData,
                          "MODIFY_COMPANY"
                          )'
               >
@@ -490,36 +462,16 @@ import CompanyModel from "../../core/ts/models/companyModel";
   `,
 })
 export default class CompanyComponent extends Vue implements CompanyPresenter {
-  // 页面JS
   @Prop
   public readonly interactor!: CompanyInteractor;
 
-  // 数据原型
-  public model: CompanyModel = new CompanyModel();
-
-  public key: number | undefined = this.model.searchForm.agentCompanyId;
-
-  // 当前分页大小
-  public readonly pageNo: number = this.model.pageInfo.pageNo;
-
-  @Watch("pageNo", { deep: true, immediate: true })
-  public propertyWatcher(newValue: string, oldValue: string): void {
-    if (newValue !== oldValue) {
-      this.interactor.changePageSize(this.model);
-    }
-  }
-
-  @Watch("key", { deep: true, immediate: true })
-  public propertyWatcherOne(newValue: string, oldValue: string): void {
-    console.log(newValue);
-    console.log(oldValue);
-  }
+  public model: CompanyViewModel = new CompanyViewModel();
 
   public mounted(): void {
     this.interactor.startPresenting(this);
   }
 
-  public updateView(model: CompanyModel): void {
+  public updateView(model: CompanyViewModel): void {
     this.model = model;
   }
 }

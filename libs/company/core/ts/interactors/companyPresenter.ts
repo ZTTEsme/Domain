@@ -1,5 +1,5 @@
-import CompanyModel from "../models/companyModel";
+import CompanyViewModel from "../models/companyViewModel";
 
 export default interface CompanyPresenter {
-  updateView(model: CompanyModel): void;
+  updateView(model: CompanyViewModel): void;
 }

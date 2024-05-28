@@ -2,7 +2,6 @@ import Router from "cloos-vue-router/lib/core/router";
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
 import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
-import CommonUtils from "../../../../common/utils/ts/commonUtils";
 import CompanyUsersState from "../interactors/companyUsersState";
 import CompanyUsersModel from "../models/companyUsersModel";
 
@@ -37,9 +36,8 @@ export default class CompanyUsersAssembler {
     model.labelInfo.serverErrorInfo = i18nGateway.get("companyUser.label.serverErrorInfo");
     model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
 
-    // table pagination
+    // data
     model.users = state.users;
-    model.pageInfo = state.pageInfo;
 
     // table colName
     model.userTableColName.alias = i18nGateway.get("companyUser.table.alias");
@@ -47,7 +45,7 @@ export default class CompanyUsersAssembler {
     model.userTableColName.isAdmin = i18nGateway.get("companyUser.table.isAdmin");
     model.userTableColName.operate = i18nGateway.get("companyUser.table.operate");
 
-    // add User
+    // add user
     state.dialog.msgAddUserWithSuccess = i18nGateway.get("companyUser.dialog.msgAddUserWithSuccess");
     state.dialog.msgAddUserWithFailure = i18nGateway.get("companyUser.dialog.msgAddUserWithFailure");
     state.dialog.addUserDialogTitle = i18nGateway.get("companyUser.dialog.addUserDialogTitle");
@@ -71,6 +69,5 @@ export default class CompanyUsersAssembler {
         user.alias = "N/A";
       }
     });
-    model.pageResultForUsers = CommonUtils.getPageData(model.users, model.pageInfo.pageNo, model.pageInfo.pageSize);
   }
 }

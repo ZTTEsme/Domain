@@ -1,14 +1,13 @@
 export default class CompanyTableColName {
+  public alias: string = "";
 
-  public alias:string = "";
+  public type: string = "";
 
-  public type:string = "";
+  public agentCompanyId: string = "";
 
-  public agentCompanyId:string = "";
+  public customerId: string = "";
 
-  public customerId:string = "";
+  public parentCompanyId: string = "";
 
-  public parentCompanyId:string = ""
-
-  public operate:string = "";
+  public operate: string = "";
 }

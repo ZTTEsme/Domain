@@ -1,7 +1,7 @@
 export default class TableAction {
-  public add:string = ""
+  public add: string = "";
 
-  public delete:string = ""
+  public delete: string = "";
 
-  public modify:string = "";
+  public modify: string = "";
 }

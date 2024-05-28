@@ -108,14 +108,7 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
                         </div>
                       </div>
                       <hr />
-                      <NoDataComponent v-show="model.pageResultForUsers.total<=0" img="./img/no-data-available.gif">
-                        <span>{{ model.labelInfo.noDataLabel }}</span>
-                      </NoDataComponent>
-                      <div
-                        class="row row-cols-auto g-3"
-                        style="min-height:300px"
-                        v-show="model.pageResultForUsers.total>0"
-                      >
+                      <div class="row row-cols-auto g-3" style="min-height:300px">
                         <div class="table-responsive d-flex flex-column" style="width:100%;">
                           <!--table-->
                           <table id="example" class="table table-striped table-bordered text-center" style="width:100%">
@@ -128,7 +121,10 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
                               </tr>
                             </thead>
                             <tbody>
-                              <tr v-for="ele in model.pageResultForUsers.data">
+                              <tr v-show="model.users.length === 0">
+                                <td colspan="4">{{ model.labelInfo.noDataLabel }}</td>
+                              </tr>
+                              <tr v-for="ele in model.users">
                                 <td>{{ ele.alias }}</td>
                                 <td>{{ ele.email }}</td>
                                 <td>
@@ -146,30 +142,6 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
                               </tr>
                             </tbody>
                           </table>
-
-                          <!--pagination-->
-                          <div class="mt-auto">
-                            <div class="row float-end me-1">
-                              <div class="col ps-0 pe-1">
-                                <select
-                                  class="form-select"
-                                  aria-label="Default select example"
-                                  v-model="model.pageInfo.pageSize"
-                                  @click="()=>interactor.changePageSize(model)"
-                                >
-                                  <option v-for="item in model.pageInfo.pageItems" :value="item">{{ item }}</option>
-                                </select>
-                              </div>
-                              <div class="col ps-0 pe-0">
-                                <pagination
-                                  :totalSize="model.pageResultForUsers.total"
-                                  :pageSize="model.pageInfo.pageSize"
-                                  v-model="model.pageInfo.pageNo"
-                                  @change="(pageNo)=>interactor.changePage(pageNo)"
-                                ></pagination>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                       <!--end row-->

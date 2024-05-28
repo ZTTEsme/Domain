@@ -1,11 +1,11 @@
 import Router from "cloos-vue-router/lib/core/router";
 import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
+import CompanyWithUsers from "qnect-sdk-web/lib/company/core/ts/entities/companyWithUsers";
 import CompanyGateway from "qnect-sdk-web/lib/company/core/ts/gateways/companyGateway";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CommonUtils from "../../../../common/utils/ts/commonUtils";
 import CompanyUsersAssembler from "../assemblers/companyUsersAssembler";
 import AddUserFormData from "../entities/addUserFormData";
-import CompanyUsersModel from "../models/companyUsersModel";
 import CompanyUsersPresenter from "./companyUsersPresenter";
 import CompanyUsersState from "./companyUsersState";
 
@@ -41,9 +41,9 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
     if (isNaN(companyId)) {
       this.state.selectedCompanyId = null;
     } else {
-      this.state.companyWithUsers = await this.companyGateway.getCompany(companyId);
-      this.state.selectedCompanyId = this.state.companyWithUsers.id;
-      this.state.users = this.state.companyWithUsers.users;
+      const company: CompanyWithUsers = await this.companyGateway.getCompany(companyId);
+      this.state.selectedCompanyId = company.id;
+      this.state.users = company.users;
     }
 
     this.updateView();
@@ -59,22 +59,8 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
 
   public async changeCompany(companyId: number): Promise<void> {
     this.state.selectedCompanyId = companyId;
-    this.state.companyWithUsers = await this.companyGateway.getCompany(companyId);
-    this.state.users = this.state.companyWithUsers.users;
-    this.updateView();
-  }
-
-  public changePageSize(model: CompanyUsersModel): void {
-    if (this.state.pageInfo.pageSize !== this.state.pageInfo.currentPageSize) {
-      this.state.pageInfo.pageNo = 1;
-      this.state.pageInfo.pageSize = model.pageInfo.pageSize;
-      this.state.pageInfo.currentPageSize = model.pageInfo.pageSize;
-      this.updateView();
-    }
-  }
-
-  public changePage(pageNo: number): void {
-    this.state.pageInfo.pageNo = pageNo;
+    const company: CompanyWithUsers = await this.companyGateway.getCompany(companyId);
+    this.state.users = company.users;
     this.updateView();
   }
 
@@ -117,8 +103,8 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
 
         this.state.dialog.showAddUserFailureMessage = false;
         this.state.dialog.showAddUserSuccessMessage = true;
-        this.state.companyWithUsers = await this.companyGateway.getCompany(Number(this.state.selectedCompanyId));
-        this.state.users = this.state.companyWithUsers.users;
+        const company: CompanyWithUsers = await this.companyGateway.getCompany(Number(this.state.selectedCompanyId));
+        this.state.users = company.users;
         this.state.addUserFormData = new AddUserFormData();
       } catch (error) {
         this.state.dialog.showAddUserFailureMessage = true;
@@ -149,8 +135,8 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
         await this.companyGateway.removeUserFromCompany(Number(this.state.selectedCompanyId), userId);
         this.state.dialog.showDeleteUserFailureMessage = false;
         this.state.dialog.showDeleteUserSuccessMessage = true;
-        this.state.companyWithUsers = await this.companyGateway.getCompany(Number(this.state.selectedCompanyId));
-        this.state.users = this.state.companyWithUsers.users;
+        const company: CompanyWithUsers = await this.companyGateway.getCompany(Number(this.state.selectedCompanyId));
+        this.state.users = company.users;
         this.updateView();
       }
     } catch (error) {
@@ -158,11 +144,6 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
       this.state.dialog.showDeleteUserSuccessMessage = false;
       this.updateView();
     }
-  }
-
-  public changePageForTable(pageNo: number, pageSize: number): void {
-    console.log(pageNo);
-    console.log(pageSize);
   }
 
   public sort(field: string, type: string): void {
