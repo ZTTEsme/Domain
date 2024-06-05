@@ -36,6 +36,9 @@ export default class CompanyUsersAssembler {
     model.labelInfo.serverErrorInfo = i18nGateway.get("companyUser.label.serverErrorInfo");
     model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
 
+    model.labelInfo.addLabel = i18nGateway.get("company.btn.add");
+    model.labelInfo.deleteLabel = i18nGateway.get("company.btn.delete");
+
     // data
     model.users = state.users;
 

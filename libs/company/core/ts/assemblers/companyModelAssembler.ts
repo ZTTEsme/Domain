@@ -80,6 +80,12 @@ export default class CompanyModelAssembler {
     model.tableAction.delete = i18nGateway.get("company.action.delete");
     model.tableAction.modify = i18nGateway.get("company.action.modify");
 
+    // button label
+    model.labelInfo.addLabel = i18nGateway.get("company.btn.add");
+    model.labelInfo.deleteLabel = i18nGateway.get("company.btn.delete");
+    model.labelInfo.editLabel = i18nGateway.get("company.btn.edit");
+    model.labelInfo.detailsLabel = i18nGateway.get("company.btn.details");
+
     // add company dialog msgAddCompanyWithSuccess
     model.dialog.addCompany = i18nGateway.get("company.dialog.addCompany");
     model.dialog.close = i18nGateway.get("company.dialog.close");

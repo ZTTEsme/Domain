@@ -98,12 +98,13 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
                       <div class="card-title">
                         <div class="row row-cols-auto g-2">
                           <div class="col">
-                            <ButtonComponent
-                              icon="a-solid fa-plus"
-                              :disabled="model.selectedCompanyId ===null || model.selectedCompanyId === null"
-                              btn-style="width:30px"
+                            <a
                               @click="() => interactor.openAddUserDialog()"
-                            ></ButtonComponent>
+                              class="btn btn-outline-success btn-sm"
+                              :disabled="model.selectedCompanyId ===null || model.selectedCompanyId === null"
+                              role="button"
+                              ><i class="fa-solid fa-plus me-1"></i>{{ model.labelInfo.addLabel }}</a
+                            >
                           </div>
                         </div>
                       </div>
@@ -132,12 +133,12 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
                                   <i class="fa-solid fa-xmark" v-show="!ele.admin"></i>
                                 </td>
                                 <td>
-                                  <ButtonComponent
-                                    shape="btn-outline-danger"
-                                    icon="fa-solid fa-trash-can"
-                                    btn-style="width:30px"
+                                  <a
                                     @click="() => interactor.openDeleteUserDialog(ele.id)"
-                                  ></ButtonComponent>
+                                    class="btn btn-outline-danger btn-sm"
+                                    role="button"
+                                    ><i class="fa-regular fa-trash-can me-1"></i>{{ model.labelInfo.deleteLabel }}</a
+                                  >
                                 </td>
                               </tr>
                             </tbody>

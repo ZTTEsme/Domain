@@ -21,4 +21,12 @@ export default class LabelInfo {
   public serverErrorInfo: string = "";
 
   public noDataLabel: string = "";
+
+  public addLabel:string = "";
+
+  public editLabel:string = "";
+
+  public deleteLabel:string="";
+
+  public detailsLabel:string = "";
 }

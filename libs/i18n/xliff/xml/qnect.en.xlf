@@ -152,6 +152,27 @@
         <source>Modify</source>
       </segment>
     </unit>
+
+    <unit id="company.btn.add">
+      <segment>
+        <source>Add</source>
+      </segment>
+    </unit>
+    <unit id="company.btn.delete">
+      <segment>
+        <source>Delete</source>
+      </segment>
+    </unit>
+    <unit id="company.btn.edit">
+      <segment>
+        <source>Edit</source>
+      </segment>
+    </unit>
+    <unit id="company.btn.details">
+      <segment>
+        <source>Details</source>
+      </segment>
+    </unit>
     <unit id="company.dialog.addCompany">
       <segment>
         <source>Add Company</source>

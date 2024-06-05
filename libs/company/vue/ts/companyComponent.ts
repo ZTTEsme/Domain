@@ -101,11 +101,12 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
                       <div class="card-title">
                         <div class="row row-cols-auto g-2">
                           <div class="col">
-                            <ButtonComponent
-                              icon="a-solid fa-plus"
-                              btn-style="width:30px"
+                            <a
                               @click="() => interactor.openAddCompanyDialog()"
-                            ></ButtonComponent>
+                              class="btn btn-outline-success btn-sm"
+                              role="button"
+                              ><i class="fa-solid fa-plus me-1"></i>{{ model.labelInfo.addLabel }}</a
+                            >
                           </div>
                         </div>
                       </div>
@@ -113,7 +114,7 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
                       <div class="row row-cols-auto g-3" style="min-height:300px">
                         <div class="table-responsive d-flex flex-column" style="width:100%;">
                           <!--table-->
-                          <table id="example" class="table table-striped table-bordered text-center" style="width:100%">
+                          <table id="example" class="table table-bordered text-center" style="width:100%">
                             <thead>
                               <tr>
                                 <th>{{ model.companyTableColName.alias }}</th>
@@ -121,7 +122,7 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
                                 <th>{{ model.companyTableColName.parentCompanyId }}</th>
                                 <th>{{ model.companyTableColName.agentCompanyId }}</th>
                                 <th>{{ model.companyTableColName.customerId }}</th>
-                                <th style="width:200px">{{ model.companyTableColName.operate }}</th>
+                                <th style="width:250px">{{ model.companyTableColName.operate }}</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -135,30 +136,26 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
                                 <td>{{ company.agentCompanyName }}</td>
                                 <td>{{ company.customerId }}</td>
                                 <td>
-                                  <ButtonComponent
-                                    icon="fa-solid fa-pen-to-square"
-                                    btn-style="width:30px"
-                                    @click="() => interactor.openModifyDialog(
-                                             company.id,
-                                             company.agentCompanyId,
-                                             company.alias,
-                                             company.type,
-                                             company.customerId)"
-                                  ></ButtonComponent>
-                                  <ButtonComponent
-                                    btn-style="margin-left:10px;width:30px"
-                                    shape="btn-outline-danger"
-                                    icon="fa-solid fa-trash-can"
-                                    @click="() => interactor.openDeleteDialog(company.id)"
-                                  ></ButtonComponent>
-
-                                  <ButtonComponent
-                                    btn-style="width:30px;height:30px;margin-left:10px"
-                                    shape="btn-outline-success"
-                                    icon="fa-solid fa-right-to-bracket"
-                                    @click="()=>interactor.goCompany(company.id)"
+                                  <a
+                                    @click="() => interactor.openModifyDialog(company.id,company.agentCompanyId,company.alias,company.type,company.customerId)"
+                                    class="btn btn-outline-success btn-sm"
+                                    role="button"
+                                    ><i class="fa-regular fa-pen-to-square me-1"></i>{{ model.labelInfo.editLabel }}</a
                                   >
-                                  </ButtonComponent>
+                                  <a
+                                    style="margin-left:10px"
+                                    @click="() => interactor.openDeleteDialog(company.id)"
+                                    class="btn btn-outline-danger btn-sm"
+                                    role="button"
+                                    ><i class="fa-regular fa-trash-can me-1"></i>{{ model.labelInfo.deleteLabel }}</a
+                                  >
+                                  <a
+                                    style="margin-left:10px"
+                                    @click="()=>interactor.goCompany(company.id)"
+                                    class="btn btn-outline-success btn-sm"
+                                    role="button"
+                                    ><i class="fa-solid fa-right-to-bracket  me-1"></i>{{ model.labelInfo.detailsLabel }}</a
+                                  >
                                 </td>
                               </tr>
                             </tbody>

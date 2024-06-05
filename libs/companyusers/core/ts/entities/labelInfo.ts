@@ -12,4 +12,8 @@ export default class LabelInfo {
   public userTypeAdmin: string = "";
 
   public userTypeAdminExplanation: string = "";
+
+  public addLabel:string = "";
+
+  public deleteLabel:string="";
 }
