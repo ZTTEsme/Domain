@@ -1,17 +1,26 @@
 import Router from "cloos-vue-router/lib/core/router";
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
 import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
+import ValidationUtil from "qnect-sdk-web/lib/common/core/ts/validationUtil";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import CompanyState from "../interactors/companyState";
+import CompanyInputModel from "../models/companyInputModel";
 import CompanyListModel from "../models/companyListModel";
 import CompanyViewModel from "../models/companyViewModel";
 
 export default class CompanyModelAssembler {
   public static fromState(state: CompanyState, router: Router, i18nGateway: I18nGateway): CompanyViewModel {
     const model: CompanyViewModel = new CompanyViewModel();
-    this.initPageParams(state, model, router, i18nGateway);
+
+    this.addBreadcrumb(state, model, i18nGateway, router);
+    this.addFilter(state, model, i18nGateway, router);
+    this.addCreateCompanyButton(state, model, i18nGateway);
+    this.addCompaniesTable(state, model, i18nGateway, router);
+    this.addCompanyDialog(state, model, i18nGateway);
+    this.addDeleteDialog(state, model, i18nGateway);
+
     return model;
   }
 
@@ -20,154 +29,115 @@ export default class CompanyModelAssembler {
     router: Router,
     i18nGateway: I18nGateway
   ): CompanyViewModel {
-    const model: CompanyViewModel = new CompanyViewModel();
-    this.initPageParams(state, model, router, i18nGateway);
-    return model;
+    return this.fromState(state, router, i18nGateway);
   }
 
-  private static initPageParams(
-    state: CompanyState,
-    model: CompanyViewModel,
-    router: Router,
-    i18nGateway: I18nGateway
-  ): void {
+  private static addBreadcrumb(state: CompanyState, model: CompanyViewModel, i18nGateway: I18nGateway, router: Router) {
+    model.msgTitle = i18nGateway.get("company.title");
+
     model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(
       router,
       undefined,
       new Breadcrumb({ name: i18nGateway.get("common.home"), link: "/" })
     );
-
-    model.moduleName = router.getCurrentRoute().name;
-
-    // loading
-    model.isLoading = state.isLoading;
-
-    model.formErrors = state.formErrors;
-
-    model.showSearch = state.showSearch;
-
-    // label info
-    model.labelInfo.title = i18nGateway.get("company.title");
-    model.labelInfo.serverErrorInfo = i18nGateway.get("company.label.serverErrorInfo");
-    model.labelInfo.typeLabel = i18nGateway.get("company.label.type");
-    model.labelInfo.agentCompanyNameLabel = i18nGateway.get("company.label.agentCompanyName");
-    model.labelInfo.parentCompanyLabel = i18nGateway.get("company.label.parentCompany");
-    model.labelInfo.aliasLabel = i18nGateway.get("company.label.alias");
-    model.labelInfo.customerIdLabel = i18nGateway.get("company.label.customerId");
-    model.labelInfo.chooseAllLabel = i18nGateway.get("company.label.chooseAllLabel");
-    model.labelInfo.serverErrorInfo = i18nGateway.get("company.label.serverErrorInfo");
-    model.labelInfo.typeLabel = i18nGateway.get("company.label.type");
-    model.labelInfo.agentCompanyNameLabel = i18nGateway.get("company.label.agentCompanyName");
-    model.labelInfo.aliasLabel = i18nGateway.get("company.label.alias");
-    model.labelInfo.customerIdLabel = i18nGateway.get("company.label.customerId");
-    model.labelInfo.chooseAllLabel = i18nGateway.get("company.label.chooseAllLabel");
-    model.labelInfo.customer = i18nGateway.get("company.label.customer");
-    model.labelInfo.manufacturer = i18nGateway.get("company.label.manufacturer");
-    model.labelInfo.trader = i18nGateway.get("company.label.trader");
-    model.labelInfo.subsidiary = i18nGateway.get("company.label.subsidiary");
-    model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
-
-    // searchForm
-    model.labelInfo.agentCompanyLabel = i18nGateway.get("company.label.agentCompanyName");
-
-    // formData(add company && modify company)
-    model.formData.type = state.companyAddState.type;
-    model.formData.alias = state.companyAddState.alias;
-    model.formData.agentCompanyId = state.companyAddState.agentCompanyId;
-    model.formData.parentCompanyId = state.companyAddState.parentCompanyId;
-    model.formData.customerId = state.companyAddState.customerId;
-
-    // tableAction
-    model.tableAction.add = i18nGateway.get("company.action.add");
-    model.tableAction.delete = i18nGateway.get("company.action.delete");
-    model.tableAction.modify = i18nGateway.get("company.action.modify");
-
-    // button label
-    model.labelInfo.addLabel = i18nGateway.get("company.btn.add");
-    model.labelInfo.deleteLabel = i18nGateway.get("company.btn.delete");
-    model.labelInfo.editLabel = i18nGateway.get("company.btn.edit");
-    model.labelInfo.detailsLabel = i18nGateway.get("company.btn.details");
-
-    // add company dialog msgAddCompanyWithSuccess
-    model.dialog.addCompany = i18nGateway.get("company.dialog.addCompany");
-    model.dialog.close = i18nGateway.get("company.dialog.close");
-    model.dialog.submit = i18nGateway.get("company.dialog.submit");
-    model.dialog.msgAddCompanyWithSuccess = i18nGateway.get("company.dialog.msgAddCompanyWithSuccess");
-    model.dialog.msgAddCompanyWithFailure = i18nGateway.get("company.dialog.msgAddCompanyWithFailure");
-    model.dialog.msgAddCompanyWithSuccess = i18nGateway.get("company.dialog.msgAddCompanyWithSuccess");
-    model.dialog.msgAddCompanyWithFailure = i18nGateway.get("company.dialog.msgAddCompanyWithFailure");
-    model.dialog.showAddCompanyFailureMessage = state.dialog.showAddCompanyFailureMessage;
-    model.dialog.showAddCompanySuccessMessage = state.dialog.showAddCompanySuccessMessage;
-    model.dialog.openAddCompanyDialog = state.dialog.openAddCompanyDialog;
-
-    // delete company dialog
-    model.dialog.openDeleteDialog = state.dialog.openDeleteDialog;
-    model.dialog.msgDeleteCompanyWithFailure = i18nGateway.get("company.dialog.msgDeleteCompanyWithFailure");
-    model.dialog.msgDeleteCompanyWithSuccess = i18nGateway.get("company.dialog.msgDeleteCompanyWithSuccess");
-    model.dialog.deleteCompany = i18nGateway.get("company.dialog.deleteCompany");
-    model.dialog.deleteTipInfo = i18nGateway.get("company.dialog.deleteTipInfo");
-    model.dialog.msgDeleteCompanyWithFailure = i18nGateway.get("company.dialog.msgDeleteCompanyWithFailure");
-    model.dialog.msgDeleteCompanyWithSuccess = i18nGateway.get("company.dialog.msgDeleteCompanyWithSuccess");
-    model.dialog.deleteCompany = i18nGateway.get("company.dialog.deleteCompany");
-    model.dialog.deleteTipInfo = i18nGateway.get("company.dialog.deleteTipInfo");
-    model.dialog.showDeleteCompanySuccessMessage = state.dialog.showDeleteCompanySuccessMessage;
-    model.dialog.showDeleteCompanyFailureMessage = state.dialog.showDeleteCompanyFailureMessage;
-    model.dialog.currentDeleteCompanyId = state.dialog.currentDeleteCompanyId;
-
-    // modify company dialog
-    model.dialog.openModifyCompanyDialog = state.dialog.openModifyCompanyDialog;
-    model.dialog.msgModifyCompanyWithFailure = i18nGateway.get("company.dialog.msgModifyCompanyWithFailure");
-    model.dialog.msgModifyCompanyWithSuccess = i18nGateway.get("company.dialog.msgModifyCompanyWithSuccess");
-    model.dialog.modifyCompanyTitle = i18nGateway.get("company.dialog.modifyCompanyTitle");
-    model.dialog.openModifyCompanyDialog = state.dialog.openModifyCompanyDialog;
-    model.dialog.msgModifyCompanyWithFailure = i18nGateway.get("company.dialog.msgModifyCompanyWithFailure");
-    model.dialog.msgModifyCompanyWithSuccess = i18nGateway.get("company.dialog.msgModifyCompanyWithSuccess");
-    model.dialog.modifyCompanyTitle = i18nGateway.get("company.dialog.modifyCompanyTitle");
-    model.dialog.showModifyCompanySuccessMessage = state.dialog.showModifyCompanySuccessMessage;
-    model.dialog.showModifyCompanyFailureMessage = state.dialog.showModifyCompanyFailureMessage;
-
-    // search company
-    model.searchCompaniesWasSuccess = state.searchCompaniesWasSuccess;
-    model.searchCompaniesWasFailed = state.searchCompaniesWasFailed;
-
-    // CompanyTableColName
-    model.companyTableColName.agentCompanyId = i18nGateway.get("company.tableName.agentCompanyId");
-    model.companyTableColName.parentCompanyId = i18nGateway.get("company.tableName.parentCompanyId");
-    model.companyTableColName.alias = i18nGateway.get("company.tableName.alias");
-    model.companyTableColName.type = i18nGateway.get("company.tableName.type");
-    model.companyTableColName.customerId = i18nGateway.get("company.tableName.customerId");
-    model.companyTableColName.operate = i18nGateway.get("company.tableName.operate");
-
-    model.companiesNotFiltered = this.toListModel(state.companies, state.companies, i18nGateway);
-    model.companiesFiltered = this.toListModel(state.companiesFiltered, state.companies, i18nGateway);
-
-    model.filterAgentId = state.filterAgentId;
-
-    model.formErrors = state.formErrors;
   }
 
-  // update companies
-  private static toListModel(
+  private static addFilter(state: CompanyState, model: CompanyViewModel, i18nGateway: I18nGateway, router: Router) {
+    model.showLoadingIndicator = state.isLoading;
+    model.msgFilterTitle = i18nGateway.get("company.label.agentCompanyName");
+    model.msgChooseAllFilter = i18nGateway.get("company.label.chooseAllLabel");
+    model.filterAgentId = state.filterAgentId;
+    model.unfilteredCompanies = this.companiesToModels(state.companies, i18nGateway, router);
+    model.showFilterErrorMessage = state.companyFilteredWithFailure;
+    model.msgFilterErrorMessage = i18nGateway.get("company.label.serverErrorInfo");
+  }
+
+  private static addCreateCompanyButton(state: CompanyState, model: CompanyViewModel, i18nGateway: I18nGateway) {
+    model.msgCreateCompanyAction = i18nGateway.get("company.btn.add");
+  }
+
+  private static addCompaniesTable(
+    state: CompanyState,
+    model: CompanyViewModel,
+    i18nGateway: I18nGateway,
+    router: Router
+  ) {
+    model.msgCompanyAlias = i18nGateway.get("company.tableName.alias");
+    model.msgCompanyType = i18nGateway.get("company.tableName.type");
+    model.msgCompanyParent = i18nGateway.get("company.tableName.parentCompanyId");
+    model.msgCompanyAgent = i18nGateway.get("company.tableName.agentCompanyId");
+    model.msgCompanyCustomer = i18nGateway.get("company.tableName.customerId");
+    model.msgCompanyActions = i18nGateway.get("company.tableName.operate");
+    model.msgNoCompanies = i18nGateway.get("noDataLabel");
+    model.filteredCompanies = this.companiesToModels(state.filteredCompanies, i18nGateway, router, state.companies);
+    model.msgCompanyEditAction = i18nGateway.get("company.btn.edit");
+    model.msgCompanyDetailsAction = i18nGateway.get("company.btn.details");
+    model.msgCompanyDeleteAction = i18nGateway.get("company.btn.delete");
+  }
+
+  private static addCompanyDialog(state: CompanyState, model: CompanyViewModel, i18nGateway: I18nGateway) {
+    model.showCompanyDialog = state.companyDialogOpen;
+
+    if (state.companyEditId !== undefined) {
+      model.msgCompanyDialog = i18nGateway.get("company.dialog.modifyCompanyTitle");
+      model.msgSaveSuccessMessage = i18nGateway.get("company.dialog.msgModifyCompanyWithSuccess");
+      model.msgSaveErrorMessage = i18nGateway.get("company.dialog.msgModifyCompanyWithFailure");
+    } else {
+      model.msgCompanyDialog = i18nGateway.get("company.dialog.addCompany");
+      model.msgSaveSuccessMessage = i18nGateway.get("company.dialog.msgAddCompanyWithSuccess");
+      model.msgSaveErrorMessage = i18nGateway.get("company.dialog.msgAddCompanyWithFailure");
+    }
+
+    model.showSaveSuccessMessage = state.companyCreatedWithSuccess || state.companyUpdatedWithSuccess;
+    model.showSaveErrorMessage = state.companyCreatedWithFailure || state.companyUpdatedWithFailure;
+
+    model.msgCompanyTypeCustomer = i18nGateway.get("company.label.customer");
+    model.msgCompanyTypeManufacturer = i18nGateway.get("company.label.manufacturer");
+    model.msgCompanyTypeTrader = i18nGateway.get("company.label.trader");
+    model.msgCompanyTypeSubsidiary = i18nGateway.get("company.label.subsidiary");
+
+    model.companyInput = new CompanyInputModel(state.companyInput);
+
+    model.msgCompanySaveAction = i18nGateway.get("company.dialog.submit");
+
+    model.formErrors = ValidationUtil.validationErrorsToObject(state.companyInput.validationErrors, i18nGateway);
+  }
+
+  private static addDeleteDialog(state: CompanyState, model: CompanyViewModel, i18nGateway: I18nGateway) {
+    model.showDeleteDialog = state.openDeleteDialog;
+    model.msgDeleteCompany = i18nGateway.get("company.dialog.deleteCompany");
+    model.msgDeleteCompanyText = i18nGateway.get("company.dialog.deleteTipInfo");
+    model.msgDeleteAction = i18nGateway.get("company.dialog.submit");
+
+    model.showDeleteSuccessMessage = state.companyDeletedWithSuccess;
+    model.msgDeleteSuccessMessage = i18nGateway.get("company.dialog.msgDeleteCompanyWithSuccess");
+    model.showDeleteErrorMessage = state.companyDeletedWithFailure;
+    model.msgDeleteErrorMessage = i18nGateway.get("company.dialog.msgDeleteCompanyWithFailure");
+  }
+
+  private static companiesToModels(
     companies: Company[],
-    allCompanies: Company[],
-    i18nGateway: I18nGateway
+    i18nGateway: I18nGateway,
+    router: Router,
+    unfilteredCompanies?: Company[]
   ): CompanyListModel[] {
     return companies.map(
       (c) =>
         new CompanyListModel({
           id: c.id,
           alias: c.alias,
-          type: this.getCompanyTypeTranslated(c.type, i18nGateway),
+          type: this.translateCompanyType(c.type, i18nGateway),
           parentCompanyId: c.parentCompanyId,
-          parentCompanyName: this.getNameOfCompany(c.parentCompanyId, allCompanies, "N/A"),
+          parentCompanyName: this.getNameOfCompany(c.parentCompanyId, unfilteredCompanies || companies),
           agentCompanyId: c.agentCompanyId,
-          agentCompanyName: this.getNameOfCompany(c.agentCompanyId, allCompanies, "N/A"),
+          agentCompanyName: this.getNameOfCompany(c.agentCompanyId, unfilteredCompanies || companies),
           customerId: c.customerId,
+          link: c.id ? router.getFullUriOfRouteByName("users", undefined, new Map([["id", c.id.toString()]])) : "",
         })
     );
   }
 
-  private static getNameOfCompany(id: number | null, companies: Company[], fallback: string): string {
+  private static getNameOfCompany(id: number | null, companies: Company[], fallback: string = "-"): string {
     for (const company of companies) {
       if (company.id === id) {
         return company.alias;
@@ -176,7 +146,7 @@ export default class CompanyModelAssembler {
     return fallback;
   }
 
-  private static getCompanyTypeTranslated(type: string, i18nGateway: I18nGateway): string {
+  private static translateCompanyType(type: string, i18nGateway: I18nGateway): string {
     switch (type) {
       case CompanyType.CUSTOMER:
         return i18nGateway.get("company.label.customer");

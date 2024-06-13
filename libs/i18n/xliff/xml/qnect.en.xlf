@@ -183,7 +183,7 @@
     </unit>
     <unit id="company.dialog.deleteTipInfo">
       <segment>
-        <source>Are you sute you want to delete this company?</source>
+        <source>Do you want to delete this company?</source>
       </segment>
     </unit>
     <unit id="company.dialog.modifyCompanyTitle">
@@ -193,22 +193,22 @@
     </unit>
     <unit id="company.dialog.msgAddCompanyWithFailure">
       <segment>
-        <source>Failed to add company</source>
+        <source>Failed to add company.</source>
       </segment>
     </unit>
     <unit id="company.dialog.msgAddCompanyWithSuccess">
       <segment>
-        <source>Success to add company</source>
+        <source>Successfully added company.</source>
       </segment>
     </unit>
     <unit id="company.dialog.msgDeleteCompanyWithFailure">
       <segment>
-        <source>Failed to delete company</source>
+        <source>Failed to delete company.</source>
       </segment>
     </unit>
     <unit id="company.dialog.msgDeleteCompanyWithSuccess">
       <segment>
-        <source>Success to delete company</source>
+        <source>Successfully deleted company.</source>
       </segment>
     </unit>
     <unit id="company.dialog.msgModifyCompanyWithFailure">
@@ -268,7 +268,7 @@
     </unit>
     <unit id="company.label.serverErrorInfo">
       <segment>
-        <source>Server Internal Error</source>
+        <source>Internal server error</source>
       </segment>
     </unit>
     <unit id="company.label.subsidiary">

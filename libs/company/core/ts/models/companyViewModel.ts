@@ -1,48 +1,54 @@
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
-import FormErrors from "../../../../common/entities/ts/formError";
-import CompanyTableColName from "../entities/companyTableColName";
-import Dialog from "../entities/dialog";
-import FormDatas from "../entities/formDatas";
-import LabelInfo from "../entities/labelInfo";
-import TableAction from "../entities/tableAction";
+import Dictionary from "qnect-sdk-web/lib/common/core/ts/interfaces/dictionary";
+import CompanyInputModel from "./companyInputModel";
 import CompanyListModel from "./companyListModel";
 
-export default class CompanyModel {
-  public username: string = "";
-  public password: string = "";
-
+export default class CompanyViewModel {
+  public msgTitle: string = "";
   public breadcrumb: Breadcrumb[] = [];
 
-  public moduleName: string = "";
+  public unfilteredCompanies: CompanyListModel[] = [];
+  public filteredCompanies: CompanyListModel[] = [];
+  public msgFilterTitle: string = "";
+  public msgChooseAllFilter: string = "";
+  public filterAgentId: number | undefined;
+  public msgCreateCompanyAction: string = "";
+  public msgCompanyAlias: string = "";
+  public msgCompanyType: string = "";
+  public msgCompanyParent: string = "";
+  public msgCompanyAgent: string = "";
+  public msgCompanyCustomer: string = "";
+  public msgCompanyActions: string = "";
+  public msgNoCompanies: string = "";
+  public msgCompanyEditAction: string = "";
+  public msgCompanyDetailsAction: string = "";
+  public msgCompanyDeleteAction: string = "";
+  public showFilterErrorMessage: boolean = false;
+  public msgFilterErrorMessage: string = "";
+  public showDeleteDialog: boolean = false;
+  public msgDeleteCompany: string = "";
+  public msgDeleteCompanyText: string = "";
+  public showDeleteSuccessMessage: boolean = false;
+  public msgDeleteSuccessMessage: string = "";
+  public showDeleteErrorMessage: boolean = false;
+  public msgDeleteErrorMessage: string = "";
+  public msgDeleteAction: string = "";
+  public showCompanyDialog: boolean = false;
+  public msgCompanyDialog: string = "";
+  public msgSaveSuccessMessage: string = "";
+  public msgSaveErrorMessage: string = "";
+  public showSaveSuccessMessage: boolean = false;
+  public showSaveErrorMessage: boolean = false;
+  public msgCompanyTypeCustomer: string = "";
+  public msgCompanyTypeManufacturer: string = "";
+  public msgCompanyTypeTrader: string = "";
+  public msgCompanyTypeSubsidiary: string = "";
+  public companyInput: CompanyInputModel = new CompanyInputModel();
+  public msgCompanySaveAction: string = "";
+  public formErrors: Dictionary<string> = {};
+  public showLoadingIndicator: boolean = false;
 
-  public msg: string = "";
-
-  public companiesNotFiltered: CompanyListModel[] = [];
-  public companiesFiltered: CompanyListModel[] = [];
-
-  public filterAgentId: number | undefined = undefined;
-
-  public formErrors: FormErrors = {};
-
-  public showSearch: boolean = true;
-
-  public searchCompaniesWasSuccess: boolean = false;
-
-  public searchCompaniesWasFailed: boolean = false;
-
-  public isLoading: boolean = false;
-
-  public labelInfo: LabelInfo = new LabelInfo();
-
-  public tableAction: TableAction = new TableAction();
-
-  public dialog: Dialog = new Dialog();
-
-  public formData: FormDatas = new FormDatas();
-
-  public companyTableColName: CompanyTableColName = new CompanyTableColName();
-
-  public constructor(init?: Partial<CompanyModel>) {
+  public constructor(init?: Partial<CompanyViewModel>) {
     Object.assign(this, init);
   }
 }

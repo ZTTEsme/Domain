@@ -7,6 +7,7 @@ export default class CompanyListModel {
   public agentCompanyId: number | null = null;
   public agentCompanyName: string = "";
   public customerId: string = "";
+  public link: string = "";
 
   public constructor(init?: Partial<CompanyListModel>) {
     Object.assign(this, init);

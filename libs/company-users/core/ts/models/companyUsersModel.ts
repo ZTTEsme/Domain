@@ -1,7 +1,6 @@
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import CompanyUser from "qnect-sdk-web/lib/company/core/ts/entities/companyUser";
-import FormErrors from "../../../../common/entities/ts/formError";
 import AddUserFormData from "../entities/addUserFormData";
 import Dialog from "../entities/dialog";
 import LabelInfo from "../entities/labelInfo";
@@ -24,7 +23,7 @@ export default class CompanyUsersModel {
 
   public dialog: Dialog = new Dialog();
 
-  public validAddUserFormErrors: FormErrors = {};
+  // public validAddUserFormErrors: FormErrors = {};
 
   public addUserFormData: AddUserFormData = new AddUserFormData();
 

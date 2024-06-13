@@ -1,7 +1,5 @@
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import CompanyUser from "qnect-sdk-web/lib/company/core/ts/entities/companyUser";
-import FormErrors from "../../../../common/entities/ts/formError";
-import ValidationError from "../../../../common/entities/ts/validationError";
 import AddUserFormData from "../entities/addUserFormData";
 import Dialog from "../entities/dialog";
 import UserTableColName from "../entities/userTableColName";
@@ -23,6 +21,6 @@ export default class CompanyUsersState {
 
   // add user
   public addUserFormData: AddUserFormData = new AddUserFormData();
-  public validAddCompanyUserErrors: ValidationError[] = [];
-  public validAddCompanyUserFormErrors: FormErrors = {};
+  // public validAddCompanyUserErrors: ValidationError[] = [];
+  // public validAddCompanyUserFormErrors: FormErrors = {};
 }

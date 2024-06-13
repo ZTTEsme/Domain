@@ -56,7 +56,7 @@ export default class CompanyUsersAssembler {
     state.dialog.msgAddUserWithFailure = i18nGateway.get("companyUser.dialog.msgAddUserWithFailure");
     state.dialog.addUserDialogTitle = i18nGateway.get("companyUser.dialog.addUserDialogTitle");
     state.dialog.submit = i18nGateway.get("companyUser.dialog.submit");
-    model.validAddUserFormErrors = state.validAddCompanyUserFormErrors;
+    // model.validAddUserFormErrors = state.validAddCompanyUserFormErrors;
     model.addUserFormData = state.addUserFormData;
 
     // delete user

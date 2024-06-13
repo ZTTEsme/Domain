@@ -3,21 +3,20 @@ import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
 import CompanyWithUsers from "qnect-sdk-web/lib/company/core/ts/entities/companyWithUsers";
 import CompanyGateway from "qnect-sdk-web/lib/company/core/ts/gateways/companyGateway";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
-import CommonUtils from "../../../../common/utils/ts/commonUtils";
 import CompanyUsersAssembler from "../assemblers/companyUsersAssembler";
 import AddUserFormData from "../entities/addUserFormData";
 import CompanyUsersPresenter from "./companyUsersPresenter";
 import CompanyUsersState from "./companyUsersState";
 
 export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersPresenter> {
-  public validationRules: Record<string, ValidationRule[]> = {
-    email: [
-      {
-        validator: (value: string): boolean => value.length > 0,
-        message: this.i18nGateway.get("companyUser.valid.email"),
-      },
-    ],
-  };
+  // public validationRules: Record<string, ValidationRule[]> = {
+  //   email: [
+  //     {
+  //       validator: (value: string): boolean => value.length > 0,
+  //       message: this.i18nGateway.get("companyUser.valid.email"),
+  //     },
+  //   ],
+  // };
 
   private presenter: CompanyUsersPresenter | null = null;
   private readonly state: CompanyUsersState = new CompanyUsersState();
@@ -80,7 +79,7 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
   }
 
   public openAddUserDialog(): void {
-    this.state.validAddCompanyUserFormErrors = {};
+    // this.state.validAddCompanyUserFormErrors = {};
     this.state.dialog.showAddUserSuccessMessage = false;
     this.state.dialog.showAddUserFailureMessage = false;
     this.state.dialog.openAddUserDialog = true;
@@ -95,33 +94,33 @@ export default class CompanyUsersInteractor extends ViewInteractor<CompanyUsersP
   public async addUserToCompany(addUserFormData: AddUserFormData): Promise<void> {
     this.state.addUserFormData = addUserFormData;
 
-    this.state.validAddCompanyUserFormErrors = CommonUtils.validateForm(
-      this.state.addUserFormData,
-      this.validationRules,
-      this.state.validAddCompanyUserErrors,
-      this.state.validAddCompanyUserFormErrors
-    );
+    // this.state.validAddCompanyUserFormErrors = CommonUtils.validateForm(
+    //   this.state.addUserFormData,
+    //   this.validationRules,
+    //   this.state.validAddCompanyUserErrors,
+    //   this.state.validAddCompanyUserFormErrors
+    // );
 
-    if (CommonUtils.isObjectEmpty(this.state.validAddCompanyUserFormErrors)) {
-      try {
-        await this.companyGateway.inviteUserToCompany(
-          Number(this.state.selectedCompanyId),
-          this.state.addUserFormData.email,
-          this.state.addUserFormData.admin
-        );
+    // if (CommonUtils.isObjectEmpty(this.state.validAddCompanyUserFormErrors)) {
+    //   try {
+    //     await this.companyGateway.inviteUserToCompany(
+    //       Number(this.state.selectedCompanyId),
+    //       this.state.addUserFormData.email,
+    //       this.state.addUserFormData.admin
+    //     );
 
-        this.state.dialog.showAddUserFailureMessage = false;
-        this.state.dialog.showAddUserSuccessMessage = true;
-        const company: CompanyWithUsers = await this.companyGateway.getCompany(Number(this.state.selectedCompanyId));
-        this.state.users = company.users;
-        this.state.addUserFormData = new AddUserFormData();
-      } catch (error) {
-        this.state.dialog.showAddUserFailureMessage = true;
-        this.state.dialog.showAddUserSuccessMessage = false;
-      } finally {
-        this.state.isLoading = false;
-      }
-    }
+    //     this.state.dialog.showAddUserFailureMessage = false;
+    //     this.state.dialog.showAddUserSuccessMessage = true;
+    //     const company: CompanyWithUsers = await this.companyGateway.getCompany(Number(this.state.selectedCompanyId));
+    //     this.state.users = company.users;
+    //     this.state.addUserFormData = new AddUserFormData();
+    //   } catch (error) {
+    //     this.state.dialog.showAddUserFailureMessage = true;
+    //     this.state.dialog.showAddUserSuccessMessage = false;
+    //   } finally {
+    //     this.state.isLoading = false;
+    //   }
+    // }
 
     this.updateView();
   }

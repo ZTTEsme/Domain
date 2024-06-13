@@ -1,38 +1,28 @@
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
-import FormErrors from "../../../../common/entities/ts/formError";
-import ValidationError from "../../../../common/entities/ts/validationError";
-import CompanyAddState from "../entities/companyAddState";
-import Dialog from "../entities/dialog";
+import CompanyInputModel from "../models/companyInputModel";
 
 export default class CompanyState {
   public companies: Company[] = [];
-  public companiesFiltered: Company[] = [];
+  public filteredCompanies: Company[] = [];
 
-  public filterAgentId: number | undefined = undefined;
+  public filterAgentId: number | undefined;
 
   public isLoading: boolean = false;
 
-  public showSearch: boolean = true;
+  public companyInput: CompanyInputModel = new CompanyInputModel();
 
-  public type: string = "";
+  public companyFilteredWithSuccess: boolean = false;
+  public companyFilteredWithFailure: boolean = false;
 
-  public alias: string = "";
-  public customerId: string = "";
+  public companyEditId: number | undefined;
+  public companyDialogOpen: boolean = false;
+  public companyCreatedWithFailure: boolean = false;
+  public companyCreatedWithSuccess: boolean = false;
+  public companyUpdatedWithFailure: boolean = false;
+  public companyUpdatedWithSuccess: boolean = false;
 
-  public validationErrors: ValidationError[] = [];
-  public formErrors: FormErrors = {};
-
-  public companyAddState: CompanyAddState = new CompanyAddState();
-
-  public dialog: Dialog = new Dialog();
-
-  public searchCompaniesWasSuccess: boolean = false;
-  public searchCompaniesWasFailed: boolean = false;
-
-  public resetCompanyAddInputState(): void {
-    this.companyAddState.type = "";
-    this.companyAddState.agentCompanyId = null;
-    this.companyAddState.alias = "";
-    this.companyAddState.customerId = "";
-  }
+  public toDeleteCompanyId: string | undefined;
+  public openDeleteDialog: boolean = false;
+  public companyDeletedWithSuccess: boolean = false;
+  public companyDeletedWithFailure: boolean = false;
 }
