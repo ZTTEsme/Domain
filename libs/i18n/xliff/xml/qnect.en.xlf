@@ -131,26 +131,6 @@
         <source>Modify</source>
       </segment>
     </unit>
-    <unit id="company.btn.add">
-      <segment>
-        <source>Add</source>
-      </segment>
-    </unit>
-    <unit id="company.btn.delete">
-      <segment>
-        <source>Delete</source>
-      </segment>
-    </unit>
-    <unit id="company.btn.edit">
-      <segment>
-        <source>Edit</source>
-      </segment>
-    </unit>
-    <unit id="company.btn.details">
-      <segment>
-        <source>Details</source>
-      </segment>
-    </unit>
     <unit id="company.add.valid.alias">
       <segment>
         <source>Company Name is required</source>
@@ -164,6 +144,26 @@
     <unit id="company.add.valid.type">
       <segment>
         <source>Type is required</source>
+      </segment>
+    </unit>
+    <unit id="company.btn.add">
+      <segment>
+        <source>Add</source>
+      </segment>
+    </unit>
+    <unit id="company.btn.delete">
+      <segment>
+        <source>Remove</source>
+      </segment>
+    </unit>
+    <unit id="company.btn.details">
+      <segment>
+        <source>Details</source>
+      </segment>
+    </unit>
+    <unit id="company.btn.edit">
+      <segment>
+        <source>Edit</source>
       </segment>
     </unit>
     <unit id="company.dialog.addCompany">
@@ -408,7 +408,7 @@
     </unit>
     <unit id="companyUser.dialog.deleteUserDialogTitle">
       <segment>
-        <source>Delete User</source>
+        <source>Remove user</source>
       </segment>
     </unit>
     <unit id="companyUser.dialog.deleteUserTipInfo">
@@ -428,12 +428,12 @@
     </unit>
     <unit id="companyUser.dialog.msgDeleteUserWithFailure">
       <segment>
-        <source>Failed to delete the user.</source>
+        <source>Failed to remove the user.</source>
       </segment>
     </unit>
     <unit id="companyUser.dialog.msgDeleteUserWithSuccess">
       <segment>
-        <source>Successfully deleted the user.</source>
+        <source>Successfully removed the user.</source>
       </segment>
     </unit>
     <unit id="companyUser.dialog.submit">
@@ -448,7 +448,7 @@
     </unit>
     <unit id="companyUser.label.serverErrorInfo">
       <segment>
-        <source>Server Internal Error</source>
+        <source>Internal server error</source>
       </segment>
     </unit>
     <unit id="companyUser.label.userTypeAdmin">
@@ -481,6 +481,16 @@
         <source>Administrator</source>
       </segment>
     </unit>
+    <unit id="companyUser.table.isAdminFalse">
+      <segment>
+        <source>User is not administrator.</source>
+      </segment>
+    </unit>
+    <unit id="companyUser.table.isAdminTrue">
+      <segment>
+        <source>User is administrator.</source>
+      </segment>
+    </unit>
     <unit id="companyUser.table.operate">
       <segment>
         <source>Actions</source>
@@ -493,7 +503,7 @@
     </unit>
     <unit id="companyUser.valid.email">
       <segment>
-        <source>Email is required</source>
+        <source>Must be a valid email address.</source>
       </segment>
     </unit>
     <unit id="companyUser.valid.role">

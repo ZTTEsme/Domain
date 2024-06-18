@@ -14,7 +14,7 @@ export default class CompanyModelAssembler {
   public static fromState(state: CompanyState, router: Router, i18nGateway: I18nGateway): CompanyViewModel {
     const model: CompanyViewModel = new CompanyViewModel();
 
-    this.addBreadcrumb(state, model, i18nGateway, router);
+    this.addBreadcrumb(model, i18nGateway, router);
     this.addFilter(state, model, i18nGateway, router);
     this.addCreateCompanyButton(state, model, i18nGateway);
     this.addCompaniesTable(state, model, i18nGateway, router);
@@ -24,17 +24,8 @@ export default class CompanyModelAssembler {
     return model;
   }
 
-  public static fromStateWithOutValidationFeedBack(
-    state: CompanyState,
-    router: Router,
-    i18nGateway: I18nGateway
-  ): CompanyViewModel {
-    return this.fromState(state, router, i18nGateway);
-  }
-
-  private static addBreadcrumb(state: CompanyState, model: CompanyViewModel, i18nGateway: I18nGateway, router: Router) {
+  private static addBreadcrumb(model: CompanyViewModel, i18nGateway: I18nGateway, router: Router) {
     model.msgTitle = i18nGateway.get("company.title");
-
     model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(
       router,
       undefined,

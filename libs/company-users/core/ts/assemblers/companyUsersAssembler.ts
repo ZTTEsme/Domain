@@ -1,79 +1,112 @@
 import Router from "cloos-vue-router/lib/core/router";
 import Breadcrumb from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumb";
 import BreadcrumbUtil from "qnect-sdk-web/lib/breadcrumb/core/ts/breadcrumbUtil";
+import ValidationUtil from "qnect-sdk-web/lib/common/core/ts/validationUtil";
+import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
+import CompanyUser from "qnect-sdk-web/lib/company/core/ts/entities/companyUser";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
+import CompanyListModel from "../../../../company/core/ts/models/companyListModel";
+import CompanyUserModel from "../../../../company/core/ts/models/companyUserModel";
+import UserInputModel from "../../../../company/core/ts/models/userInputModel";
 import CompanyUsersState from "../interactors/companyUsersState";
 import CompanyUsersModel from "../models/companyUsersModel";
 
 export default class CompanyUsersAssembler {
   public static fromState(state: CompanyUsersState, router: Router, i18nGateway: I18nGateway): CompanyUsersModel {
     const model: CompanyUsersModel = new CompanyUsersModel();
+
+    this.addBreadcrumb(model, i18nGateway, router);
+    this.addFilter(state, model, i18nGateway);
+    this.addInviteUserAction(model, i18nGateway);
+    this.addUsersTable(state, model, i18nGateway, router);
+    this.addUserDialog(state, model, i18nGateway);
+    this.addRemoveUserDialog(state, model, i18nGateway);
+
+    return model;
+  }
+
+  private static addBreadcrumb(model: CompanyUsersModel, i18nGateway: I18nGateway, router: Router) {
+    model.msgTitle = i18nGateway.get("users.title");
     model.breadcrumb = BreadcrumbUtil.getBreadcrumbFromCurrentRoute(
       router,
       undefined,
       new Breadcrumb({ name: i18nGateway.get("common.home"), link: "/" })
     );
-    this.updateCompanyUserModel(model, state, i18nGateway);
-
-    return model;
   }
 
-  private static updateCompanyUserModel(
-    model: CompanyUsersModel,
-    state: CompanyUsersState,
-    i18nGateway: I18nGateway
-  ): void {
-    model.isLoading = state.isLoading;
-
-    model.companies = state.companies;
-    model.showCompaniesMenue = model.companies.length > 1;
+  private static addFilter(state: CompanyUsersState, model: CompanyUsersModel, i18nGateway: I18nGateway) {
+    model.showLoadingIndicator = state.isLoading;
+    model.msgFilterTitle = i18nGateway.get("model.labelInfo.companyLabel");
+    model.msgNoSelectedCompany = i18nGateway.get("model.labelInfo.selectTip");
     model.selectedCompanyId = state.selectedCompanyId;
-    // label
-    model.labelInfo.title = i18nGateway.get("users.title");
-    model.labelInfo.companyLabel = i18nGateway.get("model.labelInfo.companyLabel");
-    model.labelInfo.selectTip = i18nGateway.get("model.labelInfo.selectTip");
-    model.labelInfo.emailLabel = i18nGateway.get("companyUser.label.email");
-    model.labelInfo.userTypeAdmin = i18nGateway.get("companyUser.label.userTypeAdmin");
-    model.labelInfo.userTypeAdminExplanation = i18nGateway.get("companyUser.label.userTypeAdminExplanation");
-    model.labelInfo.serverErrorInfo = i18nGateway.get("companyUser.label.serverErrorInfo");
-    model.labelInfo.noDataLabel = i18nGateway.get("noDataLabel");
-
-    model.labelInfo.addLabel = i18nGateway.get("company.btn.add");
-    model.labelInfo.deleteLabel = i18nGateway.get("company.btn.delete");
-    model.labelInfo.editLabel = i18nGateway.get("company.btn.edit");
-
-    // data
-    model.users = state.users;
-
-    // table colName
-    model.userTableColName.alias = i18nGateway.get("companyUser.table.alias");
-    model.userTableColName.email = i18nGateway.get("companyUser.table.email");
-    model.userTableColName.isAdmin = i18nGateway.get("companyUser.table.isAdmin");
-    model.userTableColName.operate = i18nGateway.get("companyUser.table.operate");
-
-    // add user
-    state.dialog.msgAddUserWithSuccess = i18nGateway.get("companyUser.dialog.msgAddUserWithSuccess");
-    state.dialog.msgAddUserWithFailure = i18nGateway.get("companyUser.dialog.msgAddUserWithFailure");
-    state.dialog.addUserDialogTitle = i18nGateway.get("companyUser.dialog.addUserDialogTitle");
-    state.dialog.submit = i18nGateway.get("companyUser.dialog.submit");
-    // model.validAddUserFormErrors = state.validAddCompanyUserFormErrors;
-    model.addUserFormData = state.addUserFormData;
-
-    // delete user
-    state.dialog.deleteUserDialogTitle = i18nGateway.get("companyUser.dialog.deleteUserDialogTitle");
-    state.dialog.deleteUserTipInfo = i18nGateway.get("companyUser.dialog.deleteUserTipInfo");
-    state.dialog.msgDeleteUserWithFailure = i18nGateway.get("companyUser.dialog.msgDeleteUserWithFailure");
-    state.dialog.msgDeleteUserWithSuccess = i18nGateway.get("companyUser.dialog.msgDeleteUserWithSuccess");
-
-    model.dialog = state.dialog;
-    this.updateCompanyUserInfos(model);
+    model.companies = this.companiesToModels(state.companies);
+    model.showSelectCompanyErrorMessage = state.companyLoadedWithFailure;
+    model.msgSelectCompanyErrorMessage = i18nGateway.get("companyUser.label.serverErrorInfo");
   }
 
-  private static updateCompanyUserInfos(model: CompanyUsersModel): void {
-    model.users.forEach((user) => {
-      if (user.alias === null) {
-        user.alias = "N/A";
-      }
+  private static addInviteUserAction(model: CompanyUsersModel, i18nGateway: I18nGateway) {
+    model.msgInviteUserAction = i18nGateway.get("company.btn.add");
+  }
+
+  private static addUsersTable(
+    state: CompanyUsersState,
+    model: CompanyUsersModel,
+    i18nGateway: I18nGateway,
+    router: Router
+  ) {
+    model.msgUserAlias = i18nGateway.get("companyUser.table.alias");
+    model.msgUserEmail = i18nGateway.get("companyUser.table.email");
+    model.msgUserIsAdmin = i18nGateway.get("companyUser.table.isAdmin");
+    model.msgUserActions = i18nGateway.get("companyUser.table.operate");
+    model.msgUserIsAdminTrue = i18nGateway.get("companyUser.table.isAdminTrue");
+    model.msgUserIsAdminFalse = i18nGateway.get("companyUser.table.isAdminFalse");
+    model.msgNoUsers = i18nGateway.get("noDataLabel");
+    model.users = this.usersToModels(state.users, router);
+    model.msgUserEditAction = i18nGateway.get("company.btn.edit");
+    model.msgUserDeleteAction = i18nGateway.get("company.btn.delete");
+  }
+
+  private static addUserDialog(state: CompanyUsersState, model: CompanyUsersModel, i18nGateway: I18nGateway) {
+    model.showUserDialog = state.addUserDialogOpen;
+    model.msgUserDialog = i18nGateway.get("companyUser.dialog.addUserDialogTitle");
+    model.msgUserIsAdminExplanation = i18nGateway.get("companyUser.label.userTypeAdminExplanation");
+
+    model.showAddUserSuccessMessage = state.userAddedWithSuccess;
+    model.msgAddUserSuccessMessage = i18nGateway.get("companyUser.dialog.msgAddUserWithSuccess");
+    model.showAddUserErrorMessage = state.userAddedWithFailure;
+    model.msgAddUserErrorMessage = i18nGateway.get("companyUser.dialog.msgAddUserWithFailure");
+
+    model.userInput = new UserInputModel(state.addUserInput);
+    model.msgUserSaveAction = i18nGateway.get("companyUser.dialog.submit");
+    model.formErrors = ValidationUtil.validationErrorsToObject(state.addUserInput.validationErrors, i18nGateway);
+  }
+
+  static addRemoveUserDialog(state: CompanyUsersState, model: CompanyUsersModel, i18nGateway: I18nGateway) {
+    model.showUserRemoveDialog = state.removeUserDialogOpen;
+    model.msgRemoveUserDialog = i18nGateway.get("companyUser.dialog.deleteUserDialogTitle");
+    model.msgRemoveUserDialogText = i18nGateway.get("companyUser.dialog.deleteUserTipInfo");
+
+    model.showRemoveSuccessMessage = state.userRemovedWithSuccess;
+    model.msgRemoveSuccessMessage = i18nGateway.get("companyUser.dialog.msgDeleteUserWithSuccess");
+    model.showRemoveErrorMessage = state.userRemovedWithFailure;
+    model.msgRemoveErrorMessage = i18nGateway.get("companyUser.dialog.msgDeleteUserWithFailure");
+  }
+
+  private static companiesToModels(companies: Company[]): CompanyListModel[] {
+    return companies.map((company) => {
+      return new CompanyListModel({ id: company.id, alias: company.alias });
+    });
+  }
+
+  private static usersToModels(users: CompanyUser[], router: Router): CompanyUserModel[] {
+    return users.map((user) => {
+      return new CompanyUserModel({
+        id: user.id || undefined,
+        alias: user.alias,
+        email: user.email,
+        isAdmin: user.admin,
+        link: user.id ? router.getFullUriOfRouteByName("user-edit", new Map([["identifier", user.id.toString()]])) : "",
+      });
     });
   }
 }

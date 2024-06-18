@@ -1,6 +1,3 @@
-import BreadcrumbComponent from "qnect-sdk-web/lib/breadcrumb/vue/ts/breadcrumbComponent";
-import ModalComponent from "qnect-sdk-web/lib/common/vue/ts/modalComponent";
-import ToastComponent from "qnect-sdk-web/lib/common/vue/ts/toastComponent";
 import { Component, Prop, Vue } from "vue-facing-decorator";
 import CompanyInteractor from "../../core/ts/interactors/companyInteractor";
 import CompanyPresenter from "../../core/ts/interactors/companyPresenter";
@@ -8,11 +5,6 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
 
 @Component({
   name: "CompanyComponent",
-  components: {
-    modal: ModalComponent,
-    toast: ToastComponent,
-    breadcrumb: BreadcrumbComponent,
-  },
   template: `
     <div class="container mt-3">
       <breadcrumb :items="model.breadcrumb" />
@@ -25,10 +17,10 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
 
       <div class="card mb-3">
         <div class="card-body">
-          <label for="agentCompanyId" class="form-label">{{ model.msgFilterTitle }}</label>
+          <label for="filter-agent-company" class="form-label">{{ model.msgFilterTitle }}</label>
           <select
             class="form-select"
-            id="agentCompanyId"
+            id="filter-agent-company"
             v-model="model.filterAgentId"
             @change="interactor.setCompanyFilter(model.filterAgentId)"
           >
@@ -45,11 +37,7 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
       </div>
       <div v-show="!model.showLoadingIndicator" class="card">
         <div class="card-body">
-          <button
-            type="button"
-            class="btn btn-outline-success btn-sm mb-3"
-            @click="() => interactor.openCompanyDialog()"
-          >
+          <button type="button" class="btn btn-primary mb-3" @click="() => interactor.openCompanyDialog()">
             <i class="fa-solid fa-plus me-1"></i>{{ model.msgCreateCompanyAction }}
           </button>
 
@@ -104,10 +92,10 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
         :title="model.msgCompanyDialog"
         :abortFunction="() => interactor.closeCompanyDialog()"
       >
-        <alert :show="model.showSaveSuccessMessage" color="success" icon="fas fa-check">
+        <alert :show="model.showSaveSuccessMessage" color="success" icon="fa-solid fa-check">
           {{ model.msgSaveSuccessMessage }}
         </alert>
-        <alert :show="model.showSaveErrorMessage" color="danger" icon="fas fa-triangle-exclamation">
+        <alert :show="model.showSaveErrorMessage" color="danger" icon="fa-solid fa-triangle-exclamation">
           {{ model.msgSaveErrorMessage }}
         </alert>
 
@@ -200,10 +188,10 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
         :title="model.msgDeleteCompany"
         :abortFunction="() => interactor.closeDeleteDialog()"
       >
-        <alert :show="model.showDeleteSuccessMessage" color="success" icon="fas fa-check">
+        <alert :show="model.showDeleteSuccessMessage" color="success" icon="fa-solid fa-check">
           {{ model.msgDeleteSuccessMessage }}
         </alert>
-        <alert :show="model.showDeleteErrorMessage" color="danger" icon="fas fa-triangle-exclamation">
+        <alert :show="model.showDeleteErrorMessage" color="danger" icon="fa-solid fa-triangle-exclamation">
           {{ model.msgDeleteErrorMessage }}
         </alert>
 

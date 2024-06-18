@@ -1,0 +1,48 @@
+{
+  /*
+   * Filename with uppercase first letter:
+   * ${1:${TM_FILENAME_BASE/^(.{1})/${1:/upcase}/}}
+   */
+  "[QNECT] Class": {
+    "scope": "typescript",
+    "prefix": "class",
+    "body": ["export default class ${1:${TM_FILENAME_BASE/^(.{1})/${1:/upcase}/}} {", "  ", "}"]
+  },
+  "[QNECT] Constructor": {
+    "scope": "typescript",
+    "prefix": "constructor",
+    "body": [
+      "public constructor(init?: Partial<${1:${TM_FILENAME_BASE/^(.{1})/${1:/upcase}/}}>) {",
+      "  Object.assign(this, init);",
+      "}"
+    ]
+  },
+  "[QNECT] Interface": {
+    "scope": "typescript",
+    "prefix": "interface",
+    "body": "export default interface ${1:${TM_FILENAME_BASE/^(.{1})/${1:/upcase}/}} {}"
+  },
+  "[QNECT] Enum": {
+    "scope": "typescript",
+    "prefix": "enum",
+    "body": [
+      "enum ${1:${TM_FILENAME_BASE/^(.{1})/${1:/upcase}/}} {",
+      "  EXAMPLE = \"EXAMPLE\",",
+      "}",
+      "",
+      "export default ${1:${TM_FILENAME_BASE/^(.{1})/${1:/upcase}/}};"
+    ]
+  },
+  "[QNECT] Error": {
+    "scope": "typescript",
+    "prefix": "error",
+    "body": [
+      "export default class ${1:${TM_FILENAME_BASE/^(.{1})/${1:/upcase}/}} extends Error {",
+      "  public constructor(message: string) {",
+      "    super(message);",
+      "    Object.setPrototypeOf(this, ${1:${TM_FILENAME_BASE/^(.{1})/${1:/upcase}/}}.prototype);",
+      "  }",
+      "}"
+    ]
+  }
+}

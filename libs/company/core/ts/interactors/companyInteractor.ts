@@ -26,12 +26,8 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
       await this.loadUnfilteredCompanies();
       await this.loadFilteredCompanies();
     } catch (error) {
-      // do nothing
+      console.warn("Could not load companies:", error);
     }
-  }
-
-  public async onUnload(): Promise<void> {
-    // do nothing
   }
 
   public startPresenting(presenter: CompanyPresenter): void {
@@ -88,7 +84,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
   }
 
   public async saveCompany(companyInput: CompanyInputModel): Promise<void> {
-    this.state.companyInput = companyInput;
+    this.state.companyInput = new CompanyInputModel(companyInput);
     this.state.companyCreatedWithFailure = false;
     this.state.companyCreatedWithSuccess = false;
     this.state.companyUpdatedWithFailure = false;
