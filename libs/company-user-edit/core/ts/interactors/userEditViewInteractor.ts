@@ -16,29 +16,19 @@ import UserEditViewPresenter from "./userEditViewPresenter";
 import UserEditViewState from "./userEditViewState";
 
 export default class UserEditViewInteractor extends ViewInteractor<UserEditViewPresenter> {
-  private presenter: UserEditViewPresenter | null = null;
+  private presenter: UserEditViewPresenter | undefined;
   private state: UserEditViewState;
-  private readonly userGateway: UserGateway;
-  private readonly companyGateway: CompanyGateway;
-  private readonly userPermissionGateway: UserPermissionGateway;
-  private readonly i18nGateway: I18nGateway;
-  private readonly devicesGateway: DevicesGateway;
 
   public constructor(
     router: Router,
-    userGateway: UserGateway,
-    companyGateway: CompanyGateway,
-    userPermissionGateway: UserPermissionGateway,
-    i18nGateway: I18nGateway,
-    devicesGateway: DevicesGateway
+    private readonly userGateway: UserGateway,
+    private readonly companyGateway: CompanyGateway,
+    private readonly userPermissionGateway: UserPermissionGateway,
+    private readonly i18nGateway: I18nGateway,
+    private readonly devicesGateway: DevicesGateway
   ) {
     super(router);
     this.state = new UserEditViewState();
-    this.userGateway = userGateway;
-    this.companyGateway = companyGateway;
-    this.userPermissionGateway = userPermissionGateway;
-    this.i18nGateway = i18nGateway;
-    this.devicesGateway = devicesGateway;
   }
 
   public startPresenting(presenter: UserEditViewPresenter): void {

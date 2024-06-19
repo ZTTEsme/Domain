@@ -15,8 +15,8 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
         {{ model.msgFilterErrorMessage }}
       </toast>
 
-      <div class="card mb-3">
-        <div class="card-body">
+      <div class="row mb-5">
+        <div class="col-12 col-sm-6 col-lg-5 col-xl-4">
           <label for="filter-agent-company" class="form-label">{{ model.msgFilterTitle }}</label>
           <select
             class="form-select"
@@ -30,13 +30,11 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
         </div>
       </div>
 
-      <div v-show="model.showLoadingIndicator" class="card">
-        <div class="card-body text-center">
-          <i class="fa-solid fa-circle-notch fa-spin fs-1"></i>
-        </div>
+      <div v-show="model.showLoadingIndicator" class="text-center">
+        <i class="fa-solid fa-circle-notch fa-spin fs-1"></i>
       </div>
-      <div v-show="!model.showLoadingIndicator" class="card">
-        <div class="card-body">
+      <div v-show="!model.showLoadingIndicator" class="row">
+        <div class="col-12">
           <button type="button" class="btn btn-primary mb-3" @click="() => interactor.openCompanyDialog()">
             <i class="fa-solid fa-plus me-1"></i>{{ model.msgCreateCompanyAction }}
           </button>

@@ -12,17 +12,39 @@ import UserEditViewModel from "../../core/ts/models/userEditViewModel";
     modal: ModalComponent,
   },
   template: `
-    <div class="container home-page mt-3">
+    <div class="container mt-3">
       <breadcrumb :items="model.breadcrumb" />
       <h1 class="h3">{{ model.msgTitle }}</h1>
+
       <div v-show="model.msgNoAccess">
         <p>{{ model.msgNoAccess }}</p>
       </div>
+
+      <toast :show="model.showPakIdUpdateSucceededMsg" color="success">
+        <i class="fa-solid fa-check me-1"></i>
+        <span>{{ model.msgPakIdUpdateSucceeded }}</span>
+      </toast>
+
+      <toast :show="model.showPakIdUpdateFailedMsg" color="danger">
+        <i class="fa-solid fa-check me-1"></i>
+        <span>{{ model.msgPakIdUpdateFailed }}</span>
+      </toast>
+
+      <toast :show="model.showRoleUpdateSucceededMsg" color="success">
+        <i class="fa-solid fa-check me-1"></i>
+        <span>{{ model.msgRoleUpdateSucceeded }}</span>
+      </toast>
+
+      <toast :show="model.showRoleUpdateFailedMsg" color="danger">
+        <i class="fa-solid fa-check me-1"></i>
+        <span>{{ model.msgRoleUpdateFailed }}</span>
+      </toast>
+
       <template v-if="model.showMainContent">
         <div class="mb-3">
-          <div class="container">
-            <div class="row">
-              <div class="col-2 rounded p-3 bg-primary">
+          <div class="row">
+            <div class="col-5 col-sm-4 col-lg-2">
+              <div class="p-3 p-md-4 p-xl-5 rounded bg-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <path
                     fill="#FFF"
@@ -30,168 +52,137 @@ import UserEditViewModel from "../../core/ts/models/userEditViewModel";
                   />
                 </svg>
               </div>
-              <div class="col-10">
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <th scope="row">{{ model.msgFirstName }}</th>
-                      <td>{{ model.firstName }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">{{ model.msgLastName }}</th>
-                      <td>{{ model.lastName }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">{{ model.msgEmail }}</th>
-                      <td>{{ model.email }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            </div>
+            <div class="col-7 col-sm-8 col-md-6 col-xl-4">
+              <ul class="table-list">
+                <li class="table-list__row">
+                  <div class="table-list__cell table-list__cell--header-always">{{ model.msgFirstName }}</div>
+                  <div class="table-list__cell">{{ model.firstName }}</div>
+                </li>
+                <li class="table-list__row">
+                  <div class="table-list__cell table-list__cell--header-always">{{ model.msgLastName }}</div>
+                  <div class="table-list__cell">{{ model.lastName }}</div>
+                </li>
+                <li class="table-list__row">
+                  <div class="table-list__cell table-list__cell--header-always">{{ model.msgEmail }}</div>
+                  <div class="table-list__cell">{{ model.email }}</div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
         <div>
           <h2 class="h4">{{ model.msgCompanies }}</h2>
-          <ul class="list-group mb-3">
-            <li class="list-group-item" v-for="connection in model.companyConnections">
-              <div class="mb-1">
-                <span class="fw-semibold">{{ model.msgCompanyName }}:</span> {{ connection.companyName }}
-              </div>
-              <div class="mb-1">
-                <span class="fw-semibold me-1">{{ model.msgIsAdmin }}:</span>
-                <span v-show="connection.admin"><i class="fa-solid fa-check"></i></span>
-                <span v-show="!connection.admin"><i class="fa-solid fa-xmark"></i></span>
-              </div>
 
-              <div class="d-flex flex-row mb-1">
-                <span class="fw-semibold me-1">{{ model.msgPakId }}:</span>
-                <div>
-                  <span>
-                    <div class="dropdown fw-normal">
-                      <button
-                        class="form-select form-select-sm text-start text-nowrap"
-                        type="button"
-                        data-bs-popper-config='{"strategy":"fixed"}'
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                        aria-expanded="false"
-                      >
-                        {{ connection.pakSummary }}
-                      </button>
-                      <div class="dropdown-menu p-0">
-                        <div class="p-2">
-                          <div class="form-check ps-0" v-show="connection.pakLogins.length === 0">
-                            <label class="form-check-label text-nowrap fst-italic me-2">
-                              {{ model.msgNoPakLoginsFound }}
-                            </label>
-                          </div>
-                          <div class="form-check ps-0" v-show="connection.pakIdSet">
-                            <label class="form-check-label text-nowrap me-2">
-                              {{ model.msgUnassignPakId }}
-                            </label>
-                            <button
-                              type="button"
-                              class="btn btn-outline-primary btn-sm"
-                              @click="() => interactor.assignPakId(connection.companyId, undefined)"
-                            >
-                              {{ model.msgUnassign }}
-                            </button>
-                          </div>
-                          <div class="form-check ps-0" v-for="(pakLogin, pakLoginIndex) in connection.pakLogins">
-                            <label
-                              class="form-check-label text-nowrap me-2"
-                              :for="'company' + connection.companyId + '-pakLogin' + pakLoginIndex"
-                            >
-                              {{ pakLogin.description }}
-                            </label>
-                            <button
-                              type="button"
-                              class="btn btn-outline-primary btn-sm"
-                              :id="'company' + connection.companyId + '-pakLogin' + pakLoginIndex"
-                              @click="() => interactor.assignPakId(connection.companyId, pakLogin.pakId)"
-                            >
-                              {{ model.msgAssign }}
-                            </button>
-                          </div>
-                        </div>
+          <ul class="table-list">
+            <li class="table-list__row table-list__row--header">
+              <div class="table-list__cell">{{ model.msgCompanyName }}</div>
+              <div class="table-list__cell">{{ model.msgIsAdmin }}</div>
+              <div class="table-list__cell">{{ model.msgPakId }}</div>
+              <div class="table-list__cell">{{ model.msgRoles }}</div>
+            </li>
+            <li class="table-list__row" v-for="connection in model.companyConnections">
+              <div class="table-list__cell">{{ connection.companyName }}</div>
+              <div class="table-list__cell">
+                <i class="fa-solid" :class="connection.admin ? 'fa-check' : 'fa-xmark'"></i>
+              </div>
+              <div class="table-list__cell">
+                <div class="dropdown">
+                  <button
+                    class="form-select form-select-sm text-start text-nowrap"
+                    type="button"
+                    data-bs-popper-config='{ "strategy": "fixed" }'
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
+                  >
+                    {{ connection.pakSummary }}
+                  </button>
+                  <div class="dropdown-menu p-0">
+                    <div class="p-2">
+                      <div class="form-check ps-0" v-show="connection.pakLogins.length === 0">
+                        <label class="form-check-label text-nowrap fst-italic me-2">
+                          {{ model.msgNoPakLoginsFound }}
+                        </label>
+                      </div>
+                      <div class="form-check ps-0" v-show="connection.pakIdSet">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary btn-sm me-2"
+                          :id="'company-' + connection.companyId + '-pak-login-unassign'"
+                          @click="() => interactor.assignPakId(connection.companyId, undefined)"
+                        >
+                          {{ model.msgUnassign }}
+                        </button>
+                        <label
+                          class="form-check-label text-nowrap"
+                          :for="'company-' + connection.companyId + '-pak-login-unassign'"
+                        >
+                          {{ model.msgUnassignPakId }}
+                        </label>
+                      </div>
+                      <div class="form-check ps-0" v-for="(pakLogin, pakLoginIndex) in connection.pakLogins">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary btn-sm me-2"
+                          :id="'company-' + connection.companyId + '-pak-login-' + pakLoginIndex"
+                          @click="() => interactor.assignPakId(connection.companyId, pakLogin.pakId)"
+                        >
+                          {{ model.msgAssign }}
+                        </button>
+                        <label
+                          class="form-check-label text-nowrap"
+                          :for="'company-' + connection.companyId + '-pak-login-' + pakLoginIndex"
+                        >
+                          {{ pakLogin.description }}
+                        </label>
                       </div>
                     </div>
-                  </span>
+                  </div>
                 </div>
               </div>
-
-              <div class="d-flex flex-row mb-3">
-                <div>
-                  <span class="fw-semibold me-1">{{ model.msgRoles }}:</span>
-                </div>
-                <div>
-                  <span>
-                    <div class="dropdown fw-normal">
-                      <button
-                        class="form-select form-select-sm text-start text-nowrap"
-                        type="button"
-                        data-bs-popper-config='{"strategy":"fixed"}'
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                        aria-expanded="false"
-                      >
-                        {{ connection.roleSummary }}
-                      </button>
-                      <div class="dropdown-menu p-0">
-                        <div class="p-2">
-                          <div class="form-check ps-0" v-show="connection.roles.length === 0">
-                            <label class="form-check-label text-nowrap fst-italic me-2">
-                              {{ model.msgNoRolesFound }}
-                            </label>
-                          </div>
-                          <div class="form-check" v-for="(role, roleIndex) in connection.roles">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              v-model="role.selected"
-                              @click="() => interactor.toggleRoleAssignment(connection.companyId, role.id)"
-                              :id="'company' + connection.companyId + '-role' + roleIndex"
-                            />
-                            <label
-                              class="form-check-label text-nowrap"
-                              :for="'company' + connection.companyId + '-role' + roleIndex"
-                            >
-                              {{ role.alias }}
-                            </label>
-                          </div>
-                        </div>
+              <div class="table-list__cell">
+                <div class="dropdown">
+                  <button
+                    class="form-select form-select-sm text-start text-nowrap"
+                    type="button"
+                    data-bs-popper-config='{"strategy":"fixed"}'
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
+                  >
+                    {{ connection.roleSummary }}
+                  </button>
+                  <div class="dropdown-menu p-0">
+                    <div class="p-2">
+                      <div class="form-check ps-0" v-show="connection.roles.length === 0">
+                        <label class="form-check-label text-nowrap fst-italic me-2">
+                          {{ model.msgNoRolesFound }}
+                        </label>
+                      </div>
+                      <div class="form-check" v-for="(role, roleIndex) in connection.roles">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          v-model="role.selected"
+                          @click="() => interactor.toggleRoleAssignment(connection.companyId, role.id)"
+                          :id="'company' + connection.companyId + '-role' + roleIndex"
+                        />
+                        <label
+                          class="form-check-label text-nowrap"
+                          :for="'company' + connection.companyId + '-role' + roleIndex"
+                        >
+                          {{ role.alias }}
+                        </label>
                       </div>
                     </div>
-                  </span>
+                  </div>
                 </div>
               </div>
             </li>
           </ul>
         </div>
       </template>
-
-      <section>
-        <toast :show="model.showPakIdUpdateSucceededMsg" color="success">
-          <i class="fa-solid fa-check me-1"></i>
-          <span>{{ model.msgPakIdUpdateSucceeded }}</span>
-        </toast>
-
-        <toast :show="model.showPakIdUpdateFailedMsg" color="danger">
-          <i class="fa-solid fa-check me-1"></i>
-          <span>{{ model.msgPakIdUpdateFailed }}</span>
-        </toast>
-
-        <toast :show="model.showRoleUpdateSucceededMsg" color="success">
-          <i class="fa-solid fa-check me-1"></i>
-          <span>{{ model.msgRoleUpdateSucceeded }}</span>
-        </toast>
-
-        <toast :show="model.showRoleUpdateFailedMsg" color="danger">
-          <i class="fa-solid fa-check me-1"></i>
-          <span>{{ model.msgRoleUpdateFailed }}</span>
-        </toast>
-      </section>
     </div>
   `,
 })

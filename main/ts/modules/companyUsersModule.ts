@@ -70,7 +70,7 @@ export default class CompanyUsersModule implements Module {
     this.router.getRouter().register(
       new Route({
         name: "user-edit",
-        title: this.i18nModule.getI18nGateway().get("companyUser.router.edit.name"),
+        title: this.i18nModule.getI18nGateway().get("common.userEdit"),
         urlPattern: ":identifier",
         parent: this.router.getRouter().getRouteByName("users"),
       }),
