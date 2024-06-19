@@ -14,17 +14,15 @@ import RolesViewModel from "../../core/ts/models/rolesViewModel";
   template: `
     <div class="container home-page mt-3">
       <breadcrumb :items="model.breadcrumb" />
-
-      <div>
-        <h1 class="h3">{{ model.msgTitle }}</h1>
-      </div>
+      <h1>{{ model.msgTitle }}</h1>
 
       <template v-if="model.showMainContent">
-        <div class="card mb-3" v-show="model.showCompaniesMenue">
-          <div class="card-body">
-            <p>{{ model.msgCompanies }}</p>
+        <div class="row mb-5" v-show="model.showCompaniesMenue">
+          <div class="col-12 col-sm-6 col-lg-5 col-xl-4">
+            <label for="filter-company" class="form-label">{{ model.msgCompanies }}</label>
             <select
               class="form-select"
+              id="filter-company"
               v-model="model.selectedCompanyId"
               @change="interactor.changeCompany(model.selectedCompanyId)"
             >
@@ -33,8 +31,8 @@ import RolesViewModel from "../../core/ts/models/rolesViewModel";
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-body">
+        <div class="row">
+          <div class="col-12">
             <div class="mb-3" v-show="model.showEditActions">
               <a class="btn btn-primary" :href="model.addNewRoleLink">
                 <i class="fa-solid fa-plus"></i>

@@ -14,10 +14,12 @@ import RolesEditViewModel from "../../core/ts/models/rolesEditViewModel";
   template: `
     <div class="container home-page mt-3">
       <breadcrumb :items="model.breadcrumb" />
-      <h1 class="h3">{{ model.msgTitle }}</h1>
+      <h1>{{ model.msgTitle }}</h1>
+
       <div v-show="model.msgNoAccess">
         <p>{{ model.msgNoAccess }}</p>
       </div>
+
       <template v-if="model.showMainContent">
         <form>
           <div class="mb-3">

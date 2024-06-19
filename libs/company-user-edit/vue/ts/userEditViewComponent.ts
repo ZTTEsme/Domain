@@ -14,7 +14,7 @@ import UserEditViewModel from "../../core/ts/models/userEditViewModel";
   template: `
     <div class="container mt-3">
       <breadcrumb :items="model.breadcrumb" />
-      <h1 class="h3">{{ model.msgTitle }}</h1>
+      <h1>{{ model.msgTitle }}</h1>
 
       <div v-show="model.msgNoAccess">
         <p>{{ model.msgNoAccess }}</p>
