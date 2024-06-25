@@ -5,6 +5,7 @@ import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 
 import ValidationUtil from "qnect-sdk-web/lib/common/core/ts/validationUtil";
 import RolesEditViewState from "../interactors/rolesEditViewState";
+import EditRoleModel from "../models/editRoleModel";
 import RolesEditViewModel from "../models/rolesEditViewModel";
 
 export default class RolesEditViewModelAssembler {
@@ -71,8 +72,9 @@ export default class RolesEditViewModelAssembler {
     model.msgPermissions = i18nGateway.get("common.permissions");
     model.msgFilter = i18nGateway.get("common.filter");
     model.msgShowAll = i18nGateway.get("common.showAll");
-    model.msgNoPermissionsFound =
-      state.role.permissions.filter((p) => p.show).length === 0 ? i18nGateway.get("common.noPermissionsFound") : "";
+    model.msgNoPermissionsFound = RolesEditViewModelAssembler.anyPermissionSelected(model.role)
+      ? ""
+      : i18nGateway.get("common.noPermissionsFound");
 
     model.showDeleteAction = state.isEditMode;
     model.msgDeleteAction = i18nGateway.get("common.delete");
@@ -84,5 +86,16 @@ export default class RolesEditViewModelAssembler {
     model.msgSaveSuccessful = i18nGateway.get("common.saveSuccessful");
     model.showAddedSuccessful = state.addedSuccessful;
     model.msgAddedSuccessful = i18nGateway.get("common.addedSuccessful");
+  }
+
+  private static anyPermissionSelected(role: EditRoleModel): boolean {
+    for (const group of role.groups) {
+      for (const permission of group.permissions) {
+        if (permission.selected) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

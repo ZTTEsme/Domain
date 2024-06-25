@@ -11,19 +11,19 @@ export default class UserPermissionInMemoryGateway implements UserPermissionGate
   private roleCounter: number = 10;
   private readonly permissions: PermissionModel[] = [
     new PermissionModel({
-      appId: "app-a",
+      appId: "app-dashboard",
       permissionId: "1",
       translations: new Map([
-        ["de-DE", "Lesen"],
-        ["en-US", "Read"],
+        ["de-DE", "Dashboard auslisten"],
+        ["en-US", "List dashboard"],
       ]),
     }),
     new PermissionModel({
-      appId: "app-b",
+      appId: "app-program-management",
       permissionId: "2",
       translations: new Map([
-        ["de-DE", "Schreiben"],
-        ["en-US", "Write"],
+        ["de-DE", "Programme verwalten"],
+        ["en-US", "Manage programs"],
       ]),
     }),
     new PermissionModel({
@@ -32,6 +32,22 @@ export default class UserPermissionInMemoryGateway implements UserPermissionGate
       translations: new Map([
         ["de-DE", "Löschen"],
         ["en-US", "Delete"],
+      ]),
+    }),
+    new PermissionModel({
+      serviceId: "service-a",
+      permissionId: "4",
+      translations: new Map([
+        ["de-DE", "Schreiben"],
+        ["en-US", "Write"],
+      ]),
+    }),
+    new PermissionModel({
+      serviceId: "service-a",
+      permissionId: "5",
+      translations: new Map([
+        ["de-DE", "Lesen"],
+        ["en-US", "Read"],
       ]),
     }),
   ];

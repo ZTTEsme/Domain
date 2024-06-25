@@ -1,5 +1,8 @@
 import Route from "cloos-vue-router/lib/core/route";
 import VueRouteHandler from "cloos-vue-router/lib/vue/vueRouteHandler";
+import AppConfigGateway from "qnect-sdk-web/lib/apps/core/ts/gateways/appConfigGateway";
+import AppConfigGatewayMock from "qnect-sdk-web/lib/apps/core/ts/gateways/appConfigGatewayMock";
+import RestAppConfigGateway from "qnect-sdk-web/lib/apps/rest/ts/gateways/restAppConfigGateway";
 import ProjectUtil from "qnect-sdk-web/lib/common/browser/ts/projectUtil";
 import CompanyGateway from "qnect-sdk-web/lib/company/core/ts/gateways/companyGateway";
 import CompanyGatewayMock from "qnect-sdk-web/lib/company/core/ts/gateways/companyGatewayMock";
@@ -34,6 +37,9 @@ export default class RolesModule implements Module {
     const companyGateway: CompanyGateway = ProjectUtil.isMock()
       ? new CompanyGatewayMock()
       : new RestCompanyGateway(this.authModule.getRestClientProvider());
+    const appConfigGateway: AppConfigGateway = ProjectUtil.isMock()
+      ? new AppConfigGatewayMock()
+      : new RestAppConfigGateway(this.authModule.getRestClientProvider());
 
     this.router.getRouter().register(
       new Route({
@@ -65,7 +71,8 @@ export default class RolesModule implements Module {
         interactor: new RolesEditViewInteractor(
           this.router.getRouter(),
           userPermissionGatway,
-          this.i18nModule.getI18nGateway()
+          this.i18nModule.getI18nGateway(),
+          appConfigGateway
         ),
       })
     );

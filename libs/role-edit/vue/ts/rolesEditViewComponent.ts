@@ -57,16 +57,23 @@ import RolesEditViewModel from "../../core/ts/models/rolesEditViewModel";
             <div>
               <p>{{ model.msgNoPermissionsFound }}</p>
             </div>
-            <div class="from-check form-switch mb-1" v-for="permission in model.role.permissions">
-              <div v-show="permission.show">
-                <input
-                  class="form-check-input me-1"
-                  type="checkbox"
-                  role="switch"
-                  v-model="permission.selected"
-                  :id="'input' + permission.permissionId"
-                />
-                <label class="form-check-label" :for="'input' + permission.permissionId">{{ permission.alias }}</label>
+            <div v-for="group in model.role.groups">
+              <div v-show="group.show">
+                <h2 class="h6">{{ group.alias }}</h2>
+                <div class="from-check form-switch mb-1" v-for="permission in group.permissions">
+                  <div v-show="permission.show">
+                    <input
+                      class="form-check-input me-1"
+                      type="checkbox"
+                      role="switch"
+                      v-model="permission.selected"
+                      :id="'input' + permission.permissionId"
+                    />
+                    <label class="form-check-label" :for="'input' + permission.permissionId">{{
+                      permission.alias
+                    }}</label>
+                  </div>
+                </div>
               </div>
             </div>
           </fieldset>

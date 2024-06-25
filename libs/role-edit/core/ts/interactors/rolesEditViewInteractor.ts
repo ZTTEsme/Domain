@@ -2,6 +2,7 @@ import Route from "cloos-vue-router/lib/core/route";
 import Router from "cloos-vue-router/lib/core/router";
 import ViewInteractor from "cloos-vue-router/lib/core/viewInteractor";
 
+import AppConfigGateway from "qnect-sdk-web/lib/apps/core/ts/gateways/appConfigGateway";
 import NotPermittedError from "qnect-sdk-web/lib/common/core/ts/errors/notPermittedError";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
 import UserPermissionGateway from "../../../../roles-common/core/ts/gateways/userPermissionGateway";
@@ -10,8 +11,9 @@ import RoleListModel from "../../../../roles-common/core/ts/models/roleListModel
 import RolePermissionSaveModel from "../../../../roles-common/core/ts/models/rolePermissionSaveModel";
 import RoleSaveModel from "../../../../roles-common/core/ts/models/roleSaveModel";
 import RolesEditViewModelAssembler from "../assemblers/rolesEditViewModelAssembler";
+import EditRoleGroupModel from "../models/editRoleGroupModel";
+import EditRolePermissionModel from "../models/editRoleGroupPermissionModel";
 import EditRoleModel from "../models/editRoleModel";
-import EditRolePermissionModel from "../models/editRolePermissionModel";
 import RolesEditViewPresenter from "./rolesEditViewPresenter";
 import RolesEditViewState from "./rolesEditViewState";
 
@@ -20,12 +22,19 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
   private state: RolesEditViewState;
   private readonly userPermissionGateway: UserPermissionGateway;
   private readonly i18nGateway: I18nGateway;
+  private readonly appConfigGateway: AppConfigGateway;
 
-  public constructor(router: Router, userPermissionGateway: UserPermissionGateway, i18nGateway: I18nGateway) {
+  public constructor(
+    router: Router,
+    userPermissionGateway: UserPermissionGateway,
+    i18nGateway: I18nGateway,
+    appConfigGateway: AppConfigGateway
+  ) {
     super(router);
     this.state = new RolesEditViewState();
     this.userPermissionGateway = userPermissionGateway;
     this.i18nGateway = i18nGateway;
+    this.appConfigGateway = appConfigGateway;
   }
 
   public startPresenting(presenter: RolesEditViewPresenter): void {
@@ -34,6 +43,8 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
   }
 
   public async onLoad(): Promise<void> {
+    this.state.apps = await this.appConfigGateway.getApps();
+    console.log(this.state.apps);
     try {
       this.state.userRoleIdStr = this.router.getPathParams().get("identifier");
       this.state.addedSuccessful = this.router.getQueryParams().get("save") === "success";
@@ -154,8 +165,11 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
   public updateFilter(filter: string): void {
     this.state.filter = filter;
 
-    for (const permission of this.state.role.permissions) {
-      permission.show = this.showPermissionModel(permission, filter);
+    for (const group of this.state.role.groups) {
+      for (const permission of group.permissions) {
+        permission.show = this.showPermissionModel(permission, group.alias, filter);
+      }
+      group.show = group.permissions.some((p) => p.show);
     }
 
     this.updateView();
@@ -166,21 +180,86 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
   }
 
   private toEditModel(model: RoleListModel, permissions: PermissionModel[]): EditRoleModel {
+    const groups: EditRoleGroupModel[] = [];
+    const appGroupModels: EditRoleGroupModel[] = [];
+
+    const serviceGroupName: string = this.i18nGateway.get("permissions.generalPermissions");
+    const servicePermissionModels: EditRolePermissionModel[] = this.getServicePermissions(permissions)
+      .map((p) => this.toPermissionModel(p, model.permissions, serviceGroupName))
+      .sort((a, b) => a.alias.localeCompare(b.alias));
+    groups.push(
+      new EditRoleGroupModel({
+        alias: serviceGroupName,
+        show: true,
+        permissions: servicePermissionModels,
+      })
+    );
+
+    const groupByAppIds: Map<string, PermissionModel[]> = this.groupByAppIds(permissions);
+    for (const [appId, appPermissions] of groupByAppIds.entries()) {
+      const groupName: string = this.getTranslationOfApp(appId);
+      const appPermissionModels = appPermissions
+        .map((p) => this.toPermissionModel(p, model.permissions, groupName))
+        .sort((a, b) => a.alias.localeCompare(b.alias));
+      appGroupModels.push(
+        new EditRoleGroupModel({
+          alias: groupName,
+          show: true,
+          permissions: appPermissionModels,
+        })
+      );
+    }
+
+    appGroupModels.sort((a, b) => a.alias.localeCompare(b.alias));
+    appGroupModels.forEach((group) => groups.push(group));
+
     return new EditRoleModel({
       id: model.id,
       alias: model.alias,
-      permissions: permissions.map(
-        (p) =>
-          new EditRolePermissionModel({
-            appId: p.appId,
-            serviceId: p.serviceId,
-            permissionId: p.permissionId,
-            alias: `${this.selectTranslation(p.translations, p.permissionId)} (${p.permissionId})`,
-            show: this.showPermission(p, this.state.filter),
-            selected: this.isPermissionSelected(p, model.permissions),
-          })
-      ),
+      groups: groups,
     });
+  }
+
+  private getTranslationOfApp(appId: string): string {
+    console.log(this.state.apps, appId);
+    for (const app of this.state.apps) {
+      if (app.appId === appId) {
+        return this.selectTranslation(app.names, appId);
+      }
+    }
+    return appId;
+  }
+
+  private toPermissionModel(
+    permission: PermissionModel,
+    availablePermissions: PermissionModel[],
+    groupName: string
+  ): EditRolePermissionModel {
+    return new EditRolePermissionModel({
+      appId: permission.appId,
+      serviceId: permission.serviceId,
+      permissionId: permission.permissionId,
+      alias: `${this.selectTranslation(permission.translations, permission.permissionId)} (${permission.permissionId})`,
+      show: this.showPermission(permission, groupName, this.state.filter),
+      selected: this.isPermissionSelected(permission, availablePermissions),
+    });
+  }
+
+  private groupByAppIds(permissions: PermissionModel[]): Map<string, PermissionModel[]> {
+    const result: Map<string, PermissionModel[]> = new Map<string, PermissionModel[]>();
+    for (const permission of permissions) {
+      if (permission.serviceId === undefined && permission.appId !== undefined) {
+        if (!result.has(permission.appId)) {
+          result.set(permission.appId, []);
+        }
+        result.get(permission.appId)?.push(permission);
+      }
+    }
+    return result;
+  }
+
+  private getServicePermissions(permissions: PermissionModel[]): PermissionModel[] {
+    return permissions.filter((p) => p.serviceId !== undefined);
   }
 
   private selectTranslation(translations: Map<string, string>, fallback: string): string {
@@ -197,19 +276,23 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
   }
 
   private toSaveModel(model: EditRoleModel): RoleSaveModel {
+    const permissions: RolePermissionSaveModel[] = [];
+    for (const group of model.groups) {
+      for (const permission of group.permissions) {
+        permissions.push(
+          new RolePermissionSaveModel({
+            permissionId: permission.permissionId,
+            appId: permission.appId,
+            serviceId: permission.serviceId,
+          })
+        );
+      }
+    }
+
     return new RoleSaveModel({
       id: model.id,
       alias: model.alias,
-      permissions: model.permissions
-        .filter((p) => p.selected)
-        .map(
-          (p) =>
-            new RolePermissionSaveModel({
-              permissionId: p.permissionId,
-              appId: p.appId,
-              serviceId: p.serviceId,
-            })
-        ),
+      permissions: permissions,
     });
   }
 
@@ -221,7 +304,11 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
     );
   }
 
-  private showPermissionModel(permissionOfInterest: EditRolePermissionModel, filter: string): boolean {
+  private showPermissionModel(
+    permissionOfInterest: EditRolePermissionModel,
+    groupName: string,
+    filter: string
+  ): boolean {
     if (!this.state.filter) {
       return true;
     }
@@ -232,19 +319,19 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
         permissionOfInterest.serviceId === permission.serviceId &&
         permissionOfInterest.permissionId === permission.permissionId
       ) {
-        return this.showPermission(permission, filter);
+        return this.showPermission(permission, groupName, filter);
       }
     }
     return false;
   }
 
-  private showPermission(permission: PermissionModel, filter: string): boolean {
+  private showPermission(permission: PermissionModel, groupName: string, filter: string): boolean {
     if (!this.state.filter) {
       return true;
     }
     const filterLower: string = filter.toLowerCase();
     for (const translation of permission.translations.values()) {
-      if (translation.toLowerCase().includes(filterLower)) {
+      if (translation.toLowerCase().includes(filterLower) || groupName.toLowerCase().includes(filterLower)) {
         return true;
       }
     }

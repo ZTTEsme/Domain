@@ -1,3 +1,4 @@
+import AppConfig from "qnect-sdk-web/lib/apps/core/ts/entities/appConfig";
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import RoleListModel from "../../../../roles-common/core/ts/models/roleListModel";
 
@@ -11,4 +12,6 @@ export default class RolesViewState {
   public selectedCompanyId: number | undefined = undefined;
 
   public getRolesFailed: boolean = false;
+
+  public apps: AppConfig[] = [];
 }

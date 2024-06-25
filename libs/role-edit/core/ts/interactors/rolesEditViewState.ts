@@ -1,3 +1,4 @@
+import AppConfig from "qnect-sdk-web/lib/apps/core/ts/entities/appConfig";
 import ValidationError from "qnect-sdk-web/lib/common/core/ts/entities/validationError";
 import PermissionModel from "../../../../roles-common/core/ts/models/permissionModel";
 import EditRoleModel from "../models/editRoleModel";
@@ -26,4 +27,6 @@ export default class RolesEditViewState {
   public saveFailed: boolean = false;
   public saveSuccessful: boolean = false;
   public addedSuccessful: boolean = false;
+
+  public apps: AppConfig[] = [];
 }
