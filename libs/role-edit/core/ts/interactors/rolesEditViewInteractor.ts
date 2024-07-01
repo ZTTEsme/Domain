@@ -279,13 +279,15 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
     const permissions: RolePermissionSaveModel[] = [];
     for (const group of model.groups) {
       for (const permission of group.permissions) {
-        permissions.push(
-          new RolePermissionSaveModel({
-            permissionId: permission.permissionId,
-            appId: permission.appId,
-            serviceId: permission.serviceId,
-          })
-        );
+        if (permission.selected) {
+          permissions.push(
+            new RolePermissionSaveModel({
+              permissionId: permission.permissionId,
+              appId: permission.appId,
+              serviceId: permission.serviceId,
+            })
+          );
+        }
       }
     }
 
@@ -296,7 +298,10 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
     });
   }
 
-  private isPermissionSelected(selectedPermission: PermissionModel, availablePermissions: PermissionModel[]): boolean {
+  private isPermissionSelected(
+    selectedPermission: PermissionModel | EditRolePermissionModel,
+    availablePermissions: PermissionModel[]
+  ): boolean {
     return (
       availablePermissions.findIndex((p) => p.permissionId === selectedPermission.permissionId) > -1 &&
       availablePermissions.findIndex((p) => p.appId === selectedPermission.appId) > -1 &&
