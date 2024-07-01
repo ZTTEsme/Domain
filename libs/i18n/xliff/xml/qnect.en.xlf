@@ -61,6 +61,11 @@
         <source>First name</source>
       </segment>
     </unit>
+    <unit id="common.hint">
+      <segment>
+        <source>Hint</source>
+      </segment>
+    </unit>
     <unit id="common.home">
       <segment>
         <source>Home</source>
@@ -399,6 +404,11 @@
     <unit id="company.unassignPakId">
       <segment>
         <source>Remove PAK-ID assignment.</source>
+      </segment>
+    </unit>
+    <unit id="companyUser.defaultRolesAdded">
+      <segment>
+        <source>The user is assigned to the default roles automatically. Please configure any other role assignments manually.</source>
       </segment>
     </unit>
     <unit id="companyUser.dialog.addUserDialogTitle">

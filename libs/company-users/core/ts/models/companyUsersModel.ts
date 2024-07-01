@@ -28,6 +28,8 @@ export default class CompanyUsersModel {
   public showUserDialog: boolean = false;
   public msgUserDialog: string = "";
   public msgUserIsAdminExplanation: string = "";
+  public msgHint: string = "";
+  public msgHintUserRoles: string = "";
   public showAddUserSuccessMessage: boolean = false;
   public msgAddUserSuccessMessage: string = "";
   public showAddUserErrorMessage: boolean = false;

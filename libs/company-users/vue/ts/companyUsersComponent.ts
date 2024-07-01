@@ -110,6 +110,13 @@ import CompanyUsersModel from "../../core/ts/models/companyUsersModel";
             <input type="checkbox" class="form-check-input" id="input-user-admin" v-model="model.userInput.isAdmin" />
             <label class="form-check-label" for="input-user-admin">{{ model.msgUserIsAdminExplanation }}</label>
           </div>
+
+          <div class="mt-3">
+            <p>
+              <span class="fw-bold me-1">{{ model.msgHint }}:</span>
+              <span>{{ model.msgHintUserRoles }}</span>
+            </p>
+          </div>
         </form>
 
         <template #footer>

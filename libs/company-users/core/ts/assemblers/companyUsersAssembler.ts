@@ -76,6 +76,9 @@ export default class CompanyUsersAssembler {
     model.showAddUserErrorMessage = state.userAddedWithFailure;
     model.msgAddUserErrorMessage = i18nGateway.get("companyUser.dialog.msgAddUserWithFailure");
 
+    model.msgHint = i18nGateway.get("common.hint");
+    model.msgHintUserRoles = i18nGateway.get("companyUser.defaultRolesAdded");
+
     model.userInput = new UserInputModel(state.addUserInput);
     model.msgUserSaveAction = i18nGateway.get("companyUser.dialog.submit");
     model.formErrors = ValidationUtil.validationErrorsToObject(state.addUserInput.validationErrors, i18nGateway);
