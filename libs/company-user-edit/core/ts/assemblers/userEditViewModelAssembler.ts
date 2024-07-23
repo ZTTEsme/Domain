@@ -61,6 +61,8 @@ export default class UserEditViewModelAssembler {
     model.msgNoRolesFound = i18nGateway.get("company.noRolesFound");
     model.msgNoPakLoginsFound = i18nGateway.get("company.noPakLoginsFound");
     model.msgUnassignPakId = i18nGateway.get("company.unassignPakId");
+    model.msgSetAdmin = i18nGateway.get("company.setAdmin");
+    model.msgResetAdmin = i18nGateway.get("company.resetAdmin");
 
     if (state.user) {
       model.companyConnections = state.user.companyConnections.map((con) => {
@@ -85,10 +87,16 @@ export default class UserEditViewModelAssembler {
     model.msgPakIdUpdateSucceeded = i18nGateway.get("company.pakIdUpdateSucceeded");
     model.showPakIdUpdateFailedMsg = state.pakIdUpdateFailed;
     model.msgPakIdUpdateFailed = i18nGateway.get("company.pakIdUpdateFailed");
+
     model.showRoleUpdateSucceededMsg = state.roleUpdateSucceeded;
     model.msgRoleUpdateSucceeded = i18nGateway.get("company.roleUpdateSucceeded");
     model.showRoleUpdateFailedMsg = state.roleUpdateFailed;
     model.msgRoleUpdateFailed = i18nGateway.get("company.roleUpdateFailed");
+
+    model.showAdminFlagUpdateSucceededMsg = state.adminFlagUpdateSucceeded;
+    model.msgAdminFlagUpdateSucceeded = i18nGateway.get("company.adminFlagUpdateSucceeded");
+    model.showAdminFlagUpdateFailedMsg = state.adminFlagUpdateFailed;
+    model.msgAdminFlagUpdateFailed = i18nGateway.get("company.adminFlagUpdateFailed");
 
     return model;
   }

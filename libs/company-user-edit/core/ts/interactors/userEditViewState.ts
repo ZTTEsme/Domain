@@ -13,6 +13,9 @@ export default class UserEditViewState {
   public roleUpdateSucceeded: boolean = false;
   public roleUpdateFailed: boolean = false;
 
+  public adminFlagUpdateSucceeded: boolean = false;
+  public adminFlagUpdateFailed: boolean = false;
+
   public userIdStr: string | undefined = undefined;
   public userId: number = 0;
 

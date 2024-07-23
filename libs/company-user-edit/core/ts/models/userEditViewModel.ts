@@ -29,14 +29,22 @@ export default class UserEditViewModel {
   public msgAssign: string = "";
   public msgUnassign: string = "";
   public msgUnassignPakId: string = "";
+  public msgSetAdmin: string = "";
+  public msgResetAdmin: string = "";
   public companyConnections: CompanyConnectionModel[] = [];
 
   public showPakIdUpdateSucceededMsg: boolean = false;
   public msgPakIdUpdateSucceeded: string = "";
   public showPakIdUpdateFailedMsg: boolean = false;
   public msgPakIdUpdateFailed: string = "";
+
   public showRoleUpdateSucceededMsg: boolean = false;
   public msgRoleUpdateSucceeded: string = "";
   public showRoleUpdateFailedMsg: boolean = false;
   public msgRoleUpdateFailed: string = "";
+
+  public showAdminFlagUpdateSucceededMsg: boolean = false;
+  public msgAdminFlagUpdateSucceeded: string = "";
+  public showAdminFlagUpdateFailedMsg: boolean = false;
+  public msgAdminFlagUpdateFailed: string = "";
 }

@@ -150,6 +150,31 @@ export default class UserEditViewInteractor extends ViewInteractor<UserEditViewP
     this.updateView();
   }
 
+  public async updateAdminFlag(companyId: number, admin: boolean): Promise<void> {
+    this.state.adminFlagUpdateSucceeded = false;
+    this.state.adminFlagUpdateFailed = false;
+    this.updateView();
+
+    if (this.state.user && this.state.user.companyConnections) {
+      for (const connection of this.state.user.companyConnections) {
+        if (connection.companyId === companyId) {
+          try {
+            await this.userPermissionGateway.updateIsAdminFlag(companyId, this.state.userId, admin);
+            connection.admin = admin;
+            this.state.adminFlagUpdateSucceeded = true;
+            this.state.adminFlagUpdateFailed = false;
+          } catch (error) {
+            console.log(error);
+            this.state.adminFlagUpdateSucceeded = false;
+            this.state.adminFlagUpdateFailed = true;
+          }
+        }
+      }
+    }
+
+    this.updateView();
+  }
+
   private updateView(): void {
     this.presenter?.updateView(UserEditViewModelAssembler.fromState(this.state, this.router, this.i18nGateway));
   }

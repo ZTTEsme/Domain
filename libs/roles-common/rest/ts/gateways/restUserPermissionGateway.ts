@@ -129,6 +129,16 @@ export default class RestUserPermissionGateway implements UserPermissionGateway 
     }
   }
 
+  public async updateIsAdminFlag(companyId: number, userId: number, isAdmin: boolean): Promise<void> {
+    const uri: string = `/api/corporate/companies/${companyId}/users/${userId}/admin`;
+
+    try {
+      await this.clientProvider.getClient().put(uri, { isAdmin: isAdmin === undefined ? false : isAdmin });
+    } catch (error) {
+      throw AxiosErrorHandler.handle(error);
+    }
+  }
+
   private getRoleFromResource(resource: RoleResource): RoleListModel {
     return new RoleListModel({
       id: resource.id === null ? undefined : resource.id,

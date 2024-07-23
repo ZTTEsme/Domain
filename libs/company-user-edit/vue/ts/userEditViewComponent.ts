@@ -26,7 +26,7 @@ import UserEditViewModel from "../../core/ts/models/userEditViewModel";
       </toast>
 
       <toast :show="model.showPakIdUpdateFailedMsg" color="danger">
-        <i class="fa-solid fa-check me-1"></i>
+        <i class="fa-solid fa-xmark me-1"></i>
         <span>{{ model.msgPakIdUpdateFailed }}</span>
       </toast>
 
@@ -36,8 +36,18 @@ import UserEditViewModel from "../../core/ts/models/userEditViewModel";
       </toast>
 
       <toast :show="model.showRoleUpdateFailedMsg" color="danger">
-        <i class="fa-solid fa-check me-1"></i>
+        <i class="fa-solid fa-xmark me-1"></i>
         <span>{{ model.msgRoleUpdateFailed }}</span>
+      </toast>
+
+      <toast :show="model.showAdminFlagUpdateSucceededMsg" color="success">
+        <i class="fa-solid fa-check me-1"></i>
+        <span>{{ model.msgAdminFlagUpdateSucceeded }}</span>
+      </toast>
+
+      <toast :show="model.showAdminFlagUpdateFailedMsg" color="danger">
+        <i class="fa-solid fa-xmark me-1"></i>
+        <span>{{ model.msgAdminFlagUpdateFailed }}</span>
       </toast>
 
       <template v-if="model.showMainContent">
@@ -84,7 +94,27 @@ import UserEditViewModel from "../../core/ts/models/userEditViewModel";
             <li class="table-list__row" v-for="connection in model.companyConnections">
               <div class="table-list__cell">{{ connection.companyName }}</div>
               <div class="table-list__cell">
-                <i class="fa-solid" :class="connection.admin ? 'fa-check' : 'fa-xmark'"></i>
+                <div class="d-flex justify-content-between">
+                  <i class="fa-solid" :class="connection.admin ? 'fa-check' : 'fa-xmark'"></i>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm me-2"
+                    v-show="!connection.admin"
+                    @click="() => interactor.updateAdminFlag(connection.companyId, true)"
+                  >
+                    <i class="fa-solid fa-plus"></i>
+                    {{ model.msgSetAdmin }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm me-2"
+                    v-show="connection.admin"
+                    @click="() => interactor.updateAdminFlag(connection.companyId, false)"
+                  >
+                    <i class="fa-solid fa-trash-can"></i>
+                    {{ model.msgResetAdmin }}
+                  </button>
+                </div>
               </div>
               <div class="table-list__cell">
                 <div class="dropdown">

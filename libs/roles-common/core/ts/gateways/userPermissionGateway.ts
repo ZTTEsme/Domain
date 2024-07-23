@@ -14,4 +14,5 @@ export default interface UserPermissionGateway {
   getPermissions(companyId: number): Promise<PermissionModel[]>;
   assignRoleToUser(companyId: number, userId: number, roleId: number): Promise<void>;
   unassignRoleFromUser(companyId: number, userId: number, roleId: number): Promise<void>;
+  updateIsAdminFlag(companyId: number, userId: number, isAdmin: boolean): Promise<void>;
 }

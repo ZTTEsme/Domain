@@ -156,6 +156,10 @@ export default class UserPermissionInMemoryGateway implements UserPermissionGate
     await JsExtension.delay(300);
   }
 
+  public async updateIsAdminFlag(companyId: number, userId: number, isAdmin: boolean): Promise<void> {
+    await JsExtension.delay(300);
+  }
+
   private toRoleModel(role: RoleSaveModel): RoleListModel {
     return new RoleListModel({
       id: role.id,

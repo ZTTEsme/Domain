@@ -151,6 +151,16 @@
         <source>Type is required</source>
       </segment>
     </unit>
+    <unit id="company.adminFlagUpdateSucceeded">
+      <segment>
+        <source>Successfully update administrator information.</source>
+      </segment>
+    </unit>
+    <unit id="company.adminFlagUpdateFailed">
+      <segment>
+        <source>Failed to update administrator information.</source>
+      </segment>
+    </unit>
     <unit id="company.btn.add">
       <segment>
         <source>Add</source>
@@ -341,6 +351,11 @@
         <source>PAK-ID '<ph disp="PAK identifier" id="pakId" />' login at device '<ph disp="Alias of device" id="deviceAlias" />' at '<ph disp="Timestamp" id="timestamp" />'</source>
       </segment>
     </unit>
+    <unit id="company.resetAdmin">
+      <segment>
+        <source>Remove from administrators</source>
+      </segment>
+    </unit>
     <unit id="company.roleNameNotFound">
       <segment>
         <source>Name of role not found.</source>
@@ -364,6 +379,11 @@
     <unit id="company.router.name">
       <segment>
         <source>Companies</source>
+      </segment>
+    </unit>
+    <unit id="company.setAdmin">
+      <segment>
+        <source>Add to administrators</source>
       </segment>
     </unit>
     <unit id="company.tableName.agentCompanyId">
