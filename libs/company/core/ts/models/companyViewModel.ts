@@ -43,6 +43,8 @@ export default class CompanyViewModel {
   public msgCompanyTypeManufacturer: string = "";
   public msgCompanyTypeTrader: string = "";
   public msgCompanyTypeSubsidiary: string = "";
+  public disableExternalIdentityProvidersInput: boolean = true;
+  public msgCompanyUsesExternalIdentityProviders: string = "";
   public companyInput: CompanyInputModel = new CompanyInputModel();
   public msgCompanySaveAction: string = "";
   public formErrors: Dictionary<string> = {};

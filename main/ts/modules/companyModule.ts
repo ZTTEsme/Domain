@@ -12,19 +12,11 @@ import I18nModule from "./i18nModule";
 import RouterModule from "./routerModule";
 
 export default class CompanyModule implements Module {
-  private readonly authModule: AuthModule;
-  private readonly i18nModule: I18nModule;
-  private readonly routerModule: RouterModule;
-
   public constructor(
-    private readonly auth: AuthModule,
-    private readonly router: RouterModule,
-    private readonly i18n: I18nModule
-  ) {
-    this.authModule = auth;
-    this.routerModule = router;
-    this.i18nModule = i18n;
-  }
+    private readonly authModule: AuthModule,
+    private readonly routerModule: RouterModule,
+    private readonly i18nModule: I18nModule
+  ) {}
 
   public getName(): string {
     return CompanyModule.name;
@@ -50,13 +42,14 @@ export default class CompanyModule implements Module {
         interactor: new CompanyInteractor(
           this.routerModule.getRouter(),
           this.i18nModule.getI18nGateway(),
-          companyGateway
+          companyGateway,
+          this.authModule.getUserEnvironmentGateway()
         ),
       })
     );
   }
 
   public async loadSecondPhase(): Promise<void> {
-    //
+    // do nothing
   }
 }

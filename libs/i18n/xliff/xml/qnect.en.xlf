@@ -148,7 +148,7 @@
     </unit>
     <unit id="company.add.valid.type">
       <segment>
-        <source>A type selecttion is required</source>
+        <source>A type selection is required</source>
       </segment>
     </unit>
     <unit id="company.adminFlagUpdateFailed">
@@ -274,6 +274,16 @@
     <unit id="company.label.trader">
       <segment>
         <source>Trader</source>
+      </segment>
+    </unit>
+    <unit id="company.label.type">
+      <segment>
+        <source>Company type</source>
+      </segment>
+    </unit>
+    <unit id="company.label.useExternalIdentityProviders">
+      <segment>
+        <source>Use external identity provider</source>
       </segment>
     </unit>
     <unit id="company.multipleRoles">

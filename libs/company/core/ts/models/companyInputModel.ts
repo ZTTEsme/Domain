@@ -7,6 +7,7 @@ export default class CompanyInputModel {
   public agentCompanyId: number | null = null;
   public parentCompanyId: number | null = null;
   public customerId: string = "";
+  public useExternalIdentityProviders: boolean = false;
 
   public validationErrors: ValidationError[] = [];
 

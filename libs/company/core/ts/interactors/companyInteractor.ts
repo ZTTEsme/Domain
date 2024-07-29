@@ -4,6 +4,7 @@ import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
 import CompanyType from "qnect-sdk-web/lib/company/core/ts/enums/companyType";
 import CompanyGateway from "qnect-sdk-web/lib/company/core/ts/gateways/companyGateway";
 import I18nGateway from "qnect-sdk-web/lib/i18n/core/ts/gateways/i18nGateway";
+import CachedUserEnvironmentGateway from "qnect-sdk-web/lib/userenvironment/core/ts/gateways/cachedUserEnvironmentGateway";
 import CompanyModelAssembler from "../assemblers/companyModelAssembler";
 import CompanyInputModel from "../models/companyInputModel";
 import CompanyPresenter from "./companyPresenter";
@@ -16,13 +17,15 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
   public constructor(
     router: Router,
     private readonly i18nGateway: I18nGateway,
-    private readonly companyGateway: CompanyGateway
+    private readonly companyGateway: CompanyGateway,
+    private readonly userEnvironmentGateway: CachedUserEnvironmentGateway
   ) {
     super(router);
   }
 
   public async onLoad(): Promise<void> {
     try {
+      await this.loadActiveCompany();
       await this.loadUnfilteredCompanies();
       await this.loadFilteredCompanies();
     } catch (error) {
@@ -138,6 +141,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
             parentCompanyId: company.parentCompanyId,
             agentCompanyId: company.agentCompanyId,
             customerId: company.customerId,
+            useExternalIdentityProviders: company.useExternalIdentityProviders,
           });
           this.state.companyDialogOpen = true;
           break;
@@ -170,6 +174,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
           parentCompanyId: this.state.companyInput.parentCompanyId,
           agentCompanyId: this.state.companyInput.agentCompanyId,
           customerId: this.state.companyInput.customerId,
+          useExternalIdentityProviders: this.state.companyInput.useExternalIdentityProviders,
         })
       );
 
@@ -189,6 +194,7 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
           parentCompanyId: this.state.companyInput.parentCompanyId,
           agentCompanyId: this.state.companyInput.agentCompanyId,
           customerId: this.state.companyInput.customerId,
+          useExternalIdentityProviders: this.state.companyInput.useExternalIdentityProviders,
         })
       );
 
@@ -198,12 +204,23 @@ export default class CompanyInteractor extends ViewInteractor<CompanyPresenter> 
     }
   }
 
+  private async loadActiveCompany(): Promise<void> {
+    const activeCompanyId: number | null = this.userEnvironmentGateway.getActiveCompanyId();
+    if (activeCompanyId) {
+      this.state.activeCompany = await this.companyGateway.getCompany(activeCompanyId);
+    }
+  }
+
   private async loadUnfilteredCompanies(): Promise<void> {
     this.state.companies = await this.companyGateway.getCompanies();
   }
 
   private async loadFilteredCompanies(): Promise<void> {
-    this.state.filteredCompanies = this.state.companies;
+    if (this.state.filterAgentId !== undefined) {
+      this.state.filteredCompanies = await this.companyGateway.getCompaniesByAgent(this.state.filterAgentId);
+    } else {
+      this.state.filteredCompanies = this.state.companies;
+    }
   }
 
   private updateView() {

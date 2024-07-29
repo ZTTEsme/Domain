@@ -86,6 +86,8 @@ export default class CompanyModelAssembler {
     model.msgCompanyTypeManufacturer = i18nGateway.get("company.label.manufacturer");
     model.msgCompanyTypeTrader = i18nGateway.get("company.label.trader");
     model.msgCompanyTypeSubsidiary = i18nGateway.get("company.label.subsidiary");
+    model.msgCompanyUsesExternalIdentityProviders = i18nGateway.get("company.label.useExternalIdentityProviders");
+    model.disableExternalIdentityProvidersInput = !(state.activeCompany?.type === CompanyType.MANUFACTURER);
 
     model.companyInput = new CompanyInputModel(state.companyInput);
 

@@ -1,7 +1,10 @@
 import Company from "qnect-sdk-web/lib/company/core/ts/entities/company";
+import CompanyWithUsers from "qnect-sdk-web/lib/company/core/ts/entities/companyWithUsers";
 import CompanyInputModel from "../models/companyInputModel";
 
 export default class CompanyState {
+  public activeCompany: CompanyWithUsers | undefined;
+
   public companies: Company[] = [];
   public filteredCompanies: Company[] = [];
 

@@ -158,7 +158,7 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
             </div>
           </div>
 
-          <div class="mb-1">
+          <div class="mb-3">
             <label for="input-company-customer" class="form-label">{{ model.msgCompanyCustomer }}</label>
             <input
               type="text"
@@ -170,6 +170,19 @@ import CompanyViewModel from "../../core/ts/models/companyViewModel";
             <div class="invalid-feedback" v-show="!!model.formErrors.customerId">
               {{ model.formErrors.customerId }}
             </div>
+          </div>
+
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="input-company-identity-provider"
+              type="checkbox"
+              v-model="model.companyInput.useExternalIdentityProviders"
+              :disabled="model.disableExternalIdentityProvidersInput"
+            />
+            <label class="form-check-label" for="input-company-identity-provider">{{
+              model.msgCompanyUsesExternalIdentityProviders
+            }}</label>
           </div>
         </form>
 
