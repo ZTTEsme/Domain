@@ -35,7 +35,7 @@ export default class CompanyModelAssembler {
 
   private static addFilter(state: CompanyState, model: CompanyViewModel, i18nGateway: I18nGateway, router: Router) {
     model.showLoadingIndicator = state.isLoading;
-    model.msgFilterTitle = i18nGateway.get("company.label.agentCompanyName");
+    model.msgFilterTitle = i18nGateway.get("company.tableName.agentCompany");
     model.msgChooseAllFilter = i18nGateway.get("company.label.chooseAllLabel");
     model.filterAgentId = state.filterAgentId;
     model.unfilteredCompanies = this.companiesToModels(state.companies, i18nGateway, router);
@@ -55,8 +55,8 @@ export default class CompanyModelAssembler {
   ) {
     model.msgCompanyAlias = i18nGateway.get("company.tableName.alias");
     model.msgCompanyType = i18nGateway.get("company.tableName.type");
-    model.msgCompanyParent = i18nGateway.get("company.tableName.parentCompanyId");
-    model.msgCompanyAgent = i18nGateway.get("company.tableName.agentCompanyId");
+    model.msgCompanyParent = i18nGateway.get("company.tableName.parentCompany");
+    model.msgCompanyAgent = i18nGateway.get("company.tableName.agentCompany");
     model.msgCompanyCustomer = i18nGateway.get("company.tableName.customerId");
     model.msgCompanyActions = i18nGateway.get("company.tableName.operate");
     model.msgNoCompanies = i18nGateway.get("noDataLabel");
@@ -70,9 +70,9 @@ export default class CompanyModelAssembler {
     model.showCompanyDialog = state.companyDialogOpen;
 
     if (state.companyEditId !== undefined) {
-      model.msgCompanyDialog = i18nGateway.get("company.dialog.modifyCompanyTitle");
-      model.msgSaveSuccessMessage = i18nGateway.get("company.dialog.msgModifyCompanyWithSuccess");
-      model.msgSaveErrorMessage = i18nGateway.get("company.dialog.msgModifyCompanyWithFailure");
+      model.msgCompanyDialog = i18nGateway.get("company.dialog.editCompanyTitle");
+      model.msgSaveSuccessMessage = i18nGateway.get("company.dialog.msgEditCompanyWithSuccess");
+      model.msgSaveErrorMessage = i18nGateway.get("company.dialog.msgEditCompanyWithFailure");
     } else {
       model.msgCompanyDialog = i18nGateway.get("company.dialog.addCompany");
       model.msgSaveSuccessMessage = i18nGateway.get("company.dialog.msgAddCompanyWithSuccess");

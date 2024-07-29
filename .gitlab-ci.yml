@@ -4,8 +4,41 @@ stages:
   - build
   - publish
 
+variables:
+  TRANSLATOR_VERSION: "1.3.10"
+
+build:internationalization:
+  stage: build
+  image: "docker-i4dev.cloos.de/libs/java/translator"
+  variables:
+    TRANSLATION_IGNORELIST: "C-Gate,IoT Hub,IoT Connector,Carola EDI,Carola,CAROLA,RoboPlan,QNECT,PAK-ID"
+  cache:
+    - key:
+        files:
+          - libs/i18n/xliff/xml/qnect.en.xlf
+      paths:
+        - libs/i18n/xliff/xml
+  artifacts:
+    paths:
+      - libs/i18n/xliff/xml
+    expire_in: 8h
+  script:
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t cs    -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t de-DE -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t es    -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t fr    -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t it    -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t nl    -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t pl    -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t pt-BR -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t ru    -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t tr    -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+    - deepl-translator -b libs/i18n/xliff/xml/qnect -s en-US -t zh-CN -m "qnect-customer-management" -i "$TRANSLATION_IGNORELIST"
+
 build:node-build:
   stage: build
+  needs:
+    - "build:internationalization"
   script:
     - npm install
     - npm run build

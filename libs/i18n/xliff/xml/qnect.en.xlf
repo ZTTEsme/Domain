@@ -131,29 +131,24 @@
         <source>Delete</source>
       </segment>
     </unit>
-    <unit id="company.action.modify">
-      <segment>
-        <source>Modify</source>
-      </segment>
-    </unit>
     <unit id="company.add.valid.alias">
       <segment>
-        <source>Company Name is required</source>
+        <source>A name is required</source>
       </segment>
     </unit>
     <unit id="company.add.valid.customerId">
       <segment>
-        <source>Customer ID is required</source>
+        <source>An ID is required</source>
       </segment>
     </unit>
     <unit id="company.add.valid.type">
       <segment>
-        <source>Type is required</source>
+        <source>A type selecttion is required</source>
       </segment>
     </unit>
     <unit id="company.adminFlagUpdateSucceeded">
       <segment>
-        <source>Successfully update administrator information.</source>
+        <source>The administrator information was successfully updated.</source>
       </segment>
     </unit>
     <unit id="company.adminFlagUpdateFailed">
@@ -201,9 +196,9 @@
         <source>Do you want to delete this company?</source>
       </segment>
     </unit>
-    <unit id="company.dialog.modifyCompanyTitle">
+    <unit id="company.dialog.editCompanyTitle">
       <segment>
-        <source>Modify company</source>
+        <source>Edit company</source>
       </segment>
     </unit>
     <unit id="company.dialog.msgAddCompanyWithFailure">
@@ -213,7 +208,7 @@
     </unit>
     <unit id="company.dialog.msgAddCompanyWithSuccess">
       <segment>
-        <source>Successfully added company.</source>
+        <source>The company was successfully added.</source>
       </segment>
     </unit>
     <unit id="company.dialog.msgDeleteCompanyWithFailure">
@@ -223,17 +218,17 @@
     </unit>
     <unit id="company.dialog.msgDeleteCompanyWithSuccess">
       <segment>
-        <source>Successfully deleted company.</source>
+        <source>The company was successfully deleted.</source>
       </segment>
     </unit>
-    <unit id="company.dialog.msgModifyCompanyWithFailure">
+    <unit id="company.dialog.msgEditCompanyWithFailure">
       <segment>
-        <source>Failed to change the company.</source>
+        <source>Failed to update the company.</source>
       </segment>
     </unit>
-    <unit id="company.dialog.msgModifyCompanyWithSuccess">
+    <unit id="company.dialog.msgEditCompanyWithSuccess">
       <segment>
-        <source>Successfully changed the company.</source>
+        <source>The company was successfully updated.</source>
       </segment>
     </unit>
     <unit id="company.dialog.submit">
@@ -246,16 +241,6 @@
         <source>Administrator</source>
       </segment>
     </unit>
-    <unit id="company.label.agentCompanyName">
-      <segment>
-        <source>Agent Company</source>
-      </segment>
-    </unit>
-    <unit id="company.label.alias">
-      <segment>
-        <source>Company Name</source>
-      </segment>
-    </unit>
     <unit id="company.label.chooseAllLabel">
       <segment>
         <source>All companies</source>
@@ -266,19 +251,9 @@
         <source>Customer</source>
       </segment>
     </unit>
-    <unit id="company.label.customerId">
-      <segment>
-        <source>Customer ID</source>
-      </segment>
-    </unit>
     <unit id="company.label.manufacturer">
       <segment>
         <source>Manufacturer</source>
-      </segment>
-    </unit>
-    <unit id="company.label.parentCompany">
-      <segment>
-        <source>Parent Company</source>
       </segment>
     </unit>
     <unit id="company.label.serverErrorInfo">
@@ -294,11 +269,6 @@
     <unit id="company.label.trader">
       <segment>
         <source>Trader</source>
-      </segment>
-    </unit>
-    <unit id="company.label.type">
-      <segment>
-        <source>Copmany type</source>
       </segment>
     </unit>
     <unit id="company.multipleRoles">
@@ -328,7 +298,7 @@
     </unit>
     <unit id="company.noRolesFound">
       <segment>
-        <source>No Roles found.</source>
+        <source>No roles found.</source>
       </segment>
     </unit>
     <unit id="company.pakId">
@@ -386,19 +356,19 @@
         <source>Add to administrators</source>
       </segment>
     </unit>
-    <unit id="company.tableName.agentCompanyId">
+    <unit id="company.tableName.agentCompany">
       <segment>
-        <source>Agent Company</source>
+        <source>Agent</source>
       </segment>
     </unit>
     <unit id="company.tableName.alias">
       <segment>
-        <source>Company Name</source>
+        <source>Name</source>
       </segment>
     </unit>
     <unit id="company.tableName.customerId">
       <segment>
-        <source>Customer ID</source>
+        <source>ID</source>
       </segment>
     </unit>
     <unit id="company.tableName.operate">
@@ -406,14 +376,14 @@
         <source>Actions</source>
       </segment>
     </unit>
-    <unit id="company.tableName.parentCompanyId">
+    <unit id="company.tableName.parentCompany">
       <segment>
-        <source>Parent Company</source>
+        <source>Parent</source>
       </segment>
     </unit>
     <unit id="company.tableName.type">
       <segment>
-        <source>Company Type</source>
+        <source>Type</source>
       </segment>
     </unit>
     <unit id="company.title">
@@ -433,12 +403,12 @@
     </unit>
     <unit id="companyUser.dialog.addUserDialogTitle">
       <segment>
-        <source>Invite Company User</source>
+        <source>Invite user to company</source>
       </segment>
     </unit>
     <unit id="companyUser.dialog.deleteUserDialogTitle">
       <segment>
-        <source>Remove user</source>
+        <source>Remove user from company</source>
       </segment>
     </unit>
     <unit id="companyUser.dialog.deleteUserTipInfo">
@@ -453,7 +423,7 @@
     </unit>
     <unit id="companyUser.dialog.msgAddUserWithSuccess">
       <segment>
-        <source>Successfully added the user.</source>
+        <source>The user was adde successfully.</source>
       </segment>
     </unit>
     <unit id="companyUser.dialog.msgDeleteUserWithFailure">
@@ -463,7 +433,7 @@
     </unit>
     <unit id="companyUser.dialog.msgDeleteUserWithSuccess">
       <segment>
-        <source>Successfully removed the user.</source>
+        <source>The user was removed successfully.</source>
       </segment>
     </unit>
     <unit id="companyUser.dialog.submit">
@@ -473,7 +443,7 @@
     </unit>
     <unit id="companyUser.label.email">
       <segment>
-        <source>Email</source>
+        <source>E-Mail</source>
       </segment>
     </unit>
     <unit id="companyUser.label.serverErrorInfo">
@@ -488,7 +458,7 @@
     </unit>
     <unit id="companyUser.label.userTypeAdminExplanation">
       <segment>
-        <source>Add as user with administrator permissions</source>
+        <source>Add with administrator permissions.</source>
       </segment>
     </unit>
     <unit id="companyUser.router.name">
@@ -513,7 +483,7 @@
     </unit>
     <unit id="companyUser.table.isAdminFalse">
       <segment>
-        <source>User is not administrator.</source>
+        <source>User isn't an administrator.</source>
       </segment>
     </unit>
     <unit id="companyUser.table.isAdminTrue">
@@ -526,19 +496,9 @@
         <source>Actions</source>
       </segment>
     </unit>
-    <unit id="companyUser.valid.alias">
-      <segment>
-        <source>User alias is required</source>
-      </segment>
-    </unit>
     <unit id="companyUser.valid.email">
       <segment>
         <source>Must be a valid email address.</source>
-      </segment>
-    </unit>
-    <unit id="companyUser.valid.role">
-      <segment>
-        <source>Role is required</source>
       </segment>
     </unit>
     <unit id="model.labelInfo.companyLabel">
@@ -623,7 +583,7 @@
     </unit>
     <unit id="state.labels.userTip">
       <segment>
-        <source>Manage all users</source>
+        <source>Manage users</source>
       </segment>
     </unit>
     <unit id="user.title">
