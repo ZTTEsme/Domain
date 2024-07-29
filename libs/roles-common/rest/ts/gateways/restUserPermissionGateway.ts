@@ -143,6 +143,7 @@ export default class RestUserPermissionGateway implements UserPermissionGateway 
     return new RoleListModel({
       id: resource.id === null ? undefined : resource.id,
       alias: resource.alias,
+      defaultRole: resource.defaultRole,
       permissions: resource.permissions.map((p) => this.getPermissionFromResource(p)),
     });
   }
@@ -173,6 +174,7 @@ export default class RestUserPermissionGateway implements UserPermissionGateway 
     return {
       id: model.id,
       alias: model.alias,
+      defaultRole: model.defaultRole,
       permissions: model.permissions.map((p) => ({
         appId: p.appId === undefined ? null : p.appId,
         serviceId: p.serviceId === undefined ? null : p.serviceId,

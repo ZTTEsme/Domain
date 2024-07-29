@@ -18,6 +18,7 @@ export default class RolesEditViewModel {
   public msgFilter: string = "";
   public msgShowAll: string = "";
   public msgNoPermissionsFound: string = "";
+  public msgDefaultRole: string = "";
 
   public formErrors: Dictionary<string> = {};
   public role: EditRoleModel = new EditRoleModel();

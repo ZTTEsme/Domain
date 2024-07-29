@@ -34,6 +34,19 @@ import RolesEditViewModel from "../../core/ts/models/rolesEditViewModel";
             <div class="invalid-feedback">{{ model.formErrors.roleAlias }}</div>
           </div>
 
+          <div class="mb-3">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="inputDefaultRole"
+                v-model="model.role.defaultRole"
+              />
+              <label class="form-check-label" for="inputDefaultRole">{{ model.msgDefaultRole }}</label>
+            </div>
+          </div>
+
           <fieldset class="mb-3">
             <legend class="col-form-label">{{ model.msgPermissions }}</legend>
             <div class="input-group mb-3">

@@ -55,16 +55,19 @@ export default class UserPermissionInMemoryGateway implements UserPermissionGate
     new RoleListModel({
       id: 1,
       alias: "Administrator",
+      defaultRole: false,
       permissions: [this.permissions[0], this.permissions[1], this.permissions[2]],
     }),
     new RoleListModel({
       id: 2,
       alias: "Programmer",
+      defaultRole: false,
       permissions: [this.permissions[0], this.permissions[1]],
     }),
     new RoleListModel({
       id: 3,
       alias: "Viewer",
+      defaultRole: true,
       permissions: [this.permissions[0]],
     }),
   ];
@@ -164,6 +167,7 @@ export default class UserPermissionInMemoryGateway implements UserPermissionGate
     return new RoleListModel({
       id: role.id,
       alias: role.alias,
+      defaultRole: role.defaultRole,
       permissions: role.permissions.map(
         (p) =>
           new PermissionModel({

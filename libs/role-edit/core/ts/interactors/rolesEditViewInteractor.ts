@@ -119,7 +119,7 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
   }
 
   public async saveRole(role: EditRoleModel): Promise<void> {
-    this.state.role;
+    this.state.role = role;
     this.state.roleNameValid = !!role.alias;
 
     this.validateRole();
@@ -216,6 +216,7 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
     return new EditRoleModel({
       id: model.id,
       alias: model.alias,
+      defaultRole: model.defaultRole,
       groups: groups,
     });
   }
@@ -294,6 +295,7 @@ export default class RolesEditViewInteractor extends ViewInteractor<RolesEditVie
     return new RoleSaveModel({
       id: model.id,
       alias: model.alias,
+      defaultRole: model.defaultRole,
       permissions: permissions,
     });
   }

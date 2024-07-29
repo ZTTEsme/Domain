@@ -26,6 +26,11 @@
         <source>Companies</source>
       </segment>
     </unit>
+    <unit id="common.defaultRole">
+      <segment>
+        <source>Assign this role to all new users in this company.</source>
+      </segment>
+    </unit>
     <unit id="common.delete">
       <segment>
         <source>Delete</source>
@@ -146,14 +151,14 @@
         <source>A type selecttion is required</source>
       </segment>
     </unit>
-    <unit id="company.adminFlagUpdateSucceeded">
-      <segment>
-        <source>The administrator information was successfully updated.</source>
-      </segment>
-    </unit>
     <unit id="company.adminFlagUpdateFailed">
       <segment>
         <source>Failed to update administrator information.</source>
+      </segment>
+    </unit>
+    <unit id="company.adminFlagUpdateSucceeded">
+      <segment>
+        <source>The administrator information was successfully updated.</source>
       </segment>
     </unit>
     <unit id="company.btn.add">

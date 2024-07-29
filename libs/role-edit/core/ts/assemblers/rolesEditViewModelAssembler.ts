@@ -75,6 +75,7 @@ export default class RolesEditViewModelAssembler {
     model.msgNoPermissionsFound = RolesEditViewModelAssembler.anyPermissionSelected(model.role)
       ? ""
       : i18nGateway.get("common.noPermissionsFound");
+    model.msgDefaultRole = i18nGateway.get("common.defaultRole");
 
     model.showDeleteAction = state.isEditMode;
     model.msgDeleteAction = i18nGateway.get("common.delete");
